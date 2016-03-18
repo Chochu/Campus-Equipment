@@ -29,12 +29,12 @@ function populateTable(){
   }
   $CampusArray = array();
   $BuildingArray = array();
-  $str = file_get_contents('../campus.json');
+  $str = file_get_contents($JsonCampus);
   $json = json_decode($str,true);
   foreach ($json as $value){
     $CampusArray[$value['id']] = $value['Name'];
   }
-  $str = file_get_contents('../building.json');
+  $str = file_get_contents($JsonBuilding);
   $json = json_decode($str,true);
   foreach ($json as $value){
     $BuildingArray[$value['id']] = $value['Name'];

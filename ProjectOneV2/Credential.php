@@ -1,6 +1,6 @@
 <?php
 $servername = "localhost";
-$username = "root";
+$username = "Chochu";
 $password = "";
 $dbname = "nyit";
 $JsonCampus = '../Script/JSON/campus.json';

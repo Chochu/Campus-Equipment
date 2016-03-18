@@ -107,7 +107,7 @@ function replaceSpace($string){
 </head>
 <body>
 
-  <h2>Update Building id: <?php getPost("id"); ?></h2>
+  <h2>Update Room id: <?php getPost("id"); ?></h2>
   <p><span class="error">* required field.</span></p>
 
   <form class="form-horizontal" role="form" method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
@@ -119,20 +119,12 @@ function replaceSpace($string){
         <?php echo "<p class='text-danger'>$IdE</p>";?>
       </div>
     </div>
-    <!-- Name -->
+    <!-- Room Number -->
     <div class="form-group">
       <label for="name" class="col-sm-2 control-label">Name</label>
       <div class="col-sm-4">
-        <input type="text" class="form-control" id="name" name="name" placeholder="Anna Rubin" value="<?php  getPost("Name");?>">
+        <input type="text" class="form-control" id="room" name="room" placeholder="130" value="<?php  getPost("Name");?>">
         <?php echo "<p class='text-danger'>$NameE</p>";?>
-      </div>
-    </div>
-    <!-- Abb -->
-    <div class="form-group">
-      <label for="name" class="col-sm-2 control-label">Abb</label>
-      <div class="col-sm-4">
-        <input type="text" class="form-control" id="abb" name="abb" placeholder="AARH" value="<?php  getPost("Abb");?>">
-        <?php echo "<p class='text-danger'>$AbbE</p>";?>
       </div>
     </div>
     <!-- Alt Name  -->
@@ -142,14 +134,25 @@ function replaceSpace($string){
         <input type="text" class="form-control" id="altname" name="altname" placeholder="300 Building" value="<?php  getPost("AltName");?>">
       </div>
     </div>
-    <!-- Drop Down -->
+    <!-- Campus Dropdown -->
     <div class="form-group">
       <label for="name" class="col-sm-2 control-label">Campus</label>
       <div class="col-sm-4">
-        <select name="ddcampusid">
+        <select name="ddcampusid" onchange="configureDropDownLists(this,document.getElementById('ddbuildingid'))">
           <option value="">...</option>
-          <?php listcampusDropdown();?>
+          <?php JsontoDropdown('../Script/JSON/campus.json');?>
         </select>
+        <?php echo "<p class='text-danger'>$CampusIDE</p>";?>
+      </div>
+    </div>
+    <!-- Building Dropdown -->
+    <div class="form-group">
+      <label for="name" class="col-sm-2 control-label">Building</label>
+      <div class="col-sm-4">
+        <select name="ddbuildingid" id="ddbuildingid">
+          <option value="">...</option>
+        </select>
+        <?php echo "<p class='text-danger'>$CampusIDE</p>";?>
       </div>
     </div>
     <div class="form-group">
@@ -162,6 +165,46 @@ function replaceSpace($string){
   <?php
   echo "<h1>" .  $str . "</h1>";
   ?>
+
+  <script>
+  var gBuildingjson;
+  var BuildingArr = [];
+  $.ajax({ //http://stackoverflow.com/questions/7346563/loading-local-json-file
+         url: "../Script/JSON/building.json",
+             //force to handle it as text
+         dataType: "text",
+              success: function (dataTest) {
+
+                  //data downloaded so we call parseJSON function
+                  //and pass downloaded data
+                  var Buildingjson = $.parseJSON(dataTest);
+                  gBuildingjson = Buildingjson;
+                  //now json variable contains data in json format
+                  //let's display a few items
+                  $.each(Buildingjson, function (i, jsonObjectList) {
+                    //console.log(jsonObjectList['id']);
+                    BuildingArr.push([jsonObjectList['id'],jsonObjectList['Name'],jsonObjectList['CampusID']]);
+                   });
+               }
+    });
+
+
+  function configureDropDownLists(ddcampusid,ddbuildingid) {
+    ddbuildingid.options.length = 0;
+    for (var arrayID in BuildingArr){
+      if (BuildingArr[arrayID][2] == ddcampusid.value){
+        createOption(ddbuildingid, BuildingArr[arrayID][1], BuildingArr[arrayID][0]);
+      }
+    }
+  }
+
+  function createOption(ddbuildingid, text, value) {
+    var opt = document.createElement('option');
+    opt.value = value;
+    opt.text = text;
+    ddbuildingid.options.add(opt);
+  }
+  </script>
 
 
 </body>

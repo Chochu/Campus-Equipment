@@ -23,33 +23,36 @@ function JsontoDropdown($datapath){
   <select id="ddl2">
   </select>
 
-  <script type="text/javascript" src="ProjectOneV2/Script/JSON/buiding.json">
+  <script>
+  var gBuildingjson;
+  var BuildingArr = [];
+  $.ajax({ //http://stackoverflow.com/questions/7346563/loading-local-json-file
+         url: "ProjectOneV2/Script/JSON/building.json",
+             //force to handle it as text
+         dataType: "text",
+              success: function (dataTest) {
+
+                  //data downloaded so we call parseJSON function
+                  //and pass downloaded data
+                  var Buildingjson = $.parseJSON(dataTest);
+                  gBuildingjson = Buildingjson;
+                  //now json variable contains data in json format
+                  //let's display a few items
+                  $.each(Buildingjson, function (i, jsonObjectList) {
+                    //console.log(jsonObjectList['id']);
+                    BuildingArr.push([jsonObjectList['id'],jsonObjectList['Name'],jsonObjectList['CampusID']]);
+                   });
+               }
+    });
+
+
   function configureDropDownLists(ddl1,ddl2) {
-
-    switch (ddl1.value) {
-      case '1':
-      ddl2.options.length = 0;
-      for (i = 0; i < colours.length; i++) {
-        createOption(ddl2, colours[i], colours[i]);
+    ddl2.options.length = 0;
+    for (var arrayID in BuildingArr){
+      if (BuildingArr[arrayID][2] == ddl1.value){
+        createOption(ddl2, BuildingArr[arrayID][1], BuildingArr[arrayID][0]);
       }
-      break;
-      case '10':
-      ddl2.options.length = 0;
-      for (i = 0; i < shapes.length; i++) {
-        createOption(ddl2, shapes[i], shapes[i]);
-      }
-      break;
-      case '13':
-      ddl2.options.length = 0;
-      for (i = 0; i < names.length; i++) {
-        createOption(ddl2, names[i], names[i]);
-      }
-      break;
-      default:
-      ddl2.options.length = 0;
-      break;
     }
-
   }
 
   function createOption(ddl, text, value) {
