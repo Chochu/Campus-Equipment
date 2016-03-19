@@ -52,6 +52,30 @@ echo'
              <li><a href="../Room/UpdateRoom.php">Update Room</a></li>
            </ul>
          </li>
+         <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Equipment<span class="caret"></span></a>
+           <ul class="dropdown-menu">
+             <li><a href="../Equipment/InsertEquipment.php">Insert Equipment</a></li>
+             <li><a href="../Equipment/LookupEquipment.php">Lookup Equipment</a></li>
+             <li><a href="../Equipment/DeleteEquipment.php">Delete Equipment</a></li>
+             <li><a href="../Equipment/UpdateEquipment.php">Update Equipment</a></li>
+           </ul>
+         </li>
+         <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Equipment Type<span class="caret"></span></a>
+           <ul class="dropdown-menu">
+             <li><a href="../EquipmentType/InsertEquipmentType.php">Insert EquipmentType</a></li>
+             <li><a href="../EquipmentType/LookupEquipmentType.php">Lookup Equipment Type</a></li>
+             <li><a href="../EquipmentType/DeleteEquipmentType.php">Delete Equipment Type</a></li>
+             <li><a href="../EquipmentType/UpdateEquipmentType.php">Update Equipment Type</a></li>
+           </ul>
+         </li>
+         <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Deploy<span class="caret"></span></a>
+           <ul class="dropdown-menu">
+             <li><a href="../Deploy/InsertDeploy.php">Insert Deploy</a></li>
+             <li><a href="../Deploy/LookupDeploy.php">Lookup Deploy</a></li>
+             <li><a href="../Deploy/DeleteDeploy.php">Delete Deploy</a></li>
+             <li><a href="../Deploy/UpdateDeploy.php">Update Deploy</a></li>
+           </ul>
+         </li>
        </ul>
      </div>
    </nav>

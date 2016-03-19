@@ -19,7 +19,12 @@ $NameE = $AbbE = $AddressE = $CountryE = $StateE = $ZipE = "";
 $Name = $Abb = $Address = $Country = $State = $Zip = "";
 $str = "";
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
+if ($_SERVER["REQUEST_METHOD"] == "POST") {//If post request was called
+  /*
+  if statement are use to check if the text field of the html are empty
+  if they are, set the error variables to display the error
+  else remove special header and set its to the variables
+  */
   if (empty($_POST["name"])) {
     $NameE = "Name is required";
   } else {
@@ -50,14 +55,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   } else {
     $Country = TrimText($_POST["country"]);
   }
-  // $Active = $_POST["active"];
 
-  #echo $Building . $Room . $Item_Name . $Item_Type .$Assest_Tag.$Service_Tag ;
+  //Check if the variable are empty, if they are that means that the html text-danger
+  //are empty, This check prevent sql statement from executing if Name, Abb, and CampusID
+  //are empty
   if($Name != "" && $Abb != "" && $Address != "" && $Country != "" && $State != "" && $Zip != ""){
+
     // Connection Data
-
     require '../Credential.php';
-
     $conn = new mysqli($servername, $username, $password, $dbname);
     // Check connection
     if ($conn->connect_error) {
@@ -74,9 +79,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     '".$State."',
     '".$Zip."')";
 
-
-    if ($conn->query($sql) === TRUE) {
+    // get result of the executed statement
+    if ($conn->query($sql) === TRUE) {//if success
+      //set result variable
       $str =  "New record created successfully";
+      //run python Script to update json in Script/Json folder
       exec('python ../Script/UpdateCampusJson.py');
     } else {
       $str = "Error : " . $sql . "<br>" . $conn->error;
@@ -84,6 +91,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   }
 }
 
+//remove special char to prevent sql injection
 function TrimText($data) {
   $data = trim($data);
   $data = stripslashes($data);
@@ -93,7 +101,7 @@ function TrimText($data) {
 ?>
 <meta charset="UTF-8">
 <div class="menu">
-  <?php include 'header.php'; ?>
+  <?php include 'header.php';  //load menu?>
   <br><br>
 </div>
 
@@ -152,16 +160,8 @@ function TrimText($data) {
         <?php echo "<p class='text-danger'>$CountryE</p>";?>
       </div>
     </div>
-    <!-- Active -->
-    <!-- <div class="form-group">
-      <label for="name" class="col-sm-2 control-label">Active</label>
-      <div class="col-sm-4">
-        <select name="active">
-          <option value="1">True</option>
-          <option value="0">False</option>
-        </select>
-      </div>
-    </div> -->
+
+    <!-- Sumbit Button -->
     <div class="form-group">
       <div class="col-sm-10 col-sm-offset-2">
         <input id="submit" name="submit" type="submit" value="Submit" class="btn btn-primary">
@@ -170,7 +170,7 @@ function TrimText($data) {
 
   </form>
   <?php
-  echo "<h1>" .  $str . "</h1>";
+  echo "<h1>" .  $str . "</h1>";//use to display result
   ?>
 
 

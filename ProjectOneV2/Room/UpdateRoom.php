@@ -12,29 +12,29 @@ $_Post - Someone is pushing (inserting/updating/deleting) data from your applica
 <?php
 
 // define variables and set to empty values
-$IdE = $NameE = $AbbE = $CampusIDE = $Altname= "";
-$Id = $Name = $Abb = $CampusID = "";
+$IdE = $RoomNumE = $BuildingIDE = $CampusIDE = "";
+$Id = $RoomNum = $type = $BuildingID = $CampusID = $Altname = "";
 $str = "";
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
+if ($_SERVER["REQUEST_METHOD"] == "POST") {//If post request was called
+  /* similar structure to Insert Building, with an extra field called id
+  if statement are use to check if the text field of the html are empty
+  if they are, set the error variables to display the error
+  else remove special header and set its to the variables
+  */
 
   if (empty($_POST["id"])) {
     $IdE = "ID is required";
   } else {
     $Id = TrimText($_POST["id"]);
   }
-  if (empty($_POST['name'])) {
-    $NameE = "Name is required";
+  if (empty($_POST['room'])) {
+    $RoomNumE = "Name is required";
   } else {
-    $Name = TrimText($_POST["name"]);
-  }
-  if (empty($_POST['abb'])) {
-    $AbbE = "Abb is required";
-  } else {
-    $Abb = TrimText($_POST["abb"]);
+    $RoomNum = TrimText($_POST["room"]);
   }
   if (empty($_POST['altname'])) {
-    $Altname = "";
+    $Altname = "";//Alt name doesnt have a error variables, so if it is empty, nothing will happen
   } else {
     $Altname = TrimText($_POST["altname"]);
   }
@@ -43,13 +43,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   }else {
     $CampusID = $_POST['ddcampusid'];
   }
-  // $Active = $_POST["active"];
-  #echo $Building . $Room . $Item_Name . $Item_Type .$Assest_Tag.$Service_Tag ;
-  if($Name != "" && $Abb != "" && $CampusID != ""){
+  if($_POST['ddbuildingid'] == ""){
+    $BuildingIDE = "Must Select an Campus";
+  }else {
+    $BuildingID = $_POST['ddbuildingid'];
+  }
+
+  //Check if the variable are empty, if they are that means that the html text-danger
+  //are empty, This check prevent sql statement from executing if Name, Abb, and CampusID
+  //are empty
+  if($RoomNum != "" && $BuildingID != "" && $CampusID != ""){
     // Connection Data
-
     require '../Credential.php';
-
     $conn = new mysqli($servername, $username, $password, $dbname);
     // Check connection
     if ($conn->connect_error) {
@@ -57,35 +62,41 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     $sql = "
-    UPDATE building SET
-    Name = '".$Name."',
-    Abb = '".$Abb."',
-    CampusID = '".$CampusID."',
-    AltName = '".$Altname."'
+    UPDATE room SET
+    RoomNumber = '".$RoomNum."',
+    AltName = '".$Altname."',
+    BuildingID = '".$BuildingID."',
+    CampusID = '".$CampusID."'
     WHERE
     id = ".$Id;
 
-    if ($conn->query($sql) === TRUE) {
+    // get result of the executed statement
+    if ($conn->query($sql) === TRUE) {//if success
+      //set result variable
       $str =  "Updated record created successfully";
     } else {
       $str = "Error : " . $sql . "<br>" . $conn->error;
     }
   }
 }
+//populate campus dropdown
 function listcampusDropdown(){
-  $str = file_get_contents('campus.json');
-  $json = json_decode($str,true);
-  foreach ($json as $value){
-     echo "<option value=\"".$value['id']."\">".$value['Name']."</option>";
+  require '../Credential.php';//load the path
+  $str = file_get_contents($JsonCampus); //load text from file
+  $json = json_decode($str,true);//decode to json var
+  foreach ($json as $value){//loop through json
+     echo "<option value=\"".$value['id']."\">".$value['Name']."</option>";//add option value to dropdown
   }
 }
+//remove special char to prevent sql injection
 function TrimText($data) {
   $data = trim($data);
   $data = stripslashes($data);
   $data = htmlspecialchars($data);
   return $data;
 }
-
+//Used for set the value of the html text from get request,
+//User doesnt have retype everything out
 function getPost($string){
   if( array_key_exists($string,$_GET)){
     echo replaceSpace($_GET[$string]);
@@ -94,6 +105,7 @@ function getPost($string){
     echo "";
   }
 }
+//replace % with space
 function replaceSpace($string){
   return str_replace("%"," ",$string);
 }
@@ -121,17 +133,17 @@ function replaceSpace($string){
     </div>
     <!-- Room Number -->
     <div class="form-group">
-      <label for="name" class="col-sm-2 control-label">Name</label>
+      <label for="name" class="col-sm-2 control-label">Room Number</label>
       <div class="col-sm-4">
-        <input type="text" class="form-control" id="room" name="room" placeholder="130" value="<?php  getPost("Name");?>">
-        <?php echo "<p class='text-danger'>$NameE</p>";?>
+        <input type="text" class="form-control" id="room" name="room" placeholder="130" value="<?php  getPost("Room");?>">
+        <?php echo "<p class='text-danger'>$RoomNumE</p>";?>
       </div>
     </div>
     <!-- Alt Name  -->
     <div class="form-group">
       <label for="name" class="col-sm-2 control-label">Alt Name</label>
       <div class="col-sm-4">
-        <input type="text" class="form-control" id="altname" name="altname" placeholder="300 Building" value="<?php  getPost("AltName");?>">
+        <input type="text" class="form-control" id="altname" name="altname" placeholder="Lecture Hall" value="<?php  getPost("Alt");?>">
       </div>
     </div>
     <!-- Campus Dropdown -->
@@ -140,7 +152,7 @@ function replaceSpace($string){
       <div class="col-sm-4">
         <select name="ddcampusid" onchange="configureDropDownLists(this,document.getElementById('ddbuildingid'))">
           <option value="">...</option>
-          <?php JsontoDropdown('../Script/JSON/campus.json');?>
+          <?php listcampusDropdown();?>
         </select>
         <?php echo "<p class='text-danger'>$CampusIDE</p>";?>
       </div>
@@ -156,6 +168,7 @@ function replaceSpace($string){
       </div>
     </div>
     <div class="form-group">
+      <!-- Submit Button -->
       <div class="col-sm-10 col-sm-offset-2">
         <input id="submit" name="submit" type="submit" value="Submit" class="btn btn-primary">
       </div>

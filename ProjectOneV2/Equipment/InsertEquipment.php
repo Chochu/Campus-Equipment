@@ -10,22 +10,29 @@ $_Post - Someone is pushing (inserting/updating/deleting) data from your applica
 .error {color: #FF0000;}
 </style>
 <?php
-
+/*
+INSERT INTO `nyit`.`equipmenttype`
+(`id`,
+`Make`,
+`Model`,
+`Type`,
+`Description`)
+*/
 // define variables and set to empty values
-$RoomNumE = $BuildingIDE = $CampusIDE = "";
-$RoomNum = $type = $BuildingID = $CampusID = $Altname = "";
+$MakeE = $ModelE = $TypeE = "";
+$Make = $Model = $Type = $Description = "";
 $str = "";
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {//If post request was called
-  /*
-  if statement are use to check if the text field of the html are empty
-  if they are, set the error variables to display the error
-  else remove special header and set its to the variables
-  */
-  if (empty($_POST['room'])) {
-    $RoomNumE = "Room Number is required";
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+  if (empty($_POST['make'])) {
+    $MakeE = "Make is required";
   } else {
-    $RoomNum = TrimText($_POST["room"]);
+    $MakeE = TrimText($_POST["make"]);
+  }
+  if (empty($_POST['type'])) {
+    $typeE = "Need";
+  } else {
+    $type = TrimText($_POST["type"]);
   }
   if (empty($_POST['altname'])) {
     $Altname = "";
@@ -43,13 +50,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {//If post request was called
     $BuildingID = $_POST['ddbuildingid'];
   }
 
-  //Check if the variable are empty, if they are that means that the html text-danger
-  //are empty, This check prevent sql statement from executing if Name, Abb, and CampusID
-  //are empty
+  #echo $Building . $Room . $Item_Name . $Item_Type .$Assest_Tag.$Service_Tag ;
   if($RoomNum != "" && $BuildingID != "" && $CampusID != ""){
-
     // Connection Data
+
     require '../Credential.php';
+
     $conn = new mysqli($servername, $username, $password, $dbname);
     // Check connection
     if ($conn->connect_error) {
@@ -64,35 +70,33 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {//If post request was called
     '".$BuildingID."',
     '".$CampusID."')";
 
-    // get result of the executed statement
-    if ($conn->query($sql) === TRUE) {//if success
-      //set result variable
+
+    if ($conn->query($sql) === TRUE) {
       $str =  "Updated record created successfully";
-      //run python Script to update json in Script/Json folder
     } else {
       $str = "Error : " . $sql . "<br>" . $conn->error;
     }
   }
 }
-//remove special char to prevent sql injection
+
 function TrimText($data) {
   $data = trim($data);
   $data = stripslashes($data);
   $data = htmlspecialchars($data);
   return $data;
 }
-//populate campus dropdown
+
 function JsontoDropdown($datapath){
-  $str = file_get_contents($datapath);//load text from file
-  $json = json_decode($str,true);//decode to json var
-  foreach ($json as $value){//loop through json
-    echo "<option value=\"".$value['id']."\">".$value['Name']."</option>";//add option value to dropdown
+  $str = file_get_contents($datapath);
+  $json = json_decode($str,true);
+  foreach ($json as $value){
+    echo "<option value=\"".$value['id']."\">".$value['Name']."</option>";
   }
 }
 ?>
 <meta charset="UTF-8">
 <div class="menu">
-  <?php include 'header.php'; //load menu?>
+  <?php include 'header.php'; ?>
   <br><br>
 </div>
 
@@ -122,9 +126,9 @@ function JsontoDropdown($datapath){
     <div class="form-group">
       <label for="name" class="col-sm-2 control-label">Campus</label>
       <div class="col-sm-4">
-        <select name="ddcampusid" onchange="configureDropDownLists(this,document.getElementById('ddbuildingid'))">
+        <select name="ddcampusid">
           <option value="">...</option>
-          <?php JsontoDropdown('../Script/JSON/campus.json');?>
+          <?php JsontoDropdown('../campus.json');?>
         </select>
         <?php echo "<p class='text-danger'>$CampusIDE</p>";?>
       </div>
@@ -133,13 +137,14 @@ function JsontoDropdown($datapath){
     <div class="form-group">
       <label for="name" class="col-sm-2 control-label">Building</label>
       <div class="col-sm-4">
-        <select name="ddbuildingid" id="ddbuildingid">
+        <select name="ddbuildingid">
           <option value="">...</option>
+          <?php JsontoDropdown('../building.json');?>
         </select>
         <?php echo "<p class='text-danger'>$CampusIDE</p>";?>
       </div>
     </div>
-    <!-- Sumbit Button -->
+
     <div class="form-group">
       <div class="col-sm-10 col-sm-offset-2">
         <input id="submit" name="submit" type="submit" value="Submit" class="btn btn-primary">
@@ -150,43 +155,7 @@ function JsontoDropdown($datapath){
   <?php
   echo "<h1>" .  $str . "</h1>";
   ?>
-  <script>
-  var BuildingArr = [];
-  $.ajax({ //http://stackoverflow.com/questions/7346563/loading-local-json-file
-    url: "../Script/JSON/building.json",
-    //force to handle it as text
-    dataType: "text",
-    success: function (dataTest) {
 
-      //data downloaded so we call parseJSON function
-      //and pass downloaded data
-      var Buildingjson = $.parseJSON(dataTest);
-      //now json variable contains data in json format
-      //let's display a few items
-      $.each(Buildingjson, function (i, jsonObjectList) {
-        //console.log(jsonObjectList['id']);
-        BuildingArr.push([jsonObjectList['id'],jsonObjectList['Name'],jsonObjectList['CampusID']]);
-      });
-    }
-  });
-
-
-  function configureDropDownLists(ddcampusid,ddbuildingid) {//Function called when dropdown value change
-    ddbuildingid.options.length = 0;
-    for (var arrayID in BuildingArr){
-      if (BuildingArr[arrayID][2] == ddcampusid.value){
-        createOption(ddbuildingid, BuildingArr[arrayID][1], BuildingArr[arrayID][0]);
-      }
-    }
-  }
-
-  function createOption(ddbuildingid, text, value) {//add option to dropdown
-    var opt = document.createElement('option');
-    opt.value = value;
-    opt.text = text;
-    ddbuildingid.options.add(opt);
-  }
-  </script>
 
 </body>
 </html>

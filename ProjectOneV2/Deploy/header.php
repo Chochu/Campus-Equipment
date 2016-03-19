@@ -46,10 +46,10 @@ echo'
          </li>
          <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Room<span class="caret"></span></a>
            <ul class="dropdown-menu">
-             <li><a href="InsertRoom.php">Insert Room</a></li>
-             <li><a href="LookupRoom.php">Lookup Room</a></li>
-             <li><a href="DeleteRoom.php">Delete Room</a></li>
-             <li><a href="UpdateRoom.php">Update Room</a></li>
+             <li><a href="../Room/InsertRoom.php">Insert Room</a></li>
+             <li><a href="../Room/LookupRoom.php">Lookup Room</a></li>
+             <li><a href="../Room/DeleteRoom.php">Delete Room</a></li>
+             <li><a href="../Room/UpdateRoom.php">Update Room</a></li>
            </ul>
          </li>
          <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Equipment<span class="caret"></span></a>
@@ -70,10 +70,10 @@ echo'
          </li>
          <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Deploy<span class="caret"></span></a>
            <ul class="dropdown-menu">
-             <li><a href="../Deploy/InsertDeploy.php">Insert Deploy</a></li>
-             <li><a href="../Deploy/LookupDeploy.php">Lookup Deploy</a></li>
-             <li><a href="../Deploy/DeleteDeploy.php">Delete Deploy</a></li>
-             <li><a href="../Deploy/UpdateDeploy.php">Update Deploy</a></li>
+             <li><a href="InsertDeploy.php">Insert Deploy</a></li>
+             <li><a href="LookupDeploy.php">Lookup Deploy</a></li>
+             <li><a href="DeleteDeploy.php">Delete Deploy</a></li>
+             <li><a href="UpdateDeploy.php">Update Deploy</a></li>
            </ul>
          </li>
        </ul>

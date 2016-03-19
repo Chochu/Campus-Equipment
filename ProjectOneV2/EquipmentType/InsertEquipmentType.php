@@ -3,6 +3,9 @@
 $_Get - Someone is requesting Data from your application
 $_Post - Someone is pushing (inserting/updating/deleting) data from your application
 */
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
 ?>
 <html>
 <head>
@@ -12,45 +15,36 @@ $_Post - Someone is pushing (inserting/updating/deleting) data from your applica
 <?php
 
 // define variables and set to empty values
-$NameE = $AbbE = $CampusIDE = $Altname= "";
-$Name = $Abb = $CampusID = "";
+$MakeE = $ModelE = $TypeE = "";
+$Make = $Model = $Type = $Description = "";
 $str = "";
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") { //If post request was called
+if ($_SERVER["REQUEST_METHOD"] == "POST") {//If post request was called
   /*
   if statement are use to check if the text field of the html are empty
   if they are, set the error variables to display the error
   else remove special header and set its to the variables
   */
-  if (empty($_POST['name'])) {
-    $NameE = "Name is required";
+  if (empty($_POST["make"])) {
+    $MakeE = "Make is required";
   } else {
-    $Name = TrimText($_POST["name"]);
+    $Make = TrimText($_POST["make"]);
   }
-
-  if (empty($_POST['abb'])) {
-    $AbbE = "Abb is required";
+  if (empty($_POST["model"])) {
+    $ModelE = "Model is required";
   } else {
-    $Abb = TrimText($_POST["abb"]);
+    $Model = TrimText($_POST["model"]);
   }
-
-  if (empty($_POST['altname'])) {
-    //Alt name doesnt have a error variables, so if it is empty, nothing will happen
-    $Altname = "";
+  if (empty($_POST["type"])) {
+    $TypeE = "Type is required";
   } else {
-    $Altname = TrimText($_POST["altname"]);
-  }
-
-  if($_POST['ddcampusid'] == ""){
-    $CampusIDE = "Must Select an Campus";
-  }else {
-    $CampusID = $_POST['ddcampusid'];
+    $Type = TrimText($_POST["type"]);
   }
 
   //Check if the variable are empty, if they are that means that the html text-danger
   //are empty, This check prevent sql statement from executing if Name, Abb, and CampusID
   //are empty
-  if($Name != "" && $Abb != "" && $CampusID != ""){
+  if($Make != "" && $Model != "" && $Type != ""){
 
     // Connection Data
     require '../Credential.php';
@@ -61,19 +55,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") { //If post request was called
     }
 
     $sql = "
-    INSERT INTO building(Name, Abb, CampusID, AltName)
+    INSERT INTO equipmenttype(Make, Model, Type, Description)
     VALUES
-    ('".$Name."',
-    '".$Abb."',
-    '".$CampusID."',
-    '".$Altname."')";
+    ('".$Make."',
+    '".$Model."',
+    '".$Type."',
+    '".$Description."')";
 
     // get result of the executed statement
-    if ($conn->query($sql) === TRUE) { //if success
+    if ($conn->query($sql) === TRUE) {//if success
       //set result variable
-      $str =  "Updated record created successfully";
+      $str =  "New record created successfully";
       //run python Script to update json in Script/Json folder
-      exec('python ../Script/UpdateBuildingJson.py');
+      exec('python ../Script/UpdateCampusJson.py');
     } else {
       $str = "Error : " . $sql . "<br>" . $conn->error;
     }
@@ -87,65 +81,53 @@ function TrimText($data) {
   $data = htmlspecialchars($data);
   return $data;
 }
-
-//populate campus dropdown
-function listcampusDropdown(){
-  require '../Credential.php'; //load the path
-  $str = file_get_contents($JsonCampus); //load text from file
-  $json = json_decode($str,true);//decode to json var
-  foreach ($json as $value){//loop through json
-    echo "<option value=\"".$value['id']."\">".$value['Name']."</option>"; //add option value to dropdown
-  }
-}
 ?>
-
+<meta charset="UTF-8">
 <div class="menu">
-  <?php include 'header.php'; //load menu
-  ?>
+  <?php include 'header.php';  //load menu?>
   <br><br>
 </div>
 
 </head>
 <body>
 
-  <h2>Insert to Building Database</h2>
+  <h2>Insert to Campus Database</h2>
   <p><span class="error">* required field.</span></p>
 
   <form class="form-horizontal" role="form" method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
-    <!-- Name -->
+    <!-- Make -->
     <div class="form-group">
       <label for="name" class="col-sm-2 control-label">Name</label>
       <div class="col-sm-4">
-        <input type="text" class="form-control" id="name" name="name" placeholder="Anna Rubin" value="<?php echo $Name;?>">
+        <input type="text" class="form-control" id="name" name="name" placeholder="Old Westbury" value="<?php echo $Name;?>">
         <?php echo "<p class='text-danger'>$NameE</p>";?>
       </div>
     </div>
-    <!-- Abb -->
+    <!-- Model -->
     <div class="form-group">
       <label for="name" class="col-sm-2 control-label">Abb</label>
       <div class="col-sm-4">
-        <input type="text" class="form-control" id="abb" name="abb" placeholder="AARH" value="<?php echo $Abb;?>">
+        <input type="text" class="form-control" id="abb" name="abb" placeholder="OW" value="<?php echo $Abb;?>">
         <?php echo "<p class='text-danger'>$AbbE</p>";?>
       </div>
     </div>
-    <!-- Altname  -->
+    <!-- Type  -->
     <div class="form-group">
-      <label for="name" class="col-sm-2 control-label">Alt Name</label>
+      <label for="name" class="col-sm-2 control-label">Address</label>
       <div class="col-sm-4">
-        <input type="text" class="form-control" id="altname" name="altname" placeholder="300 Building" value="<?php echo $Altname;?>">
+        <input type="text" class="form-control" id="address" name="address" placeholder="Northern Blvd, Old Westbury" value="<?php echo $Address;?>">
+        <?php echo "<p class='text-danger'>$AddressE</p>";?>
       </div>
     </div>
-    <!-- Campus Dropdown -->
+    <!-- Description -->
     <div class="form-group">
-      <label for="name" class="col-sm-2 control-label">Campus</label>
+      <label for="name" class="col-sm-2 control-label">State</label>
       <div class="col-sm-4">
-        <select name="ddcampusid">
-          <option value="">...</option>
-          <?php listcampusDropdown();?>
-        </select>
-        <?php echo "<p class='text-danger'>$CampusIDE</p>";?>
+        <input type="text" class="form-control" id="state" name="state"  placeholder="NY" value="<?php echo $State;?>">
+        <?php echo "<p class='text-danger'>$StateE</p>";?>
       </div>
     </div>
+    
     <!-- Sumbit Button -->
     <div class="form-group">
       <div class="col-sm-10 col-sm-offset-2">
@@ -155,7 +137,7 @@ function listcampusDropdown(){
 
   </form>
   <?php
-  echo "<h1>" .  $str . "</h1>"; //use to display result
+  echo "<h1>" .  $str . "</h1>";//use to display result
   ?>
 
 
