@@ -1,67 +1,109 @@
-<?php
-/*
-$_Get - Someone is requesting Data from your application
-$_Post - Someone is pushing (inserting/updating/deleting) data from your application
-*/
-include 'header.php';
-function JsontoDropdown($datapath){
-  $str = file_get_contents($datapath);
-  $json = json_decode($str,true);
-  foreach ($json as $value){
-    echo "<option value=\"".$value['id']."\">".$value['Name']."</option>";
-  }
-}
-
-?>
 <html>
+<head>
+  <?php include 'header.php';
+  ?>
+  <link rel="stylesheet" type="text/css" href="style.css">
+</head>
 <body>
-  <select id="ddl" onchange="configureDropDownLists(this,document.getElementById('ddl2'))">
-    <option value=""></option>
-    <?php JsontoDropdown('ProjectOneV2/Script/JSON/campus.json');?>
-  </select>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6 col-md-offset-3">
+        <div class="panel panel-login">
 
-  <select id="ddl2">
-  </select>
+          <!-- Tab [login][Register] -->
+          <div class="panel-heading">
+            <div class="row">
+              <div class="col-xs-6">
+                <a href="#" class="active" id="login-form-link">Login</a>
+              </div>
+              <div class="col-xs-6">
+                <a href="#" id="register-form-link">Register</a>
+              </div>
+            </div>
+            <hr>
+          </div>
 
+          <div class="panel-body">
+            <div class="row">
+              <div class="col-lg-12">
+
+                <!-- login-form -->
+                <form id="login-form" action="login.php" method="post" role="form" style="display: block;" onsubmit="return validatelogin()">
+
+                  <div class="form-group">
+                    <input type="text" name="username" id="username" tabindex="1" class="form-control" placeholder="Username" value="" required>
+                  </div>
+
+                  <div class="form-group">
+                    <input type="password" name="password" id="password" tabindex="2" class="form-control" placeholder="Password" required>
+                  </div>
+
+                  <div class="form-group">
+                    <div class="row">
+                      <div class="col-sm-6 col-sm-offset-3">
+                        <input type="submit" name="login-submit" id="login-submit" tabindex="4" class="form-control btn btn-login" value="Log In">
+                      </div>
+                    </div>
+                  </div>
+                </form>
+
+                <!-- register-form -->
+                <form id="register-form" action="register.php" method="post" role="form" style="display: none;" onsubmit="return validateregister()">
+
+                  <div class="form-group">
+                    <input type="text" name="username" id="username" tabindex="1" class="form-control" placeholder="Username" value="" required>
+                  </div>
+
+                  <div class="form-group">
+                    <input type="password" name="password" id="password" tabindex="2" class="form-control" placeholder="Password" required>
+                  </div>
+
+                  <div class="form-group">
+                    <input type="password" name="confirm-password" id="confirm-password" tabindex="2" class="form-control" placeholder="Confirm Password" required>
+                  </div>
+
+                  <div class="form-group">
+                    <div class="row">
+                      <div class="col-sm-6 col-sm-offset-3">
+                        <input type="submit" name="register-submit" id="register-submit" tabindex="4" class="form-control btn btn-register" value="Register Now">
+                      </div>
+                    </div>
+                  </div>
+                </form>
+                <?php
+                if(array_key_exists('msg',$_GET)){
+                  if ($_GET['msg'])
+                  {
+                    echo '<div class="success_message">' . base64_decode(urldecode($_GET['msg'])) . '</div>';
+                  }
+                }
+                ?>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
   <script>
-  var gBuildingjson;
-  var BuildingArr = [];
-  $.ajax({ //http://stackoverflow.com/questions/7346563/loading-local-json-file
-         url: "ProjectOneV2/Script/JSON/building.json",
-             //force to handle it as text
-         dataType: "text",
-              success: function (dataTest) {
-
-                  //data downloaded so we call parseJSON function
-                  //and pass downloaded data
-                  var Buildingjson = $.parseJSON(dataTest);
-                  gBuildingjson = Buildingjson;
-                  //now json variable contains data in json format
-                  //let's display a few items
-                  $.each(Buildingjson, function (i, jsonObjectList) {
-                    //console.log(jsonObjectList['id']);
-                    BuildingArr.push([jsonObjectList['id'],jsonObjectList['Name'],jsonObjectList['CampusID']]);
-                   });
-               }
+  $(function() {
+    $('#login-form-link').click(function(e) {
+      $("#login-form").delay(100).fadeIn(100);
+      $("#register-form").fadeOut(100);
+      $('#register-form-link').removeClass('active');
+      $(this).addClass('active');
+      e.preventDefault();
     });
-
-
-  function configureDropDownLists(ddl1,ddl2) {
-    ddl2.options.length = 0;
-    for (var arrayID in BuildingArr){
-      if (BuildingArr[arrayID][2] == ddl1.value){
-        createOption(ddl2, BuildingArr[arrayID][1], BuildingArr[arrayID][0]);
-      }
-    }
+    $('#register-form-link').click(function(e) {
+      $("#register-form").delay(100).fadeIn(100);
+      $("#login-form").fadeOut(100);
+      $('#login-form-link').removeClass('active');
+      $(this).addClass('active');
+      e.preventDefault();
+    });
   }
+);
 
-  function createOption(ddl, text, value) {
-    var opt = document.createElement('option');
-    opt.value = value;
-    opt.text = text;
-    ddl.options.add(opt);
-  }
-  </script>
-
+</script>
 </body>
 </html>

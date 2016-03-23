@@ -41,6 +41,8 @@ function deleteRow(){
   if ($conn->query($sql) === TRUE) {//if success
     //set result variable
     $result =  "Successfully deleted Room ID: " .$id ;
+    //run python Script to update json in Script/Json folder
+    exec('python ../Script/UpdateRoomJson.py');
   } else {
     $result = "Error : " . $sql . "<br>" . $conn->error;
   }

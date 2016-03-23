@@ -10,48 +10,32 @@ $_Post - Someone is pushing (inserting/updating/deleting) data from your applica
 .error {color: #FF0000;}
 </style>
 <?php
-/*
-INSERT INTO `nyit`.`equipmenttype`
-(`id`,
-`Make`,
-`Model`,
-`Type`,
-`Description`)
-*/
+
 // define variables and set to empty values
-$MakeE = $ModelE = $TypeE = "";
-$Make = $Model = $Type = $Description = "";
+$EquipmentTypeIDE = $NameE = $ActiveE= "";
+$Name = $EquipmentTypeID = $Asset = $Serial = $Active =  "";
 $str = "";
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-  if (empty($_POST['make'])) {
-    $MakeE = "Make is required";
+  if (empty($_POST['EquipID'])) {
+    $EquipmentTypeIDE = "Equipment Type ID is required";
   } else {
-    $MakeE = TrimText($_POST["make"]);
+    $EquipmentTypeID = TrimText($_POST["EquipID"]);
   }
-  if (empty($_POST['type'])) {
-    $typeE = "Need";
+  if (empty($_POST['name'])) {
+    $NameE = "Equipment Type ID is required";
   } else {
-    $type = TrimText($_POST["type"]);
+    $Name = TrimText($_POST["name"]);
   }
-  if (empty($_POST['altname'])) {
-    $Altname = "";
+  if (empty($_POST['active'])) {
+    $ActiveE = "Please pick one";
   } else {
-    $Altname = TrimText($_POST["altname"]);
+    $Active = TrimText($_POST["active"]);
   }
-  if($_POST['ddcampusid'] == ""){
-    $CampusIDE = "Must Select an Campus";
-  }else {
-    $CampusID = $_POST['ddcampusid'];
-  }
-  if($_POST['ddbuildingid'] == ""){
-    $BuildingIDE = "Must Select an Campus";
-  }else {
-    $BuildingID = $_POST['ddbuildingid'];
-  }
+  $Asset =TrimText($_POST["Asset"]);
+  $Serial = TrimText($_POST["Serial"]);
 
-  #echo $Building . $Room . $Item_Name . $Item_Type .$Assest_Tag.$Service_Tag ;
-  if($RoomNum != "" && $BuildingID != "" && $CampusID != ""){
+  if($EquipmentTypeID != ""){
     // Connection Data
 
     require '../Credential.php';
@@ -63,12 +47,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     $sql = "
-    INSERT INTO room(RoomNumber, AltName, BuildingID, CampusID)
+    INSERT INTO equipment(Name, equipmenttype, Asset, Serial, Active)
     VALUES
-    ('".$RoomNum."',
-    '".$Altname."',
-    '".$BuildingID."',
-    '".$CampusID."')";
+    ('".$Name."',
+    '".$EquipmentTypeID."',
+    '".$Asset."',
+    '".$Serial."',
+    '".$Active."')";
 
 
     if ($conn->query($sql) === TRUE) {
@@ -90,7 +75,7 @@ function JsontoDropdown($datapath){
   $str = file_get_contents($datapath);
   $json = json_decode($str,true);
   foreach ($json as $value){
-    echo "<option value=\"".$value['id']."\">".$value['Name']."</option>";
+    echo "<option value=\"".$value['id']."\">".$value['Make']. " " .$value['Model']."</option>";
   }
 }
 ?>
@@ -103,48 +88,51 @@ function JsontoDropdown($datapath){
 </head>
 <body>
 
-  <h2>Insert to Room Database</h2>
+  <h2>Insert to Equipment Database</h2>
   <p><span class="error">* required field.</span></p>
 
   <form class="form-horizontal" role="form" method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
     <!-- Name -->
     <div class="form-group">
-      <label for="name" class="col-sm-2 control-label">Room Number</label>
+      <label for="name" class="col-sm-2 control-label">Name</label>
       <div class="col-sm-4">
-        <input type="text" class="form-control" id="room" name="room" placeholder="130" value="<?php echo $RoomNum;?>">
-        <?php echo "<p class='text-danger'>$RoomNumE</p>";?>
+        <input type="text" class="form-control" id="name" name="name" value="<?php echo $Name;?>">
+        <?php echo "<p class='text-danger'>$NameE</p>";?>
       </div>
     </div>
-    <!-- Altname  -->
+    <!-- Equip Type Dropdown -->
     <div class="form-group">
-      <label for="name" class="col-sm-2 control-label">Alt Name</label>
+      <label for="name" class="col-sm-2 control-label">Equip Type</label>
       <div class="col-sm-4">
-        <input type="text" class="form-control" id="altname" name="altname" placeholder="Lecture Hall" value="<?php echo $Altname;?>">
-      </div>
-    </div>
-    <!-- Campus Dropdown -->
-    <div class="form-group">
-      <label for="name" class="col-sm-2 control-label">Campus</label>
-      <div class="col-sm-4">
-        <select name="ddcampusid">
+        <select name="EquipID">
           <option value="">...</option>
-          <?php JsontoDropdown('../campus.json');?>
+          <?php JsontoDropdown('../Script/JSON/EquipType.json');?>
         </select>
-        <?php echo "<p class='text-danger'>$CampusIDE</p>";?>
+        <?php echo "<p class='text-danger'>$NameE</p>";?>
       </div>
     </div>
-    <!-- Building Dropdown -->
+    <!-- Asset -->
     <div class="form-group">
-      <label for="name" class="col-sm-2 control-label">Building</label>
+      <label for="name" class="col-sm-2 control-label">Asset</label>
       <div class="col-sm-4">
-        <select name="ddbuildingid">
-          <option value="">...</option>
-          <?php JsontoDropdown('../building.json');?>
-        </select>
-        <?php echo "<p class='text-danger'>$CampusIDE</p>";?>
+        <input type="text" class="form-control" id="Asset" name="Asset" value="<?php echo $Asset;?>">
       </div>
     </div>
-
+    <!-- Serial -->
+    <div class="form-group">
+      <label for="name" class="col-sm-2 control-label">Serial</label>
+      <div class="col-sm-4">
+        <input type="text" class="form-control" id="Serial" name="Serial" value="<?php echo $Serial;?>">
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="name" class="col-sm-2 control-label">Active</label>
+      <div class="col-sm-4">
+        <input type="radio" name="active" value="1"> Yes
+        <input type="radio" name="active" value="0"> No
+        <?php echo "<p class='text-danger'>$ActiveE</p>";?>
+      </div>
+    </div>
     <div class="form-group">
       <div class="col-sm-10 col-sm-offset-2">
         <input id="submit" name="submit" type="submit" value="Submit" class="btn btn-primary">

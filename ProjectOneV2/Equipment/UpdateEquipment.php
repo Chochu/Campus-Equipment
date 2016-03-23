@@ -12,41 +12,31 @@ $_Post - Someone is pushing (inserting/updating/deleting) data from your applica
 <?php
 
 // define variables and set to empty values
-$IdE = $NameE = $AbbE = $CampusIDE = $Altname= "";
-$Id = $Name = $Abb = $CampusID = "";
+$IdE = $EquipmentTypeIDE = $NameE = $ActiveE= "";
+$Id =  $EquipmentTypeID = $Asset = $Serial = $Active =  "";
 $str = "";
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
-  if (empty($_POST["id"])) {
-    $IdE = "ID is required";
+  if (empty($_POST['EquipID'])) {
+    $EquipmentTypeIDE = "Equipment Type ID is required";
   } else {
-    $Id = TrimText($_POST["id"]);
+    $EquipmentTypeID = TrimText($_POST["EquipID"]);
   }
   if (empty($_POST['name'])) {
-    $NameE = "Name is required";
+    $NameE = "Equipment Type ID is required";
   } else {
     $Name = TrimText($_POST["name"]);
   }
-  if (empty($_POST['abb'])) {
-    $AbbE = "Abb is required";
+  if (empty($_POST['active'])) {
+    $ActiveE = "Please pick one";
   } else {
-    $Abb = TrimText($_POST["abb"]);
+    $Active = TrimText($_POST["active"]);
   }
-  if (empty($_POST['altname'])) {
-    $Altname = "";
-  } else {
-    $Altname = TrimText($_POST["altname"]);
-  }
-  if($_POST['ddcampusid'] == ""){
-    $CampusIDE = "Must Select an Campus";
-  }else {
-    $CampusID = $_POST['ddcampusid'];
-  }
-  // $Active = $_POST["active"];
-  #echo $Building . $Room . $Item_Name . $Item_Type .$Assest_Tag.$Service_Tag ;
-  if($Name != "" && $Abb != "" && $CampusID != ""){
-    // Connection Data
+  $Asset =TrimText($_POST["Asset"]);
+  $Serial = TrimText($_POST["Serial"]);
+
+  if($EquipmentTypeID != ""){
 
     require '../Credential.php';
 
@@ -57,11 +47,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     $sql = "
-    UPDATE building SET
+    UPDATE equipment SET
     Name = '".$Name."',
-    Abb = '".$Abb."',
-    CampusID = '".$CampusID."',
-    AltName = '".$Altname."'
+    equipmenttype = '".$EquipmentTypeID."',
+    Asset = '".$Asset."',
+    Serial = '".$Serial."',
+    Active = '".$Active."'
     WHERE
     id = ".$Id;
 
@@ -71,12 +62,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       $str = "Error : " . $sql . "<br>" . $conn->error;
     }
   }
+
 }
 function listcampusDropdown(){
   $str = file_get_contents('campus.json');
   $json = json_decode($str,true);
   foreach ($json as $value){
-     echo "<option value=\"".$value['id']."\">".$value['Name']."</option>";
+    echo "<option value=\"".$value['id']."\">".$value['Name']."</option>";
   }
 }
 function TrimText($data) {
@@ -94,6 +86,13 @@ function getPost($string){
     echo "";
   }
 }
+function JsontoDropdown($datapath){
+  $str = file_get_contents($datapath);
+  $json = json_decode($str,true);
+  foreach ($json as $value){
+    echo "<option value=\"".$value['id']."\">".$value['Make']. " " .$value['Model']."</option>";
+  }
+}
 function replaceSpace($string){
   return str_replace("%"," ",$string);
 }
@@ -107,7 +106,7 @@ function replaceSpace($string){
 </head>
 <body>
 
-  <h2>Update Building id: <?php getPost("id"); ?></h2>
+  <h2>Update Equipement id: <?php getPost("id"); ?></h2>
   <p><span class="error">* required field.</span></p>
 
   <form class="form-horizontal" role="form" method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
@@ -123,33 +122,41 @@ function replaceSpace($string){
     <div class="form-group">
       <label for="name" class="col-sm-2 control-label">Name</label>
       <div class="col-sm-4">
-        <input type="text" class="form-control" id="name" name="name" placeholder="Anna Rubin" value="<?php  getPost("Name");?>">
+        <input type="text" class="form-control" id="name" name="name" value="<?php  getPost("Name");?>">
         <?php echo "<p class='text-danger'>$NameE</p>";?>
       </div>
     </div>
-    <!-- Abb -->
+    <!-- Equip Type Dropdown -->
     <div class="form-group">
-      <label for="name" class="col-sm-2 control-label">Abb</label>
+      <label for="name" class="col-sm-2 control-label">Equip Type</label>
       <div class="col-sm-4">
-        <input type="text" class="form-control" id="abb" name="abb" placeholder="AARH" value="<?php  getPost("Abb");?>">
-        <?php echo "<p class='text-danger'>$AbbE</p>";?>
-      </div>
-    </div>
-    <!-- Alt Name  -->
-    <div class="form-group">
-      <label for="name" class="col-sm-2 control-label">Alt Name</label>
-      <div class="col-sm-4">
-        <input type="text" class="form-control" id="altname" name="altname" placeholder="300 Building" value="<?php  getPost("AltName");?>">
-      </div>
-    </div>
-    <!-- Drop Down -->
-    <div class="form-group">
-      <label for="name" class="col-sm-2 control-label">Campus</label>
-      <div class="col-sm-4">
-        <select name="ddcampusid">
+        <select name="EquipID">
           <option value="">...</option>
-          <?php listcampusDropdown();?>
+          <?php JsontoDropdown('../Script/JSON/EquipType.json');?>
         </select>
+        <?php echo "<p class='text-danger'>$NameE</p>";?>
+      </div>
+    </div>
+    <!-- Asset -->
+    <div class="form-group">
+      <label for="name" class="col-sm-2 control-label">Asset</label>
+      <div class="col-sm-4">
+        <input type="text" class="form-control" id="Asset" name="Asset" value="<?php  getPost("Asset");?>">
+      </div>
+    </div>
+    <!-- Serial -->
+    <div class="form-group">
+      <label for="name" class="col-sm-2 control-label">Serial</label>
+      <div class="col-sm-4">
+        <input type="text" class="form-control" id="Serial" name="Serial" value="<?php getPost("Serial");?>">
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="name" class="col-sm-2 control-label">Active</label>
+      <div class="col-sm-4">
+        <input type="radio" name="active" value="1"> Yes
+        <input type="radio" name="active" value="0"> No
+        <?php echo "<p class='text-danger'>$ActiveE</p>";?>
       </div>
     </div>
     <div class="form-group">

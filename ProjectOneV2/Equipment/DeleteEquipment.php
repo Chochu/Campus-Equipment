@@ -15,13 +15,13 @@ if($_SERVER["REQUEST_METHOD"] == "POST" )
   }
   if($id != ""){
     global $sql;
-    $sql = "DELETE FROM room WHERE id=" . $_POST['id'] .";";
+    $sql = "DELETE FROM equipment WHERE id=" . $_POST['id'] .";";
   }
   deleteRow();
 }
 if( array_key_exists('id',$_GET)){
   $id = $_GET['id'];
-  $sql = "DELETE FROM room WHERE id=" . $_GET['id']. ";";
+  $sql = "DELETE FROM equipment WHERE id=" . $_GET['id']. ";";
   deleteRow();
 }
 function deleteRow(){
@@ -36,7 +36,7 @@ function deleteRow(){
   }
 
   if ($conn->query($sql) === TRUE) {
-    $result =  "Successfully deleted Room ID: " .$id ;
+    $result =  "Successfully deleted equipment ID: " .$id ;
   } else {
     $result = "Error : " . $sql . "<br>" . $conn->error;
   }
@@ -63,7 +63,7 @@ function TrimText($data) {
 
 </head>
 <body>
-  <h2>Delete Room</h2>
+  <h2>Delete Equipment</h2>
   <form class="form-horizontal" role="form" method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
     <div class="form-group">
       <label for="name" class="col-sm-2 control-label">ID</label>

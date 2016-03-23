@@ -74,6 +74,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {//If post request was called
     if ($conn->query($sql) === TRUE) {//if success
       //set result variable
       $str =  "Updated record created successfully";
+      //run python Script to update json in Script/Json folder
+      exec('python ../Script/UpdateRoomJson.py');
     } else {
       $str = "Error : " . $sql . "<br>" . $conn->error;
     }

@@ -27,7 +27,7 @@ echo'
          <a class="navbar-brand" href="#">NYIT</a>
        </div>
        <ul class="nav navbar-nav">
-         <li class="active"><a href="../header.php">Home</a></li>
+         <li class="active"><a href="#">Home</a></li>
          <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Campus<span class="caret"></span></a>
            <ul class="dropdown-menu">
              <li><a href="Campus/InsertCampus.php">Insert Campus</a></li>
@@ -50,6 +50,30 @@ echo'
              <li><a href="Room/LookupRoom.php">Lookup Room</a></li>
              <li><a href="Room/DeleteRoom.php">Delete Room</a></li>
              <li><a href="Room/UpdateRoom.php">Update Room</a></li>
+           </ul>
+         </li>
+         <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Equipment<span class="caret"></span></a>
+           <ul class="dropdown-menu">
+             <li><a href=".Equipment/InsertEquipment.php">Insert Equipment</a></li>
+             <li><a href=".Equipment/LookupEquipment.php">Lookup Equipment</a></li>
+             <li><a href=".Equipment/DeleteEquipment.php">Delete Equipment</a></li>
+             <li><a href="Equipment/UpdateEquipment.php">Update Equipment</a></li>
+           </ul>
+         </li>
+         <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Equipment Type<span class="caret"></span></a>
+           <ul class="dropdown-menu">
+             <li><a href="EquipmentType/InsertEquipmentType.php">Insert EquipmentType</a></li>
+             <li><a href="EquipmentType/LookupEquipmentType.php">Lookup Equipment Type</a></li>
+             <li><a href="EquipmentType/DeleteEquipmentType.php">Delete Equipment Type</a></li>
+             <li><a href="EquipmentType/UpdateEquipmentType.php">Update Equipment Type</a></li>
+           </ul>
+         </li>
+         <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Deploy<span class="caret"></span></a>
+           <ul class="dropdown-menu">
+             <li><a href="Deploy/Deploy.php">Deploy</a></li>
+             <li><a href="Deploy/Lookup.php">Lookup</a></li>
+             <li><a href="Deploy/Retired.php">Retired</a></li>
+             <li><a href="Deploy/Move.php">Move</a></li>
            </ul>
          </li>
        </ul>

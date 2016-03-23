@@ -70,10 +70,10 @@ echo'
          </li>
          <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Deploy<span class="caret"></span></a>
            <ul class="dropdown-menu">
-             <li><a href="../Deploy/InsertDeploy.php">Insert Deploy</a></li>
-             <li><a href="../Deploy/LookupDeploy.php">Lookup Deploy</a></li>
-             <li><a href="../Deploy/DeleteDeploy.php">Delete Deploy</a></li>
-             <li><a href="../Deploy/UpdateDeploy.php">Update Deploy</a></li>
+             <li><a href="../Deploy/Deploy.php">Deploy</a></li>
+             <li><a href="../Deploy/Lookup.php">Lookup</a></li>
+             <li><a href="../Deploy/Retired.php">Retired</a></li>
+             <li><a href="../Deploy/Move.php">Move</a></li>
            </ul>
          </li>
        </ul>

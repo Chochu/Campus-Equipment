@@ -3,13 +3,13 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
-$sql = "SELECT * FROM campus";//sql statement
+$sql = "SELECT * FROM equipmenttype";//sql statement
 
 //If post request was called, (use when search method is called)
 if($_SERVER["REQUEST_METHOD"] == "POST" )
 {
   global $sql;
-  $sql = "SELECT * FROM campus WHERE " . $_POST['key'] . " LIKE '". $_POST['keyword'] . "';";
+  $sql = "SELECT * FROM equipmenttype WHERE " . $_POST['key'] . " LIKE '". $_POST['keyword'] . "';";
 
 }
 
@@ -30,7 +30,7 @@ function populateTable(){
     //check if there is get method
   if( array_key_exists('key',$_GET) && array_key_exists('query',$_GET)){
       //if there's set sql to get
-    $sql = "SELECT * FROM campus WHERE " . $_GET['key'] . " LIKE '". $_GET['query'] . "';";
+    $sql = "SELECT * FROM equipmenttype WHERE " . $_GET['key'] . " LIKE '". $_GET['query'] . "';";
   }
 
   //execute sql
@@ -40,23 +40,19 @@ function populateTable(){
     // output data of each row
     while($row = $result->fetch_assoc()) {
       $id = $row["id"];
-      $Name = $row["Name"];
-      $Abb = $row["Abb"];
-      $Address =$row["Address"];
-      $State = $row["State"];
-      $Zip = $row["Zip"];
-      $Country = $row["Country"];
+      $Make = $row["Make"];
+      $Model = $row["Model"];
+      $Type =$row["Type"];
+      $Description = $row["Description"];
       // set html format row
       echo "<tr>
       <td>".$id."</td>
-      <td>".$Name."</td>
-      <td>".$Abb."</td>
-      <td>".$Address."</td>
-      <td>".$State."</td>
-      <td>".$Zip."</td>
-      <td>".$Country."</td>
-      <td><a href = DeleteCampus.php?id=".$id." onclick=\"return confirm('Are you sure to delete Campus in id: ".$id."');\"> Delete </a> &nbsp</td>
-      <td><a href = UpdateCampus.php?id=".replaceSpace($id)."&Name=".replaceSpace($Name)."&Abb=".replaceSpace($Abb)."&Address=".replaceSpace($Address)."&State=".replaceSpace($State)."&Zip=".replaceSpace($Zip)."&Country=".replaceSpace($Country)."> Update </a> &nbsp</td>
+      <td>".$Make."</td>
+      <td>".$Model."</td>
+      <td>".$Type."</td>
+      <td>".$Description."</td>
+      <td><a href = DeleteEquipmentType.php?id=".$id." onclick=\"return confirm('Are you sure to delete Equipment type in id: ".$id."');\"> Delete </a> &nbsp</td>
+      <td><a href = UpdateEquipmentType.php?id=".replaceSpace($id)."&Make=".replaceSpace($Make)."&Model=".replaceSpace($Model)."&Type=".replaceSpace($Type)."&Description=".replaceSpace($id)."> Update </a> &nbsp</td>
       </tr>";
     }
   }
@@ -77,12 +73,9 @@ function populateTable(){
     <p>
       Search
       <select name="key">
-        <option value="Name">Name</option>
-        <option value="Abb">Abb</option>
-        <option value="Address">Address</option>
-        <option value="State">State</option>
-        <option value="Zip">Zip</option>
-        <option value="Country">Country</option>
+        <option value="Make">Make</option>
+        <option value="Model">Model</option>
+        <option value="Type">Type</option>
       </select>
       Keyword: <input type="text" name="keyword">
       <input type="submit" name="submit" value="Submit">
@@ -101,15 +94,13 @@ function populateTable(){
               <thead>
                 <tr>
                   <th>ID</th>
-                  <th>Name</th>
-                  <th>Abb</th>
-                  <th>Address</th>
-                  <th>State</th>
-                  <th>Zip</th>
-                  <th>Country</th>
+                  <th>Make</th>
+                  <th>Model</th>
+                  <th>Type</th>
+                  <th>Description</th>
                   <th>Delete</th>
                   <th>Update</th>
-                </tr>
+              </tr>
               </thead>
               <tbody>
                 <?php

@@ -24,13 +24,13 @@ if($_SERVER["REQUEST_METHOD"] == "POST" )
 
   if($id != ""){//if $id is not empty
     global $sql;
-    $sql = "DELETE FROM Campus WHERE id=" . $_POST['id'] .";"; //set sql command
+    $sql = "DELETE FROM equipmenttype WHERE id=" . $_POST['id'] .";"; //set sql command
   }
   deleteRow(); //execute the code
 }
 if( array_key_exists('id',$_GET)){ //if the method is get
   $id = $_GET['id']; //set id
-  $sql = "DELETE FROM Campus WHERE id=" . $_GET['id']. ";"; //set sql command
+  $sql = "DELETE FROM equipmenttype WHERE id=" . $_GET['id']. ";"; //set sql command
   deleteRow(); //execute code
 }
 function deleteRow(){
@@ -46,9 +46,9 @@ function deleteRow(){
 
   if ($conn->query($sql) === TRUE) { //if success
     //set result variable
-    $result =  "Successfully deleted Campus ID: " .$id ;
+    $result =  "Successfully deleted Equipment type ID: " .$id ;
     //run python Script to update json in Script/Json folder
-    exec('python ../Script/UpdateCampusJson.py');
+    exec('python ../Script/UpdateEquipTypeJson.py');
   } else {
     $result = "Error : " . $sql . "<br>" . $conn->error;
   }
@@ -75,7 +75,7 @@ function TrimText($data) { //remove special character
 
 </head>
 <body>
-  <h2>Delete Campus</h2>
+  <h2>Delete Equipment Type</h2>
 <!-- id -->
   <form class="form-horizontal" role="form" method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
     <div class="form-group">

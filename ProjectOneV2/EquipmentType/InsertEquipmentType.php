@@ -41,6 +41,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {//If post request was called
     $Type = TrimText($_POST["type"]);
   }
 
+
   //Check if the variable are empty, if they are that means that the html text-danger
   //are empty, This check prevent sql statement from executing if Name, Abb, and CampusID
   //are empty
@@ -53,6 +54,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {//If post request was called
     if ($conn->connect_error) {
       die("Connection failed: " . $conn->connect_error);
     }
+    $Description = $conn -> real_escape_string($_POST["description"]);
 
     $sql = "
     INSERT INTO equipmenttype(Make, Model, Type, Description)
@@ -62,12 +64,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {//If post request was called
     '".$Type."',
     '".$Description."')";
 
+
     // get result of the executed statement
     if ($conn->query($sql) === TRUE) {//if success
       //set result variable
       $str =  "New record created successfully";
       //run python Script to update json in Script/Json folder
-      exec('python ../Script/UpdateCampusJson.py');
+      exec('python ../Script/UpdateEquipTypeJson.py');
     } else {
       $str = "Error : " . $sql . "<br>" . $conn->error;
     }
@@ -91,43 +94,41 @@ function TrimText($data) {
 </head>
 <body>
 
-  <h2>Insert to Campus Database</h2>
+  <h2>Insert to Equipment Type Database</h2>
   <p><span class="error">* required field.</span></p>
-
   <form class="form-horizontal" role="form" method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
     <!-- Make -->
     <div class="form-group">
-      <label for="name" class="col-sm-2 control-label">Name</label>
+      <label for="name" class="col-sm-2 control-label">Make</label>
       <div class="col-sm-4">
-        <input type="text" class="form-control" id="name" name="name" placeholder="Old Westbury" value="<?php echo $Name;?>">
-        <?php echo "<p class='text-danger'>$NameE</p>";?>
+        <input type="text" class="form-control" id="make" name="make" placeholder="Dell" value="<?php echo $Make;?>">
+        <?php echo "<p class='text-danger'>$MakeE</p>";?>
       </div>
     </div>
     <!-- Model -->
     <div class="form-group">
-      <label for="name" class="col-sm-2 control-label">Abb</label>
+      <label for="name" class="col-sm-2 control-label">Model</label>
       <div class="col-sm-4">
-        <input type="text" class="form-control" id="abb" name="abb" placeholder="OW" value="<?php echo $Abb;?>">
-        <?php echo "<p class='text-danger'>$AbbE</p>";?>
+        <input type="text" class="form-control" id="model" name="model" placeholder="Optiplex 7010" value="<?php echo $Model;?>">
+        <?php echo "<p class='text-danger'>$ModelE</p>";?>
       </div>
     </div>
     <!-- Type  -->
     <div class="form-group">
-      <label for="name" class="col-sm-2 control-label">Address</label>
+      <label for="name" class="col-sm-2 control-label">Type</label>
       <div class="col-sm-4">
-        <input type="text" class="form-control" id="address" name="address" placeholder="Northern Blvd, Old Westbury" value="<?php echo $Address;?>">
-        <?php echo "<p class='text-danger'>$AddressE</p>";?>
+        <input type="text" class="form-control" id="type" name="type" placeholder="PC" value="<?php echo $Type;?>">
+        <?php echo "<p class='text-danger'>$TypeE</p>";?>
       </div>
     </div>
     <!-- Description -->
     <div class="form-group">
-      <label for="name" class="col-sm-2 control-label">State</label>
+      <label for="name" class="col-sm-2 control-label">Description</label>
       <div class="col-sm-4">
-        <input type="text" class="form-control" id="state" name="state"  placeholder="NY" value="<?php echo $State;?>">
-        <?php echo "<p class='text-danger'>$StateE</p>";?>
+        <textarea name="description" rows="5" cols="40" id="description" name="description">123</textarea>
       </div>
     </div>
-    
+
     <!-- Sumbit Button -->
     <div class="form-group">
       <div class="col-sm-10 col-sm-offset-2">

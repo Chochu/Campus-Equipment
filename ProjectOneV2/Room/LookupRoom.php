@@ -67,7 +67,7 @@ function populateTable(){
       <td>".$BuildingArray[$BuildingID]."</td>
       <td>".$CampusID."</td>
       <td>".$CampusArray[$CampusID]."</td>
-      <td><a href = DeleteRoom.php?id=".$id." onclick=\"return confirm('Are you sure to delete Building id: ".$id."');\"> Delete </a> &nbsp</td>
+      <td><a href = DeleteRoom.php?id=".$id." onclick=\"return confirm('Are you sure to delete Room id: ".$id."');\"> Delete </a> &nbsp</td>
       <td><a href = UpdateRoom.php?id=".replaceSpace($id)."&Room=".replaceSpace($RoomNum)."&Alt=".replaceSpace($Altname)."&BuildingID=".replaceSpace($BuildingID)."&CampusID=".replaceSpace($CampusID)."> Update </a> &nbsp</td>
       </tr>";
     }
@@ -89,10 +89,10 @@ function populateTable(){
     <p>
       Search
       <select name="key">
-        <option value="Name">Name</option>
-        <option value="Abb">Abb</option>
-        <option value="CampusID">Campus ID</option>
-        <option value="AltName">Alt Name</option>
+        <option value="RoomNumber">Name</option>
+        <option value="AltName">AltName</option>
+        <option value="BuildingID">BuildingID</option>
+        <option value="CampusID">CampusID</option>
       </select>
       Keyword: <input type="text" name="keyword">
       <input type="submit" name="submit" value="Submit">

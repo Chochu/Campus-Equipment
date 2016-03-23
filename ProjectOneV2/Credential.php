@@ -1,8 +1,9 @@
 <?php
 $servername = "localhost";
-$username = "Test";
+$username = "Chochu";
 $password = "";
 $dbname = "nyit";
 $JsonCampus = '../Script/JSON/campus.json';
 $JsonBuilding = '../Script/JSON/building.json';
+$JsonEquipment = '../Script/JSON/EquipType.json';
  ?>

@@ -2,7 +2,7 @@ import json
 import mysql.connector
 import collections
 def main():
-    cnx = mysql.connector.connect(user='root', password='', host='127.0.0.1', database='nyit')
+    cnx = mysql.connector.connect(user='Chochu', password='', host='127.0.0.1', database='nyit')
     cursor = cnx.cursor()
     comm = "SELECT * FROM nyit.building;"
     cursor.execute(comm)
@@ -21,7 +21,7 @@ def main():
         objects_list.append(d)
 
     j = json.dumps(objects_list)
-    f = open("C:\wamp\www\ProjectOneV2\Script\JSON/building.json",'w')
+    f = open("G:\wamp\www\ProjectOneV2\Script\JSON/building.json",'w')
     #f2 = open("C:\wamp\www\ProjectOneV2\Script\JSON/buildingJS.json",'w')
     f.write(j)
     #f2.write('data= \'' + j + '\';')

@@ -12,8 +12,8 @@ $_Post - Someone is pushing (inserting/updating/deleting) data from your applica
 <?php
 
 // define variables and set to empty values
-$IdE = $NameE = $AbbE = $AddressE = $CountryE = $StateE = $ZipE = "";
-$Id = $Name = $Abb = $Address = $Country = $State = $Zip = "";
+$IdE = $MakeE = $ModelE = $TypeE = "";
+$Id = $Make = $Model = $Type = $Description = "";
 $str = "";
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {//If post request was called
@@ -22,47 +22,31 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {//If post request was called
   if they are, set the error variables to display the error
   else remove special header and set its to the variables
   */
-
   if (empty($_POST["id"])) {
     $IdE = "ID is required";
   } else {
     $Id = TrimText($_POST["id"]);
   }
-  if (empty($_POST["name"])) {
-    $NameE = "Name is required";
+  if (empty($_POST["make"])) {
+    $MakeE = "Make is required";
   } else {
-    $Name = TrimText($_POST["name"]);
+    $Make = TrimText($_POST["make"]);
   }
-  if (empty($_POST["abb"])) {
-    $AbbE = "Abb is required";
+  if (empty($_POST["model"])) {
+    $ModelE = "Model is required";
   } else {
-    $Abb = TrimText($_POST["abb"]);
+    $Model = TrimText($_POST["model"]);
   }
-  if (empty($_POST["address"])) {
-    $AddressE = "Address is required";
+  if (empty($_POST["type"])) {
+    $TypeE = "Type is required";
   } else {
-    $Address = TrimText($_POST["address"]);
-  }
-  if (empty($_POST["state"])) {
-    $StateE = "State is required";
-  } else {
-    $State = TrimText($_POST["state"]);
-  }
-  if (empty($_POST["zip"])) {
-    $ZipE = "Zip code is required";
-  } else {
-    $Zip = TrimText($_POST["zip"]);
-  }
-  if (empty($_POST["country"])) {
-    $CountryE = "State is Required";
-  } else {
-    $Country = TrimText($_POST["country"]);
+    $Type = TrimText($_POST["type"]);
   }
 
   //Check if the variable are empty, if they are that means that the html text-danger
   //are empty, This check prevent sql statement from executing if Name, Abb, and CampusID
   //are empty
-  if($Id != "" && $Name != "" && $Abb != "" && $Address != "" && $Country != "" && $State != "" && $Zip != ""){
+  if($Make != "" && $Model != "" && $Type != ""){
     // Connection Data
 
     require '../Credential.php';
@@ -73,14 +57,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {//If post request was called
       die("Connection failed: " . $conn->connect_error);
     }
 
+    $Description = $conn -> real_escape_string($_POST["description"]);
+
     $sql = "
-    UPDATE campus SET
-    Name = '".$Name."',
-    Abb = '".$Abb."',
-    Address = '".$Address."',
-    State = '".$Country."',
-    Zip = '".$State."',
-    Country ='".$Zip."'
+    UPDATE equipmenttype SET
+    Make = '".$Make."',
+    Model = '".$Model."',
+    Type = '".$Type."',
+    Description ='".$Description."'
     WHERE
     id = ".$Id;
 
@@ -89,7 +73,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {//If post request was called
       //set result variable
       $str =  "Updated record created successfully";
       //run python Script to update json in Script/Json folder
-      exec('python ../Script/UpdateCampusJson.py');
+      exec('python ../Script/UpdateEquipTypeJson.py');
     } else {
       $str = "Error : " . $sql . "<br>" . $conn->error;
     }
@@ -104,6 +88,28 @@ function TrimText($data) {
   return $data;
 }
 
+function loadDescrip($id){
+  if( array_key_exists($id,$_GET)){
+    require '../Credential.php'; //load Credential for Sql login
+    $conn = new mysqli($servername, $username, $password, $dbname);
+
+    if ($conn->connect_error) {
+      die("Connection failed: " . $conn->connect_error);
+    }
+
+    $exe = "SELECT Description FROM equipmenttype where id =".$_GET[$id].";";
+
+    //execute sql
+    $result = $conn->query($exe);
+    //for each row return from the sql
+    if ($result->num_rows > 0) {
+      $row = $result->fetch_assoc();
+      echo $row['Description'];
+    }
+  }
+
+
+}
 //Used for set the value of the html text from get request,
 //User doesnt have retype everything out
 function getPost($string){
@@ -129,7 +135,7 @@ function replaceSpace($string){
 </head>
 <body>
 
-  <h2>Update Campus id: <?php getPost("id"); ?></h2>
+  <h2>Update Equipment Type id: <?php getPost("id"); ?></h2>
   <p><span class="error">* required field.</span></p>
 
   <form class="form-horizontal" role="form" method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
@@ -141,54 +147,38 @@ function replaceSpace($string){
         <?php echo "<p class='text-danger'>$IdE</p>";?>
       </div>
     </div>
-    <!-- Name -->
+    <!-- Make -->
     <div class="form-group">
-      <label for="name" class="col-sm-2 control-label">Name</label>
+      <label for="name" class="col-sm-2 control-label">Make</label>
       <div class="col-sm-4">
-        <input type="text" class="form-control" id="name" name="name" placeholder="Old Westbury" value="<?php  getPost("Name");?>">
-        <?php echo "<p class='text-danger'>$NameE</p>";?>
+        <input type="text" class="form-control" id="make" name="make" placeholder="Dell" value="<?php getPost("id");?>">
+        <?php echo "<p class='text-danger'>$MakeE</p>";?>
       </div>
     </div>
-    <!-- Abb -->
+    <!-- Model -->
     <div class="form-group">
-      <label for="name" class="col-sm-2 control-label">Abb</label>
+      <label for="name" class="col-sm-2 control-label">Model</label>
       <div class="col-sm-4">
-        <input type="text" class="form-control" id="abb" name="abb" placeholder="OW" value="<?php  getPost("Abb");?>">
-        <?php echo "<p class='text-danger'>$AbbE</p>";?>
+        <input type="text" class="form-control" id="model" name="model" placeholder="Optiplex 7010" value="<?php getPost("Make");?>">
+        <?php echo "<p class='text-danger'>$ModelE</p>";?>
       </div>
     </div>
-    <!-- Address  -->
+    <!-- Type  -->
     <div class="form-group">
-      <label for="name" class="col-sm-2 control-label">Address</label>
+      <label for="name" class="col-sm-2 control-label">Type</label>
       <div class="col-sm-4">
-        <input type="text" class="form-control" id="address" name="address" placeholder="Northern Blvd, Old Westbury" value="<?php  getPost("Address");?>">
-        <?php echo "<p class='text-danger'>$AddressE</p>";?>
+        <input type="text" class="form-control" id="type" name="type" placeholder="PC" value="<?php getPost("Model");?>">
+        <?php echo "<p class='text-danger'>$TypeE</p>";?>
       </div>
     </div>
-    <!-- State -->
+    <!-- Description -->
     <div class="form-group">
-      <label for="name" class="col-sm-2 control-label">State</label>
+      <label for="name" class="col-sm-2 control-label">Description</label>
       <div class="col-sm-4">
-        <input type="text" class="form-control" id="state" name="state"  placeholder="NY" value="<?php  getPost("State");?>">
-        <?php echo "<p class='text-danger'>$StateE</p>";?>
+        <textarea name="description" rows="5" cols="40" id="description" name="description"><?php loadDescrip("Description");?></textarea>
       </div>
     </div>
-    <!-- Zip -->
-    <div class="form-group">
-      <label for="name" class="col-sm-2 control-label">Zip Code</label>
-      <div class="col-sm-4">
-        <input type="text" class="form-control" id="zip" name="zip"  placeholder="11568" value="<?php  getPost("Zip");?>">
-        <?php echo "<p class='text-danger'>$ZipE</p>";?>
-      </div>
-    </div>
-    <!-- Country -->
-    <div class="form-group">
-      <label for="name" class="col-sm-2 control-label">Country</label>
-      <div class="col-sm-4">
-        <input type="text" class="form-control" id="country" name="country" placeholder="USA" value="<?php  getPost("Country");?>">
-        <?php echo "<p class='text-danger'>$CountryE</p>";?>
-      </div>
-    </div>
+
     <!-- Sumbit Button -->
     <div class="form-group">
       <div class="col-sm-10 col-sm-offset-2">

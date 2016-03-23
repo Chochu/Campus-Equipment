@@ -1,9 +1,5 @@
 <?php
-echo'
-<a href = "ProjectOne/index.php"> ProjectOne </a> &nbsp
-<a href = "ProjectOneV2/header.php"> ProjectOne V2 </a> &nbsp
-';
- ?>
+?>
  <html lang = "en">
  <head>
    <meta charset="UTF-8">
@@ -28,32 +24,11 @@ echo'
        </div>
        <ul class="nav navbar-nav">
          <li class="active"><a href="../index.php">Home</a></li>
-         <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Campus<span class="caret"></span></a>
-           <ul class="dropdown-menu">
-             <li><a href="ProjectOneV2/Campus/InsertCampus.php">Insert Campus</a></li>
-             <li><a href="ProjectOneV2/Campus/LookupCampus.php">Lookup Campus</a></li>
-             <li><a href="ProjectOneV2/Campus/DeleteCampus.php">Delete Campus</a></li>
-             <li><a href="ProjectOneV2/Campus/UpdateCampus.php">Update Campus</a></li>
-           </ul>
-         </li>
-         <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Building<span class="caret"></span></a>
-           <ul class="dropdown-menu">
-             <li><a href="ProjectOneV2/Building/InsertBuilding.php">Insert Building</a></li>
-             <li><a href="ProjectOneV2/Building/LookupBuilding.php">Lookup Building</a></li>
-             <li><a href="ProjectOneV2/Building/DeleteBuilding.php">Delete Building</a></li>
-             <li><a href="ProjectOneV2/Building/UpdateBuilding.php">Update Building</a></li>
-           </ul>
-         </li>
-         <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Room<span class="caret"></span></a>
-           <ul class="dropdown-menu">
-             <li><a href="ProjectOneV2/Room/InsertRoom.php">Insert Room</a></li>
-             <li><a href="ProjectOneV2/Room/LookupRoom.php">Lookup Room</a></li>
-             <li><a href="ProjectOneV2/Room/DeleteRoom.php">Delete Room</a></li>
-             <li><a href="ProjectOneV2/Room/UpdateRoom.php">Update Room</a></li>
-           </ul>
-         </li>
        </ul>
      </div>
    </nav>
+
+
+
  </body>
  </html>
