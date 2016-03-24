@@ -1,8 +1,9 @@
 <?php
-echo'
-<a href = "ProjectOne/index.php"> ProjectOne </a> &nbsp
-<a href = "ProjectOneV2/header.php"> ProjectOne V2 </a> &nbsp
-';
+session_start();
+if (!isset($_SESSION['id'])) {
+  header('location:../index.php');
+  exit(); // <-- terminates the current script
+}
  ?>
  <html lang = "en">
  <head>
@@ -76,6 +77,7 @@ echo'
              <li><a href="Deploy/Move.php">Move</a></li>
            </ul>
          </li>
+         <li><a href="logout.php">Logout</a></li>
        </ul>
      </div>
    </nav>

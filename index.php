@@ -65,10 +65,14 @@
                   <div class="form-group">
                     <div class="row">
                       <div class="col-sm-6 col-sm-offset-3">
-                        <input type="submit" name="register-submit" id="register-submit" tabindex="4" class="form-control btn btn-register" value="Register Now">
+                        <!-- disable button to prevent registertion -->
+                        <input type="submit" disabled="true" name="register-submit" id="register-submit" tabindex="4" class="form-control btn btn-register" value="Register Now">
+                        <p>Registertion is disable at this time </p>
                       </div>
                     </div>
                   </div>
+
+
                 </form>
                 <?php
                 if(array_key_exists('msg',$_GET)){

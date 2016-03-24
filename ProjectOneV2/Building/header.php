@@ -1,9 +1,11 @@
 <?php
-echo'
-<a href = "ProjectOne/index.php"> ProjectOne </a> &nbsp
-<a href = "ProjectOneV2/header.php"> ProjectOne V2 </a> &nbsp
-';
- ?>
+session_start();
+if (!isset($_SESSION['id'])) {
+  header('location:../header.php');
+  exit(); // <-- terminates the current script
+}
+// close the php tag and write your HTML :)
+?>
  <html lang = "en">
  <head>
    <meta charset="UTF-8">
@@ -27,7 +29,7 @@ echo'
          <a class="navbar-brand" href="#">NYIT</a>
        </div>
        <ul class="nav navbar-nav">
-         <li class="active"><a href="../header.php">Home</a></li>
+         <li><a href="../header.php">Home</a></li>
          <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Campus<span class="caret"></span></a>
            <ul class="dropdown-menu">
              <li><a href="../Campus/InsertCampus.php">Insert Campus</a></li>
@@ -36,7 +38,7 @@ echo'
              <li><a href="../Campus/UpdateCampus.php">Update Campus</a></li>
            </ul>
          </li>
-         <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Building<span class="caret"></span></a>
+         <li class="dropdown active"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Building<span class="caret"></span></a>
            <ul class="dropdown-menu">
              <li><a href="InsertBuilding.php">Insert Building</a></li>
              <li><a href="LookupBuilding.php">Lookup Building</a></li>
@@ -76,6 +78,7 @@ echo'
              <li><a href="../Deploy/Move.php">Move</a></li>
            </ul>
          </li>
+         <li><a href="../logout.php">Logout</a></li>
        </ul>
      </div>
    </nav>

@@ -2,7 +2,7 @@
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
-
+session_start();
 $User = $Pass= "";
 // https://alias.io/2010/01/store-passwords-safely-with-php-and-mysql/
 if ($_SERVER["REQUEST_METHOD"] == "POST") { //If post request was called
@@ -42,6 +42,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") { //If post request was called
         $hash = crypt($Pass, $row['salt']);
 
         if(var_export(hash_equals($hash, $row['pass']), true)){
+          $_SESSION["id"] = $row['id'];
           header('Location: /ProjectOneV2/header.php');
         }
       }

@@ -1,8 +1,9 @@
 <?php
-echo'
-<a href = "ProjectOne/index.php"> ProjectOne </a> &nbsp
-<a href = "ProjectOneV2/header.php"> ProjectOne V2 </a> &nbsp
-';
+session_start();
+if (!isset($_SESSION['id'])) {
+  header('location:../header.php');
+  exit(); // <-- terminates the current script
+}
  ?>
  <html lang = "en">
  <head>
@@ -27,8 +28,8 @@ echo'
          <a class="navbar-brand" href="#">NYIT</a>
        </div>
        <ul class="nav navbar-nav">
-         <li class="active"><a href="../header.php">Home</a></li>
-         <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Campus<span class="caret"></span></a>
+         <li><a href="../header.php">Home</a></li>
+         <li class="dropdown active"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Campus<span class="caret"></span></a>
            <ul class="dropdown-menu">
              <li><a href="InsertCampus.php">Insert Campus</a></li>
              <li><a href="LookupCampus.php">Lookup Campus</a></li>
@@ -76,6 +77,7 @@ echo'
              <li><a href="../Deploy/Retired.php">Retired</a></li>
            </ul>
          </li>
+         <li><a href="../logout.php">Logout</a></li>
        </ul>
      </div>
    </nav>
