@@ -62,7 +62,7 @@ function populateTable(){
       <td>".$EquipmentArray[$equipmenttype]."</td>
       <td>".$Active."</td>
       <td><a href = DeleteEquipment.php?id=".$id." onclick=\"return confirm('Are you sure to delete Room id: ".$id."');\"> Delete </a> &nbsp</td>
-      <td><a href = UpdateEquipment.php?id=".replaceSpace($id)."&Name=".replaceSpace($Name)."&Asset=".replaceSpace($Asset)."&Serial=".replaceSpace($Serial)."&Active=".replaceSpace($Active)."> Update </a> &nbsp</td>
+      <td><a href = UpdateEquipment.php?id=".replaceSpace($id)."&Name=".replaceSpace($Name)."&Asset=".replaceSpace($Asset)."&Serial=".replaceSpace($Serial)."&Active=".replaceSpace($Active)."> Edit </a> &nbsp</td>
       </tr>";
     }
   }
@@ -112,7 +112,7 @@ function populateTable(){
                   <th>Equipement Type</th>
                   <th>Active</th>
                   <th>Delete</th>
-                  <th>Update</th>
+                  <th>Edit</th>
                 </tr>
               </thead>
               <tbody>

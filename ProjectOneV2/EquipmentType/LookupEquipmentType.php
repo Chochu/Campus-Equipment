@@ -52,7 +52,7 @@ function populateTable(){
       <td>".$Type."</td>
       <td>".$Description."</td>
       <td><a href = DeleteEquipmentType.php?id=".$id." onclick=\"return confirm('Are you sure to delete Equipment type in id: ".$id."');\"> Delete </a> &nbsp</td>
-      <td><a href = UpdateEquipmentType.php?id=".replaceSpace($id)."&Make=".replaceSpace($Make)."&Model=".replaceSpace($Model)."&Type=".replaceSpace($Type)."&Description=".replaceSpace($id)."> Update </a> &nbsp</td>
+      <td><a href = UpdateEquipmentType.php?id=".replaceSpace($id)."&Make=".replaceSpace($Make)."&Model=".replaceSpace($Model)."&Type=".replaceSpace($Type)."&Description=".replaceSpace($id)."> Edit </a> &nbsp</td>
       </tr>";
     }
   }
@@ -99,7 +99,7 @@ function populateTable(){
                   <th>Type</th>
                   <th>Description</th>
                   <th>Delete</th>
-                  <th>Update</th>
+                  <th>Edit</th>
               </tr>
               </thead>
               <tbody>

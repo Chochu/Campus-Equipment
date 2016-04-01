@@ -31,31 +31,25 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       die("Connection failed: " . $conn->connect_error);
     }
 
-    $sql = "SELECT * FROM nyit.deploy WHERE EquipID = " .$EquipID ;
+    $sql = "SELECT * FROM nyit.deploy WHERE EquipID = " .$EquipID . "AND PastRoomID IS NULL;" ;
     $result = $conn->query($sql);
     //if that equipment is already deploy
-    if ($result->num_rows > 0) {
+    if ($result->num_rows != 0) {
       $row = $result->fetch_assoc();
       $sql = "
       UPDATE deploy SET
-      CCampusID = '".$CampusID."',
-      CBuildingID = '".$BuildingID."',
-      CRoomID = '".$RoomID."',
-      CTime = '".date("Y-m-d")."',
-      PCampusID = '".$row['CCampusID']."',
-      PBuildingID = '".$row['CBuildingID']."',
-      PRoomID = '".$row['CRoomID']."',
-      PTime = '".$row['CTime']."'
+      CurrentRoomID = '".$RoomID."',
+      DateInstall = '".date("Y-m-d")."',
+      PastRoomID = '".$row['CRoomID']."',
+      DateRemove = '".$row['CTime']."'
       WHERE
       EquipID = ".$EquipID;
 
     }else{//if not deploy
       $sql = "
-      INSERT INTO deploy(EquipID, CCampusID, CBuildingID, CRoomID, CTime)
+      INSERT INTO deploy(EquipID,CurrentRoomID, DateInstall)
       VALUES
       ('".$EquipID."',
-      '".$CampusID."',
-      '".$BuildingID."',
       '".$RoomID."',
       '".date("Y-m-d")."')";
     }

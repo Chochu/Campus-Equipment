@@ -21,7 +21,7 @@ def main():
         objects_list.append(d)
 
     j = json.dumps(objects_list)
-    f = open("G:\wamp\www\ProjectOneV2\Script\JSON\EquipType.json",'w')
+    f = open("C:\wamp\www\ProjectOneV2\Script\JSON\EquipType.json",'w')
     f.write(j)
     cursor.close()
     cnx.close()

@@ -130,7 +130,6 @@ function JsontoDropdown($datapath){
       <div class="col-sm-4">
         <input type="radio" name="active" value="1"> Yes
         <input type="radio" name="active" value="0"> No
-        <?php echo "<p class='text-danger'>$ActiveE</p>";?>
       </div>
     </div>
     <div class="form-group">

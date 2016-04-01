@@ -64,12 +64,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") { //If post request was called
     }
 
     $sql = "
-    INSERT INTO building(Name, Abb, CampusID, AltName)
+    INSERT INTO building(Name, Abb, CampusID, AltName,Active)
     VALUES
     ('".$Name."',
     '".$Abb."',
     '".$CampusID."',
-    '".$Altname."')";
+    '".$Altname."','1')";
 
     // get result of the executed statement
     if ($conn->query($sql) === TRUE) { //if success

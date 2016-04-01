@@ -21,7 +21,7 @@ def main():
         objects_list.append(d)
 
     j = json.dumps(objects_list)
-    f = open("G:\wamp\www\ProjectOneV2\Script\JSON/room.json",'w')
+    f = open("C:\wamp\www\ProjectOneV2\Script\JSON/room.json",'w')
     #f2 = open("C:\wamp\www\ProjectOneV2\Script\JSON\campusJS.json",'w')
     f.write(j)
     #f2.write('data= \'' + j + '\';')

@@ -68,7 +68,7 @@ function populateTable(){
       <td>".$CampusID."</td>
       <td>".$CampusArray[$CampusID]."</td>
       <td><a href = DeleteRoom.php?id=".$id." onclick=\"return confirm('Are you sure to delete Room id: ".$id."');\"> Delete </a> &nbsp</td>
-      <td><a href = UpdateRoom.php?id=".replaceSpace($id)."&Room=".replaceSpace($RoomNum)."&Alt=".replaceSpace($Altname)."&BuildingID=".replaceSpace($BuildingID)."&CampusID=".replaceSpace($CampusID)."> Update </a> &nbsp</td>
+      <td><a href = UpdateRoom.php?id=".replaceSpace($id)."&Room=".replaceSpace($RoomNum)."&Alt=".replaceSpace($Altname)."&BuildingID=".replaceSpace($BuildingID)."&CampusID=".replaceSpace($CampusID)."> Edit </a> &nbsp</td>
       </tr>";
     }
   }
@@ -118,7 +118,7 @@ function populateTable(){
                   <th>Campus ID</th>
                   <th>Campus Name</th>
                   <th>Delete</th>
-                  <th>Update</th>
+                  <th>Edit</th>
                 </tr>
               </thead>
               <tbody>
@@ -128,7 +128,6 @@ function populateTable(){
               </tbody>
             </table>
           </div>
-
         </div>
       </div>
     </div>

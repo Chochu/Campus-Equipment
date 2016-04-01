@@ -57,12 +57,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {//If post request was called
     }
 
     $sql = "
-    INSERT INTO room(RoomNumber, AltName, BuildingID, CampusID)
+    INSERT INTO room(RoomNumber, AltName, BuildingID, CampusID,Active)
     VALUES
     ('".$RoomNum."',
     '".$Altname."',
     '".$BuildingID."',
-    '".$CampusID."')";
+    '".$CampusID."','1')";
 
     // get result of the executed statement
     if ($conn->query($sql) === TRUE) {//if success
@@ -101,8 +101,7 @@ function JsontoDropdown($datapath){
 <body>
 
   <h2>Insert to Room Database</h2>
-  <p><span class="error">* required field.</span></p>
-
+  <br>
   <form class="form-horizontal" role="form" method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
     <!-- Name -->
     <div class="form-group">

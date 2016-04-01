@@ -56,7 +56,7 @@ function populateTable(){
       <td>".$Zip."</td>
       <td>".$Country."</td>
       <td><a href = DeleteCampus.php?id=".$id." onclick=\"return confirm('Are you sure to delete Campus in id: ".$id."');\"> Delete </a> &nbsp</td>
-      <td><a href = UpdateCampus.php?id=".replaceSpace($id)."&Name=".replaceSpace($Name)."&Abb=".replaceSpace($Abb)."&Address=".replaceSpace($Address)."&State=".replaceSpace($State)."&Zip=".replaceSpace($Zip)."&Country=".replaceSpace($Country)."> Update </a> &nbsp</td>
+      <td><a href = UpdateCampus.php?id=".replaceSpace($id)."&Name=".replaceSpace($Name)."&Abb=".replaceSpace($Abb)."&Address=".replaceSpace($Address)."&State=".replaceSpace($State)."&Zip=".replaceSpace($Zip)."&Country=".replaceSpace($Country)."> Edit </a> &nbsp</td>
       </tr>";
     }
   }
@@ -108,7 +108,7 @@ function populateTable(){
                   <th>Zip</th>
                   <th>Country</th>
                   <th>Delete</th>
-                  <th>Update</th>
+                  <th>Edit</th>
                 </tr>
               </thead>
               <tbody>
