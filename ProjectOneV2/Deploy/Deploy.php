@@ -12,7 +12,11 @@ $_Post - Someone is pushing (inserting/updating/deleting) data from your applica
 <?php
 
 
-$str = "";
+$str = $id = "";
+
+if( array_key_exists('id',$_GET)){
+  $id = $_GET['id'];
+}
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
@@ -31,31 +35,40 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       die("Connection failed: " . $conn->connect_error);
     }
 
-    $sql = "SELECT * FROM nyit.deploy WHERE EquipID = " .$EquipID . "AND PastRoomID IS NULL;" ;
+    $sql = "SELECT * FROM nyit.deploy WHERE EquipID = " .$EquipID . " AND PastRoomID IS NULL;" ;
     $result = $conn->query($sql);
+    $str = $sql;
     //if that equipment is already deploy
-    if ($result->num_rows != 0) {
+    if ($result->num_rows > 0) {
       $row = $result->fetch_assoc();
+
       $sql = "
       UPDATE deploy SET
-      CurrentRoomID = '".$RoomID."',
       DateInstall = '".date("Y-m-d")."',
-      PastRoomID = '".$row['CRoomID']."',
-      DateRemove = '".$row['CTime']."'
+      CurrentCampusID = '".$CampusID."',
+      CurrentBuildingID = '".$BuildingID."',
+      CurrentRoomID = '".$RoomID."',
+      PastCampusID = '".$row['CurrentCampusID']."',
+      PastBuildingID = '".$row['CurrentBuildingID']."',
+      PastRoomID = '".$row['CurrentRoomID']."',
+      DateRemove = '".$row['DateInstall']."'
       WHERE
       EquipID = ".$EquipID;
-
+      $str =  "Updated record Updated successfully";
     }else{//if not deploy
       $sql = "
-      INSERT INTO deploy(EquipID,CurrentRoomID, DateInstall)
+      INSERT INTO deploy(EquipID, CurrentCampusID, CurrentBuildingID, CurrentRoomID, DateInstall)
       VALUES
       ('".$EquipID."',
+      '".$CampusID."',
+      '".$BuildingID."',
       '".$RoomID."',
       '".date("Y-m-d")."')";
+      $str =  "Updated record created successfully";
     }
     if ($conn->query($sql) === TRUE) {//if success
       //set result variable
-      $str =  "Updated record created successfully";
+
     } else {
       $str = "Error : " . $sql . "<br>" . $conn->error;
     }
@@ -92,7 +105,7 @@ function TrimText($data) {
     <div class="form-group">
       <label for="name" class="col-sm-2 control-label">Equipment ID</label>
       <div class="col-sm-4">
-        <input type="text" class="form-control" id="id" name="id" placeholder="0" required>
+        <input type="text" class="form-control" id="id" name="id" placeholder="0" value="<?php echo $id;?>" required>
       </div>
     </div>
     <!-- Drop Down -->

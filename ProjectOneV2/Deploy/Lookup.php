@@ -7,7 +7,7 @@ $sql = "";
 if($_SERVER["REQUEST_METHOD"] == "POST" )
 {
   global $sql;
-  $sql = "SELECT * FROM room WHERE " . $_POST['key'] . " LIKE '". $_POST['keyword'] . "';";
+  $sql = "SELECT * FROM nyit.deploy WHERE " . $_POST['key'] . " LIKE '". $_POST['keyword'] . "';";
 
 }
 function replaceSpace($string){
@@ -25,41 +25,60 @@ function populateTable(){
       die("Connection failed: " . $conn->connect_error);
     }
     if( array_key_exists('key',$_GET) && array_key_exists('query',$_GET)){
-      $sql = "SELECT * FROM room WHERE " . $_GET['key'] . " LIKE '". $_GET['query'] . "';";
+      $sql = "SELECT * FROM nyit.deploy WHERE " . $_GET['key'] . " LIKE '". $_GET['query'] . "';";
     }
-    $CampusArray = array();
-    $BuildingArray = array();
-    $str = file_get_contents('../campus.json');
-    $json = json_decode($str,true);
-    foreach ($json as $value){
-      $CampusArray[$value['id']] = $value['Name'];
+
+    $Campus = array();   //Campus Array
+    $Building = array();  //Building Array
+    $Room = array();  //Room Array
+    $str = file_get_contents($JsonCampus);//load campus json
+    $json = json_decode($str,true);//decode
+    foreach ($json as $value){//store to json array
+      $Campus[$value['id']] = $value['Name'];
     }
-    $str = file_get_contents('../building.json');
-    $json = json_decode($str,true);
-    foreach ($json as $value){
-      $BuildingArray[$value['id']] = $value['Name'];
+    $str = file_get_contents($JsonBuilding);//load building json
+    $json = json_decode($str,true);//decode
+    foreach ($json as $value){//store to json array
+      $Building[$value['id']] = $value['Name'];
+    }
+    $str = file_get_contents($JsonRoom);//load room json
+    $json = json_decode($str,true);//decode
+    foreach ($json as $value){//store to json array
+      $Room[$value['id']] = $value['RoomNumber'];
     }
     #echo $sql;
     $result = $conn->query($sql);
     if ($result->num_rows > 0) {
       // output data of each row
       while($row = $result->fetch_assoc()) {
-        $id = $row["id"];
-        $RoomNum = $row["RoomNumber"];
-        $Altname = $row["AltName"];
-        $BuildingID =$row["BuildingID"];
-        $CampusID = $row["CampusID"];
+        $id = $row["EquipID"];
+        $CurrentRoomID =  $Room[$row["CurrentRoomID"]];
+        $CurrentCampusID =  $Campus[$row["CurrentCampusID"]];
+        $CurrentBuildingID = $Building[$row["CurrentBuildingID"]];
+        $DateInstall =  $row["DateInstall"];
+        $PastRoomID =   "";
+        $PastCampusID =   "";
+        $PastBuildingID =  "";
+        $PastDateInstall =  "";
+        if( $row["PastRoomID"] != null)
+        {
+          $PastRoomID =  $Room[$row["PastRoomID"]];
+          $PastCampusID = $Campus[$row["PastCampusID"]] ;
+          $PastBuildingID =  $Building[$row["PastBuildingID"]];
+          $PastDateInstall =  $row["DateRemove"];
+        }
         // echo $row["Building"] . '<br>';
         echo "<tr>
         <td>".$id."</td>
-        <td>".$RoomNum."</td>
-        <td>".$Altname."</td>
-        <td>".$BuildingID."</td>
-        <td>".$BuildingArray[$BuildingID]."</td>
-        <td>".$CampusID."</td>
-        <td>".$CampusArray[$CampusID]."</td>
+        <td>".$DateInstall."</td>
+        <td>".$CurrentCampusID."</td>
+        <td>".$CurrentBuildingID."</td>
+        <td>".$CurrentRoomID."</td>
+        <td>".$PastDateInstall."</td>
+        <td>".$PastCampusID."</td>
+        <td>".$PastBuildingID."</td>
+        <td>".$PastRoomID."</td>
         <td><a href = DeleteRoom.php?id=".$id." onclick=\"return confirm('Are you sure to delete Building id: ".$id."');\"> Delete </a> &nbsp</td>
-        <td><a href = UpdateRoom.php?id=".replaceSpace($id)."&Name=".replaceSpace($RoomNum)."&Abb=".replaceSpace($Altname)."&AltName=".replaceSpace($BuildingID)."&CampusID=".replaceSpace($CampusID)."> Update </a> &nbsp</td>
         </tr>";
       }
     }
@@ -81,9 +100,9 @@ function populateTable(){
     <p>
       Search
       <select name="key">
-        <option value="Name">Name</option>
-        <option value="Abb">Abb</option>
-        <option value="CampusID">Campus ID</option>
+        <option value="EquipID">Equip ID</option>
+        <option value="DateInstall">Install Date: YYYY-MM-DD</option>
+        <option value="CampusID">Date ID</option>
         <option value="AltName">Alt Name</option>
       </select>
       Keyword: <input type="text" name="keyword">
@@ -103,16 +122,15 @@ function populateTable(){
               <thead>
                 <tr>
                   <th>Equipment ID</th>
-                  <th>Equipment Name</th>
-                  <th>Make</th>
-                  <th>Model</th>
-                  <th>Type</th>
-                  <th>Description</th>
-                  <th>Campus</th>
-                  <th>Building</th>
-                  <th>Room</th>
+                  <th>Install Date</th>
+                  <th>Current Campus</th>
+                  <th>Current Building</th>
+                  <th>Current Room</th>
+                  <th>Install Date</th>
+                  <th>Past Campus</th>
+                  <th>Past Building</th>
+                  <th>Past Room</th>
                   <th>Move</th>
-                  <th>Retire</th>
                 </tr>
               </thead>
               <tbody>

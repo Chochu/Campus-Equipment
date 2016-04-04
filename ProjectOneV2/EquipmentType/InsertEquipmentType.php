@@ -125,7 +125,7 @@ function TrimText($data) {
     <div class="form-group">
       <label for="name" class="col-sm-2 control-label">Description</label>
       <div class="col-sm-4">
-        <textarea name="description" rows="5" cols="40" id="description" name="description">123</textarea>
+        <textarea name="description" rows="5" cols="40" id="description" name="description"></textarea>
       </div>
     </div>
 

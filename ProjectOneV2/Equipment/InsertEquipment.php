@@ -57,7 +57,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 
     if ($conn->query($sql) === TRUE) {
-      $str =  "Updated record created successfully";
+      $id = $conn->insert_id;
+      echo '<script type="text/javascript">';
+      echo 'alert("Update Successfully");';
+      echo 'window.location.href = "../Deploy/Deploy.php?id='.$id.'";';
+      echo '</script>';
     } else {
       $str = "Error : " . $sql . "<br>" . $conn->error;
     }
@@ -132,7 +136,7 @@ function JsontoDropdown($datapath){
         <input type="radio" name="active" value="0"> No
       </div>
     </div>
-    <div class="form-group">
+    <div id = "deploy" class="form-group">
       <div class="col-sm-10 col-sm-offset-2">
         <input id="submit" name="submit" type="submit" value="Submit" class="btn btn-primary">
       </div>
