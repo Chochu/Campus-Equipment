@@ -9,19 +9,19 @@ $result = "";
 if($_SERVER["REQUEST_METHOD"] == "POST" )
 {
   if (empty($_POST["id"])) {
-    $idE = "Cannot delete entry without id number";
+    $idE = "Cannot deactivate entry without id number";
   } else {
     $id = TrimText($_POST["id"]);
   }
   if($id != ""){
     global $sql;
-    $sql = "DELETE FROM equipment WHERE id=" . $_POST['id'] .";";
+    $sql = "UPDATE equipment SET Active = 0 WHERE id=" . $_POST['id'] .";";
   }
   deleteRow();
 }
 if( array_key_exists('id',$_GET)){
   $id = $_GET['id'];
-  $sql = "DELETE FROM equipment WHERE id=" . $_GET['id']. ";";
+  $sql = "UPDATE equipment SET Active = 0 WHERE id=" . $_GET['id']. ";";
   deleteRow();
 }
 function deleteRow(){
@@ -36,7 +36,11 @@ function deleteRow(){
   }
 
   if ($conn->query($sql) === TRUE) {
-    $result =  "Successfully deleted equipment ID: " .$id ;
+    $result =  "Successfully deactivate equipment ID: " .$id ;
+    echo '<script type="text/javascript">';
+    echo 'alert("Successfully deactivate equipment, Please log equipment finally location");';
+    echo 'window.location.href = "../Deploy/Deploy.php?id='.$id.'";';
+    echo '</script>';
   } else {
     $result = "Error : " . $sql . "<br>" . $conn->error;
   }

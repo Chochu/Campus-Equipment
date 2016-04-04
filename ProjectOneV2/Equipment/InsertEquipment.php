@@ -17,10 +17,10 @@ $Name = $EquipmentTypeID = $Asset = $Serial = $Active =  "";
 $str = "";
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-  if (empty($_POST['EquipID'])) {
+  if (empty($_POST['EquipModel'])) {
     $EquipmentTypeIDE = "Equipment Type ID is required";
   } else {
-    $EquipmentTypeID = TrimText($_POST["EquipID"]);
+    $EquipmentTypeID = TrimText($_POST["EquipModel"]);
   }
   if (empty($_POST['name'])) {
     $NameE = "Equipment Type ID is required";
@@ -32,7 +32,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   } else {
     $Active = TrimText($_POST["active"]);
   }
-  $Asset =TrimText($_POST["Asset"]);
+  $Asset = TrimText($_POST["Asset"]);
   $Serial = TrimText($_POST["Serial"]);
 
   if($EquipmentTypeID != ""){
@@ -75,12 +75,20 @@ function TrimText($data) {
   return $data;
 }
 
+
 function JsontoDropdown($datapath){
+  $TypeArray = array();
   $str = file_get_contents($datapath);
   $json = json_decode($str,true);
   foreach ($json as $value){
-    echo "<option value=\"".$value['id']."\">".$value['Make']. " " .$value['Model']."</option>";
+    array_push($TypeArray,$value['Type']);
+    //echo "<option value=\"".$value['id']."\">".$value['Make']. " " .$value['Model']."</option>";
   }
+  $TypeArray = array_unique($TypeArray,SORT_REGULAR);
+  foreach ($TypeArray as $value) {
+    echo "<option value=\"".$value."\">".$value."</option>";
+  }
+
 }
 ?>
 <meta charset="UTF-8">
@@ -104,13 +112,24 @@ function JsontoDropdown($datapath){
         <?php echo "<p class='text-danger'>$NameE</p>";?>
       </div>
     </div>
-    <!-- Equip Type Dropdown -->
+    <!-- Type Dropdown -->
     <div class="form-group">
-      <label for="name" class="col-sm-2 control-label">Equip Type</label>
+      <label for="name" class="col-sm-2 control-label">Type</label>
       <div class="col-sm-4">
-        <select name="EquipID">
+        <!-- Configure Model dropdown based on the option user select on this dropdown -->
+        <select name="EquipType" onchange="configureDropDownLists(this,document.getElementById('EquipModel'))">
           <option value="">...</option>
           <?php JsontoDropdown('../Script/JSON/EquipType.json');?>
+        </select>
+        <?php echo "<p class='text-danger'>$NameE</p>";?>
+      </div>
+    </div>
+    <!-- Model Dropdown -->
+    <div class="form-group">
+      <label for="name" class="col-sm-2 control-label">Model</label>
+      <div class="col-sm-4">
+        <select name="EquipModel" id = "EquipModel">
+          <option value="">...</option>
         </select>
         <?php echo "<p class='text-danger'>$NameE</p>";?>
       </div>
@@ -146,7 +165,42 @@ function JsontoDropdown($datapath){
   <?php
   echo "<h1>" .  $str . "</h1>";
   ?>
+  <Script>
+  var EquipmentTypeArray = [];
+  $.ajax({ //http://stackoverflow.com/questions/7346563/loading-local-json-file
+    url: "../Script/JSON/EquipType.json",
+    //force to handle it as text
+    dataType: "text",
+    success: function (dataTest) {
 
+      //data downloaded so we call parseJSON function
+      //and pass downloaded data
+      var EquipTypeJson = $.parseJSON(dataTest);
+      //now json variable contains data in json format
+      //let's display a few items
+      $.each(EquipTypeJson, function (i, jsonObjectList) {
+        //console.log(jsonObjectList['id']);
+        EquipmentTypeArray.push([jsonObjectList['id'],jsonObjectList['Type'],jsonObjectList['Model']]);
+        console.log(jsonObjectList['Type']);
+      });
+    }
+  });
+
+  function configureDropDownLists(EquipType,EquipModel) {//Function called when dropdown value change
+    EquipModel.options.length = 0;
+    for (var arrayID in EquipmentTypeArray){
+      if (EquipmentTypeArray[arrayID][1] == EquipType.value){
+        createOption(EquipModel, EquipmentTypeArray[arrayID][2], EquipmentTypeArray[arrayID][0]);
+      }
+    }
+  }
+  function createOption(EquipModel, text, value) {//add option to dropdown
+    var opt = document.createElement('option');
+    opt.value = value;
+    opt.text = text;
+    EquipModel.options.add(opt);
+  }
+  </Script>
 
 </body>
 </html>

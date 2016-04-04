@@ -99,7 +99,7 @@ function populateTable(){
       <td>".$CurrentRoomID."</td>
       <td><a href = ../Deploy/lookup.php?EquipID=".$id."> Lookup </a> &nbsp</td>
       <td><a href = ../Deploy/Deploy.php?id=".$id."> Move </a> &nbsp</td>
-      <td><a href = DeleteEquipment.php?id=".$id." onclick=\"return confirm('Are you sure to delete Room id: ".$id."');\"> Delete </a> &nbsp</td>
+      <td><a href = DeleteEquipment.php?id=".$id." onclick=\"return confirm('Are you sure to deactivate equipment id: ".$id."');\"> Delete </a> &nbsp</td>
       <td><a href = UpdateEquipment.php?id=".replaceSpace($id)."&Name=".replaceSpace($Name)."&Asset=".replaceSpace($Asset)."&Serial=".replaceSpace($Serial)."&Active=".replaceSpace($Active)."> Edit </a> &nbsp</td>
       </tr>";
     }

@@ -19,16 +19,13 @@ if (!isset($_SESSION['id'])) {
    <!-- Latest compiled and minified JavaScript -->
    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
 
- </head>
- <body>
-
    <nav class="navbar navbar-inverse">
      <div class="container-fluid">
        <div class="navbar-header">
          <a class="navbar-brand" href="#">NYIT</a>
        </div>
        <ul class="nav navbar-nav">
-         <li class="active"><a href="#">Home</a></li>
+         <li class="active"><a href="header.php">Home</a></li>
          <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Campus<span class="caret"></span></a>
            <ul class="dropdown-menu">
              <li><a href="Campus/InsertCampus.php">Insert Campus</a></li>
@@ -55,9 +52,9 @@ if (!isset($_SESSION['id'])) {
          </li>
          <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Equipment<span class="caret"></span></a>
            <ul class="dropdown-menu">
-             <li><a href=".Equipment/InsertEquipment.php">Insert Equipment</a></li>
-             <li><a href=".Equipment/LookupEquipment.php">Lookup Equipment</a></li>
-             <li><a href=".Equipment/DeleteEquipment.php">Delete Equipment</a></li>
+             <li><a href="Equipment/InsertEquipment.php">Insert Equipment</a></li>
+             <li><a href="Equipment/LookupEquipment.php">Lookup Equipment</a></li>
+             <li><a href="Equipment/DeleteEquipment.php">Delete Equipment</a></li>
              <li><a href="Equipment/UpdateEquipment.php">Update Equipment</a></li>
            </ul>
          </li>
@@ -81,5 +78,10 @@ if (!isset($_SESSION['id'])) {
        </ul>
      </div>
    </nav>
+ </head>
+ <body>
+
+<h1> Welcome <?php echo $_SESSION["Username"]?> !</h1>
+
  </body>
  </html>

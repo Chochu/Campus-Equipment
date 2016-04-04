@@ -61,9 +61,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {//If post request was called
 
     $sql = "
     UPDATE equipmenttype SET
-    Make = '".$Make."',
-    Model = '".$Model."',
-    Type = '".$Type."',
+    Make = '".$conn -> real_escape_string($Make)."',
+    Model = '".$conn -> real_escape_string($Model)."',
+    Type = '".$conn -> real_escape_string($Type)."',
     Description ='".$Description."'
     WHERE
     id = ".$Id;
@@ -151,7 +151,7 @@ function replaceSpace($string){
     <div class="form-group">
       <label for="name" class="col-sm-2 control-label">Make</label>
       <div class="col-sm-4">
-        <input type="text" class="form-control" id="make" name="make" placeholder="Dell" value="<?php getPost("id");?>">
+        <input type="text" class="form-control" id="make" name="make" placeholder="Dell" value="<?php getPost("Make");?>">
         <?php echo "<p class='text-danger'>$MakeE</p>";?>
       </div>
     </div>
@@ -159,7 +159,7 @@ function replaceSpace($string){
     <div class="form-group">
       <label for="name" class="col-sm-2 control-label">Model</label>
       <div class="col-sm-4">
-        <input type="text" class="form-control" id="model" name="model" placeholder="Optiplex 7010" value="<?php getPost("Make");?>">
+        <input type="text" class="form-control" id="model" name="model" placeholder="Optiplex 7010" value="<?php getPost("Model");?>">
         <?php echo "<p class='text-danger'>$ModelE</p>";?>
       </div>
     </div>
@@ -167,7 +167,7 @@ function replaceSpace($string){
     <div class="form-group">
       <label for="name" class="col-sm-2 control-label">Type</label>
       <div class="col-sm-4">
-        <input type="text" class="form-control" id="type" name="type" placeholder="PC" value="<?php getPost("Model");?>">
+        <input type="text" class="form-control" id="type" name="type" placeholder="PC" value="<?php getPost("Type");?>">
         <?php echo "<p class='text-danger'>$TypeE</p>";?>
       </div>
     </div>

@@ -14,6 +14,11 @@ function replaceSpace($string){
   return str_replace(" ","%",$string);
 }
 
+
+if( array_key_exists('EquipID',$_GET)){
+  //if there's set sql to get
+  $sql = "SELECT * FROM nyit.deploy WHERE EquipID LIKE " . $_GET['EquipID'] . ";";
+}
 function populateTable(){
 
   global $sql;
@@ -23,9 +28,6 @@ function populateTable(){
     // Check connection
     if ($conn->connect_error) {
       die("Connection failed: " . $conn->connect_error);
-    }
-    if( array_key_exists('key',$_GET) && array_key_exists('query',$_GET)){
-      $sql = "SELECT * FROM nyit.deploy WHERE " . $_GET['key'] . " LIKE '". $_GET['query'] . "';";
     }
 
     $Campus = array();   //Campus Array
@@ -78,8 +80,18 @@ function populateTable(){
         <td>".$PastCampusID."</td>
         <td>".$PastBuildingID."</td>
         <td>".$PastRoomID."</td>
-        <td><a href = DeleteRoom.php?id=".$id." onclick=\"return confirm('Are you sure to delete Building id: ".$id."');\"> Delete </a> &nbsp</td>
-        </tr>";
+        ";
+        if ($PastCampusID == ""){
+          echo "
+          <td><a href = DeleteRoom.php?id=".$id." onclick=\"return confirm('Are you sure to delete Building id: ".$id."');\"> Move </a> &nbsp</td>
+          </tr>";
+        }
+        else{
+          echo "
+          <td>&nbsp</td>
+          </tr>";
+        }
+
       }
     }
 

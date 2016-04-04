@@ -74,7 +74,6 @@ if (!isset($_SESSION['id'])) {
            <ul class="dropdown-menu">
              <li><a href="../Deploy/Deploy.php">Deploy</a></li>
              <li><a href="../Deploy/Lookup.php">Lookup</a></li>
-             <li><a href="../Deploy/Retired.php">Retired</a></li>
              <li><a href="../Deploy/Move.php">Move</a></li>
            </ul>
          </li>

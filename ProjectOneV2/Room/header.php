@@ -74,7 +74,6 @@ if (!isset($_SESSION['id'])) {
              <li><a href="../Deploy/Deploy.php">Deploy</a></li>
              <li><a href="../Deploy/Lookup.php">Lookup</a></li>
              <li><a href="../Deploy/Move.php">Move</a></li>
-             <li><a href="../Deploy/Retired.php">Retired</a></li>
            </ul>
          </li>
          <li><a href="../logout.php">Logout</a></li>

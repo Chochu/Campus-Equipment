@@ -43,6 +43,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") { //If post request was called
 
         if(var_export(hash_equals($hash, $row['pass']), true)){
           $_SESSION["id"] = $row['id'];
+          $_SESSION["Username"] = $row['user'];
           header('Location: /ProjectOneV2/header.php');
         }
       }
