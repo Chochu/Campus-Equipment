@@ -26,23 +26,23 @@ function populateTable(){
   if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
   }
-  //check if there is get method
-  if( array_key_exists('key',$_GET) && array_key_exists('query',$_GET)){
-    //if there's set sql to get
-    $sql = "SELECT * FROM building WHERE " . $_GET['key'] . " LIKE '". $_GET['query'] . "';";
-  }
+  // //check if there is "get method"
+  // if(array_key_exists('key',$_GET) && array_key_exists('query',$_GET)){
+  //   //if there's set sql to get
+  //   $sql = "SELECT * FROM building WHERE " . $_GET['key'] . " LIKE '". $_GET['query'] . "';";
+  // }
 
-  //CampusArray is use to get the campus name from the campus id
+  //CampusArray hold the primary key with the campus name
   $CampusArray = array();
   $str = file_get_contents($JsonCampus); //load campus json
   $json = json_decode($str,true); //decode
-  foreach ($json as $value){ //store to json array
+  foreach ($json as $value){ //store to $CampusArray as associate array
     $CampusArray[$value['id']] = $value['Name'];
   }
 
   //execute sql
   $result = $conn->query($sql);
-  //for each row return from the sql
+  //for each row return from the execution
   if ($result->num_rows > 0) {
     // output data of each row
     while($row = $result->fetch_assoc()) {

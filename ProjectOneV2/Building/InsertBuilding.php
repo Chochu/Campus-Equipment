@@ -2,10 +2,7 @@
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
-/*
-$_Get - Someone is requesting Data from your application
-$_Post - Someone is pushing (inserting/updating/deleting) data from your application
-*/
+
 ?>
 <html>
 <head>
@@ -26,9 +23,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") { //If post request was called
   else remove special header and set its to the variables
   */
   if (empty($_POST['name'])) {
-    $NameE = "Name is required";
+    $NameE = "Name is required"; //$NameE is set when the id field is empty
   } else {
-    $Name = TrimText($_POST["name"]);
+    $Name = TrimText($_POST["name"]);//else remove speical character and set it $Name
   }
 
   if (empty($_POST['abb'])) {

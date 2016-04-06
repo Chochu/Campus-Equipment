@@ -23,9 +23,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") { //If post request was called
   else remove special header and set its to the variables
   */
   if (empty($_POST["id"])) {
-    $IdE = "ID is required";
+    $IdE = "ID is required"; //idE is set when the id field is empty
   } else {
-    $Id = TrimText($_POST["id"]);
+    $Id = TrimText($_POST["id"]); //else remove speical character and set it Id
   }
   if (empty($_POST['name'])) {
     $NameE = "Name is required";
@@ -78,7 +78,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") { //If post request was called
       //run python Script to update json in Script/Json folder
       exec('python ../Script/UpdateBuildingJson.py');
     } else {
-      $str = "Error : " . $sql . "<br>" . $conn->error;
+      $str = "Error : " . $sql . "<br>" . $conn->error; //
     }
   }
 }
@@ -101,7 +101,7 @@ function TrimText($data) {
   return $data;
 }
 
-//Used for set the value of the html text from get request,
+//this function is use for set the value of the html text from "get request"
 //User doesnt have retype everything out
 function getPost($string){
   if( array_key_exists($string,$_GET)){

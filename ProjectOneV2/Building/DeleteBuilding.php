@@ -4,25 +4,25 @@ ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
 $id = $idE = ""; //id = holds id, idE = holds the error for id
-$sql = ""; //sql statement
-$result = ""; //holds result string
+$sql = ""; //query statement
+$result = ""; //holds result string, used to display the result of the execute query
 
 //If post request was called (use for when it's load from LookupBuilding)
 if($_SERVER["REQUEST_METHOD"] == "POST" )
 {
-  if (empty($_POST["id"])) { //if the id field is enter
+  if (empty($_POST["id"])) { //Check if the ID field is empty
     $idE = "Cannot delete entry without id number"; //set error for idE
   } else {
-    $id = TrimText($_POST["id"]); //remove special chars
+    $id = TrimText($_POST["id"]); //remove special chars before assign it the id
   }
-  if($id != ""){
+  if($id != ""){//check if the var $id is empty
     global $sql;
-    $sql = "DELETE FROM building WHERE id=" . $_POST['id'] .";";//set sql statement
+    $sql = "DELETE FROM building WHERE id=" . $_POST['id'] .";";//set query statement
   }
-  deleteRow(); //execute statment
+  deleteRow(); //call function to execute statment
 }
 
-//if this page was load from LookupCampus with get request, set sql and execute it
+//if this page was load from LookupCampus with get request, set query and execute it
 if( array_key_exists('id',$_GET)){
   $id = $_GET['id'];
   $sql = "DELETE FROM building WHERE id=" . $_GET['id']. ";";

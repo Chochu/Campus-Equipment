@@ -18,8 +18,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") { //If post request was called
   //are empty, This check prevent sql statement from executing if Name, Abb, and CampusID
   //are empty
   if($username != "" && $password != "" ){
-
-
     // Connection Data
     require 'ProjectOneV2/Credential.php';
     $conn = new mysqli($servername, $username, $password, $dbname);
@@ -28,28 +26,25 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") { //If post request was called
       die("Connection failed: " . $conn->connect_error);
     }
 
-
     $sql = "SELECT * FROM account WHERE user = '".$username."';"; //set query statement
 
-    $result = $conn->query($sql);
-    //for each row return from the sql
+    $result = $conn->query($sql); //execute query
 
-    if ($result->num_rows > 0) {
-      // output data of each row
 
-      if($row = $result->fetch_assoc())
+    if ($result->num_rows > 0) {//for each row return from the sql
+      if($row = $result->fetch_assoc())// output data of each row in assoc array
       {
-        $hash = crypt($Pass, $row['salt']);
+        $hash = crypt($Pass, $row['salt']); //$row[salt] = contains the salt for that user
 
-        if(var_export(hash_equals($hash, $row['pass']), true)){
-          $_SESSION["id"] = $row['id'];
-          $_SESSION["Username"] = $row['user'];
-          header('Location: /ProjectOneV2/header.php');
+        if(var_export(hash_equals($hash, $row['pass']), true)){ //check if the result matched with the store hash password
+          $_SESSION["id"] = $row['id']; //create session id
+          $_SESSION["Username"] = $row['user']; //and set username
+          header('Location: /ProjectOneV2/header.php'); //redirect to header , main page
         }
       }
     }
     else{
-      header('Location: /index.php?msg=' . urlencode(base64_encode("Incorrect Username and Password Combination")));
+      header('Location: /index.php?msg=' . urlencode(base64_encode("Incorrect Username and Password Combination"))); //no user was found Incorrect password or username
     }
 
   }

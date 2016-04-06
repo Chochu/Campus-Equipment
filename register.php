@@ -12,7 +12,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") { //If post request was called
   else remove special header and set its to the variables
   */
   $User = TrimText($_POST["username"]);
-  $Pass = TrimText($_POST["password"]);
+  $Pass = TrimText($_POST["password"]); //currently theres not requirement for password
   $Pass2 = TrimText($_POST["confirm-password"]);
 
   if ($Pass != $Pass2){
@@ -61,16 +61,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") { //If post request was called
 
     // get result of the executed statement
     if ($conn->query($sql) === TRUE) { //if success
-      //set result variable
-      header('Location: /index.php?msg=' . urlencode(base64_encode("Successfully Created an Account")));
-      //run python Script to update json in Script/Json folder
+      header('Location: /index.php?msg=' . urlencode(base64_encode("Successfully Created an Account"))); //redirect to login page with message
     } else {
-      header('Location: /index.php?msg=' . urlencode(base64_encode("There's was an error creating an account, most likely there was an account with that user name")));
+      header('Location: /index.php?msg=' . urlencode(base64_encode("There's was an error creating an account, most likely there was an account with that user name")));//redirect to login page with message
     }
   }
-//remove special char to prevent sql injection
 }
-function TrimText($data) {
+function TrimText($data) {//remove special char to prevent sql injection
   $data = trim($data);
   $data = stripslashes($data);
   $data = htmlspecialchars($data);

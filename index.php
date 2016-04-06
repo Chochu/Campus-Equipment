@@ -26,7 +26,6 @@
           <div class="panel-body">
             <div class="row">
               <div class="col-lg-12">
-
                 <!-- login-form -->
                 <form id="login-form" action="login.php" method="post" role="form" style="display: block;" onsubmit="return validatelogin()">
 
@@ -50,7 +49,7 @@
                 <!-- register-form -->
                 <form id="register-form" action="register.php" method="post" role="form" style="display: none;" onsubmit="return validateregister()">
 
-                  <div class="form-group">
+                  <div class="form-group"> 
                     <input type="text" name="username" id="username" tabindex="1" class="form-control" placeholder="Username" value="" required>
                   </div>
 
@@ -74,7 +73,7 @@
 
 
                 </form>
-                <?php
+                <?php //Display message from "Successfully Logout or Account Created Succuessfully"
                 if(array_key_exists('msg',$_GET)){
                   if ($_GET['msg'])
                   {
@@ -90,6 +89,7 @@
     </div>
   </div>
   <script>
+  //click event use for changing login form to register-form
   $(function() {
     $('#login-form-link').click(function(e) {
       $("#login-form").delay(100).fadeIn(100);
