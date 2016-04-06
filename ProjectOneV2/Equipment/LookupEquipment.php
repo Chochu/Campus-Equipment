@@ -3,13 +3,13 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
-$sql = "SELECT nyit.equipment.*,nyit.deploy.CurrentRoomID,nyit.deploy.CurrentBuildingID,nyit.deploy.CurrentCampusID,nyit.deploy.DateInstall FROM nyit.equipment LEFT JOIN nyit.deploy on nyit.equipment.id = nyit.deploy.EquipID  where nyit.deploy.PastRoomID is null;";//sql statement
+$sql = "SELECT nyit.equipment.*,nyit.deploy.CurrentRoomID,nyit.deploy.CurrentBuildingID,nyit.deploy.CurrentCampusID,nyit.deploy.DateInstall FROM nyit.equipment LEFT JOIN nyit.deploy on nyit.equipment.DeployID = nyit.deploy.id;";//sql statement
 
 //If post request was called, (use when search method is called)
 if($_SERVER["REQUEST_METHOD"] == "POST" )
 {
   global $sql;
-  $sql = "SELECT * FROM (SELECT nyit.equipment.*,nyit.deploy.CurrentRoomID,nyit.deploy.CurrentBuildingID,nyit.deploy.CurrentCampusID,nyit.deploy.DateInstall FROM nyit.equipment LEFT JOIN nyit.deploy on nyit.equipment.id = nyit.deploy.EquipID where nyit.deploy.PastRoomID is null) AS table1 WHERE " . $_POST['key'] . " LIKE '". $_POST['keyword'] . "';";
+  $sql = "SELECT * FROM (SELECT nyit.equipment.*,nyit.deploy.CurrentRoomID,nyit.deploy.CurrentBuildingID,nyit.deploy.CurrentCampusID,nyit.deploy.DateInstall FROM nyit.equipment LEFT JOIN nyit.deploy on nyit.equipment.DeployID = nyit.deploy.id) AS table1 WHERE " . $_POST['key'] . " LIKE '". $_POST['keyword'] . "';";
 
 }
 
@@ -30,7 +30,7 @@ function populateTable(){
   //check if there is get method
   if( array_key_exists('key',$_GET) && array_key_exists('query',$_GET)){
     //if there's set sql to get nyit.deploy.PastRoomID is null AND
-    $sql = "SELECT * FROM (SELECT nyit.equipment.*,nyit.deploy.CurrentRoomID,nyit.deploy.CurrentBuildingID,nyit.deploy.CurrentCampusID,nyit.deploy.DateInstall FROM nyit.equipment LEFT JOIN nyit.deploy on nyit.equipment.id = nyit.deploy.EquipID where nyit.deploy.PastRoomID is null)AS table1 WHERE " . $_GET['key'] . " LIKE '". $_GET['query'] . "';";
+    $sql = "SELECT * FROM (SELECT nyit.equipment.*,nyit.deploy.CurrentRoomID,nyit.deploy.CurrentBuildingID,nyit.deploy.CurrentCampusID,nyit.deploy.DateInstall FROM nyit.equipment LEFT JOIN nyit.deploy on nyit.equipment.DeployID = nyit.deploy.id)AS table1 WHERE " . $_GET['key'] . " LIKE '". $_GET['query'] . "';";
   }
   //EquipmentArray is use to get the campus name from the campus id
   $EquipmentArray = array();
@@ -99,7 +99,7 @@ function populateTable(){
       <td>".$CurrentRoomID."</td>
       <td><a href = ../Deploy/lookup.php?EquipID=".$id."> Lookup </a> &nbsp</td>
       <td><a href = ../Deploy/Deploy.php?id=".$id."> Move </a> &nbsp</td>
-      <td><a href = DeleteEquipment.php?id=".$id." onclick=\"return confirm('Are you sure to deactivate equipment id: ".$id."');\"> Delete </a> &nbsp</td>
+      <td><a href = DeleteEquipment.php?id=".$id." onclick=\"return confirm('Are you sure to deactivate equipment id: ".$id."');\"> Retire </a> &nbsp</td>
       <td><a href = UpdateEquipment.php?id=".replaceSpace($id)."&Name=".replaceSpace($Name)."&Asset=".replaceSpace($Asset)."&Serial=".replaceSpace($Serial)."&Active=".replaceSpace($Active)."> Edit </a> &nbsp</td>
       </tr>";
     }
@@ -163,7 +163,7 @@ function populateTable(){
                   <th>Room</th>
                   <th>History</th>
                   <th>Move</th>
-                  <th>Delete</th>
+                  <th>Retire</th>
                   <th>Edit</th>
                 </tr>
               </thead>

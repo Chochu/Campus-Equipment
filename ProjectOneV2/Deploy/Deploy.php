@@ -35,7 +35,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       die("Connection failed: " . $conn->connect_error);
     }
 
-    $sql = "SELECT * FROM nyit.deploy WHERE EquipID = " .$EquipID . " AND PastRoomID IS NULL;" ;
+    $sql = "SELECT * FROM nyit.deploy WHERE EquipID = " .$EquipID . " AND PastRoomID IS NULL;"
+     ;
     $result = $conn->query($sql);
     $str = $sql;
     //if that equipment is already deploy
@@ -67,8 +68,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       $str =  "Updated record created successfully";
     }
     if ($conn->query($sql) === TRUE) {//if success
-      //set result variable
-
+      //update DeployID, this hold which row in the deploy row holds the current location of the equipment
+      $returnID = $conn->insert_id;
+      $sql = "UPDATE `nyit`.`equipment` SET `DeployID` = ".$returnID." WHERE `id` = ".$EquipID.";";
+      $conn->query($sql);
     } else {
       $str = "Error : " . $sql . "<br>" . $conn->error;
     }
