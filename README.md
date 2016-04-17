@@ -1,5 +1,4 @@
-# NYITDatabase
-Manage NYIT Equipement
+Manage Campus Equipement
 Simple Webform that keep track of equipment around campus. 
 This is a prototype, and used as a learning/testing project for php,javascript, and html.
 
