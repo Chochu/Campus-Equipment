@@ -1,11 +1,5 @@
 <?php
-echo'
-<a href = "../index.php"> Main </a> &nbsp
-<a href = "test.php"> Test </a> &nbsp
-<a href = "PostItem.php"> Insert Item </a> &nbsp
-<a href = "LookUp.php"> Look Up Database </a> &nbsp
-';
- ?>
+?>
  <html lang = "en">
  <head>
    <meta charset="UTF-8">
@@ -22,6 +16,5 @@ echo'
 
  </head>
  <body>
-
  </body>
  </html>
