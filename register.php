@@ -25,7 +25,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") { //If post request was called
   if($User != "" && ($Pass == $Pass2) && $Pass != ""){
 
     // Connection Data
-    require '/ProjectOneV2/Credential.php';
+    require 'ProjectOneV2/Credential.php';
     $conn = new mysqli($servername, $username, $password, $dbname);
     // Check connection
     if ($conn->connect_error) {

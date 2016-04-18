@@ -26,7 +26,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") { //If post request was called
       die("Connection failed: " . $conn->connect_error);
     }
 
-    $sql = "SELECT * FROM account WHERE user = '".$username."';"; //set query statement
+    $sql = "SELECT * FROM account WHERE Username = '".$username."';"; //set query statement
 
     $result = $conn->query($sql); //execute query
 
@@ -38,7 +38,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") { //If post request was called
         if( $row['pass'] == $password){ //check if the result matched with the store hash password
           $_SESSION["id"] = $row['id']; //create session id
           $_SESSION["Username"] = $row['user']; //and set username
-          header('Location: home.php'); //redirect to header , main page
+          header('Location: /home.php'); //redirect to header , main page
         }
       }
     }

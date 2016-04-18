@@ -75,9 +75,11 @@ function TrimText($data) {
 
 </head>
 <body>
+  
   <h2>Delete Building</h2>
   <!-- Id field -->
   <form class="form-horizontal" role="form" method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
+
     <div class="form-group">
       <label for="name" class="col-sm-2 control-label">ID</label>
       <div class="col-sm-4">

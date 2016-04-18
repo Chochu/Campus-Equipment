@@ -15,7 +15,7 @@
             <div class="row">
               <div class="col-lg-12">
                 <!-- login-form -->
-                <form id="login-form" action="login.php" method="post" role="form" style="display: block;" onsubmit="return validatelogin()">
+                <form id="login-form" action="CheckPassword.php" method="post" role="form" style="display: block;" onsubmit="return validatelogin()">
 
                   <div class="form-group">
                     <input type="text" name="username" id="username" tabindex="1" class="form-control" placeholder="Username" value="" required>
