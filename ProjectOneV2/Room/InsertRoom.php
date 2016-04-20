@@ -93,7 +93,7 @@ function JsontoDropdown($datapath){
 ?>
 <meta charset="UTF-8">
 <div class="menu">
-  <?php include 'header.php'; //load menu?>
+  <?php include '../header.php'; //load menu?>
   <br><br>
 </div>
 

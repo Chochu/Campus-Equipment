@@ -74,54 +74,57 @@ function populateTable(){
 <html lang = "en">
 <head>
   <div class="menu">
-    <?php include 'header.php'; ?>
+    <?php include '../header.php'; ?>
     <br><br>
   </div>
 </head>
 <body>
-  <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
-    <p>
-      Search
-      <select name="key">
-        <option value="Name">Name</option>
-        <option value="Abb">Abb</option>
-        <option value="CampusID">Campus ID</option>
-        <option value="AltName">Alt Name</option>
-      </select>
-      Keyword: <input type="text" name="keyword">
-      <input type="submit" name="submit" value="Submit">
-    </p>
-  </form>
-
-  <div class="row">
-    <div class="col-lg-12">
-      <div class="panel panel-default">
-        <div class="panel-heading">
-          Result
-        </div>
-        <div class="panel-body">
-          <div class="dataTable_wrapper">
-            <table class="table table-striped table-bordered table-hover" id="dataTables-example">
-              <thead>
-                <tr>
-                  <th>ID</th>
-                  <th>Name</th>
-                  <th>Abb</th>
-                  <th>AltName</th>
-                  <th>CampusID</th>
-                  <th>Campus Name</th>
-                  <th>Delete</th>
-                  <th>Edit</th>
-                </tr>
-              </thead>
-              <tbody>
-                <?php
-                populateTable();
-                ?>
-              </tbody>
-            </table>
+  <div class="container-fluid">
+    <div class = "row">
+      <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
+        <p id = "search">
+          Search
+          <select name="key">
+            <option value="Name">Name</option>
+            <option value="Abb">Abb</option>
+            <option value="CampusID">Campus ID</option>
+            <option value="AltName">Alt Name</option>
+          </select>
+          Keyword: <input type="text" name="keyword">
+          <input type="submit" name="submit" value="Submit" class="btn btn-search btn-xs">
+        </p>
+      </form>
+    </div>
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            Result
           </div>
+          <div class="panel-body">
+            <div class="dataTable_wrapper">
+              <table class="table table-inverse table-bordered table-hover" id="dataTables-example">
+                <thead>
+                  <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Abb</th>
+                    <th>AltName</th>
+                    <th>CampusID</th>
+                    <th>Campus Name</th>
+                    <th>Delete</th>
+                    <th>Edit</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <?php
+                  populateTable();
+                  ?>
+                </tbody>
+              </table>
+            </div>
 
+          </div>
         </div>
       </div>
     </div>

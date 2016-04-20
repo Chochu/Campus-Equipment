@@ -68,14 +68,14 @@ function TrimText($data) {
 <head>
   <div class="menu">
     <?php
-    include 'header.php'; //load menu
+    include '../header.php'; //load menu
     ?>
     <br><br>
   </div>
 
 </head>
 <body>
-  
+
   <h2>Delete Building</h2>
   <!-- Id field -->
   <form class="form-horizontal" role="form" method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
@@ -90,7 +90,7 @@ function TrimText($data) {
     <!-- Sumbit Buttom -->
     <div class="form-group">
       <div class="col-sm-10 col-sm-offset-2">
-        <input id="submit" name="submit" type="submit" value="Delete" class="btn btn-primary">
+        <input id="submit" name="submit" type="submit" value="Delete" class="btn btn-query btn-md">
       </div>
     </div>
 

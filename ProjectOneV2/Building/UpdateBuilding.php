@@ -119,7 +119,7 @@ function replaceSpace($string){
 ?>
 <meta charset="UTF-8">
 <div class="menu">
-  <?php include 'header.php'; ?>
+  <?php include '../header.php'; ?>
   <br><br>
 </div>
 
@@ -127,7 +127,7 @@ function replaceSpace($string){
 <body>
 
   <h2>Update Building id: <?php getPost("id"); ?></h2>
-  <p><span class="error">* required field.</span></p>
+
 
   <form class="form-horizontal" role="form" method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
     <!-- id -->

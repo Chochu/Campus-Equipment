@@ -1,0 +1,52 @@
+body {
+  background: url(Images/background.jpg) no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+label,h2{
+  color: #DD4814;
+}
+#search{
+  color: #DD4814;
+  background: #333333;
+  border-top: 2px solid #191919;
+  height: 40px;
+  padding-top: 7px
+}
+select,option{
+  background-color: #4c4c4c;
+  border: 1px solid #666666;
+  color: #F4C8B8;
+}
+input{
+  background-color: #4c4c4c;
+  border: 1px solid #666666;
+}
+.btn-search {
+  background-color: #4c4c4c;
+  outline: none;
+  color: #fff;
+  text-transform: uppercase;
+  border-color: #000000;
+}
+.btn-search:hover,
+.btn-search:focus {
+  color: #fff;
+  background-color: #DD4814;
+  border-color: #E05A2B;
+}
+.btn-query {
+  background-color: #4c4c4c;
+  outline: none;
+  color: #fff;
+  text-transform: uppercase;
+  border-color: #772953;
+}
+.btn-query:hover,
+.btn-query:focus {
+  color: #fff;
+  background-color: #DD4814;
+  border-color: #E05A2B;
+}

@@ -39,7 +39,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") { //If post request was called
         if(var_export(hash_equals($hash, $row['pass']), true)){ //check if the result matched with the store hash password
           $_SESSION["id"] = $row['id']; //create session id
           $_SESSION["Username"] = $row['user']; //and set username
-          header('Location: /ProjectOneV2/header.php'); //redirect to header , main page
+          header('Location: /ProjectOneV2/home.php'); //redirect to header , main page
         }
       }
     }

@@ -93,7 +93,7 @@ function JsontoDropdown($datapath){
 ?>
 <meta charset="UTF-8">
 <div class="menu">
-  <?php include 'header.php'; ?>
+  <?php include '../header.php'; ?>
   <br><br>
 </div>
 
@@ -101,7 +101,7 @@ function JsontoDropdown($datapath){
 <body>
 
   <h2>Insert to Equipment Database</h2>
-  <p><span class="error">* required field.</span></p>
+
 
   <form class="form-horizontal" role="form" method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
     <!-- Name -->

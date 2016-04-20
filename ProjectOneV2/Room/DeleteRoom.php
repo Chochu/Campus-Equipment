@@ -64,7 +64,7 @@ function TrimText($data) {
 <head>
   <div class="menu">
     <?php
-    include 'header.php';//load menu ?>
+    include '../header.php';//load menu ?>
     <br><br>
   </div>
 

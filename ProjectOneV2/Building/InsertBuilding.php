@@ -100,7 +100,7 @@ function listcampusDropdown(){
 ?>
 
 <div class="menu">
-  <?php include 'header.php'; //load menu
+  <?php include '../header.php'; //load menu
   ?>
   <br><br>
 </div>
@@ -109,7 +109,7 @@ function listcampusDropdown(){
 <body>
 
   <h2>Insert to Building Database</h2>
-  <p><span class="error">* required field.</span></p>
+
 
   <form class="form-horizontal" role="form" method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
     <!-- Name -->

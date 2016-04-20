@@ -87,7 +87,7 @@ function TrimText($data) {
 ?>
 <meta charset="UTF-8">
 <div class="menu">
-  <?php include 'header.php';  //load menu?>
+  <?php include '../header.php';  //load menu?>
   <br><br>
 </div>
 
@@ -95,7 +95,7 @@ function TrimText($data) {
 <body>
 
   <h2>Insert to Equipment Type Database</h2>
-  <p><span class="error">* required field.</span></p>
+
   <form class="form-horizontal" role="form" method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
     <!-- Make -->
     <div class="form-group">

@@ -112,7 +112,7 @@ function populateTable(){
 <html lang = "en">
 <head>
   <div class="menu">
-    <?php include 'header.php'; ?>
+    <?php include '../header.php'; ?>
     <script>
     $(document).ready(function(){
       $('[data-toggle="popover"]').popover();
@@ -123,7 +123,7 @@ function populateTable(){
 </head>
 <body>
   <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
-    <p>
+    <p id = "search">
       Search
       <select name="key">
         <option value="Name">Name</option>
@@ -136,7 +136,7 @@ function populateTable(){
         <option value="DateInstall">Date: YYYY-MM-DD</option>
       </select>
       Keyword: <input type="text" name="keyword">
-      <input type="submit" name="submit" value="Submit">
+      <input type="submit" name="submit" value="Submit" class="btn btn-search btn-xs">
     </p>
   </form>
 

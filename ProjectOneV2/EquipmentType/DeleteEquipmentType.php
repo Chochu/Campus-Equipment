@@ -69,7 +69,7 @@ function TrimText($data) { //remove special character
 <head>
   <div class="menu">
     <?php
-     include 'header.php'; ?>
+     include '../header.php'; ?>
     <br><br>
   </div>
 

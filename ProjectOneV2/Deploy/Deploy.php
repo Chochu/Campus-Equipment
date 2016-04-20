@@ -94,7 +94,7 @@ function TrimText($data) {
 ?>
 <meta charset="UTF-8">
 <div class="menu">
-  <?php include 'header.php'; ?>
+  <?php include '../header.php'; ?>
   <br><br>
 </div>
 

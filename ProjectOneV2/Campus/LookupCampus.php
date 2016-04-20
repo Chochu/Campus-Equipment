@@ -68,13 +68,13 @@ function populateTable(){
 <html lang = "en">
 <head>
   <div class="menu">
-    <?php include 'header.php'; ?>
+    <?php include '../header.php'; ?>
     <br><br>
   </div>
 </head>
 <body>
   <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
-    <p>
+    <p id = "search">
       Search
       <select name="key">
         <option value="Name">Name</option>
@@ -85,7 +85,7 @@ function populateTable(){
         <option value="Country">Country</option>
       </select>
       Keyword: <input type="text" name="keyword">
-      <input type="submit" name="submit" value="Submit">
+      <input type="submit" name="submit" value="Submit" class="btn btn-search btn-xs">
     </p>
   </form>
 
