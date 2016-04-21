@@ -151,13 +151,13 @@ function JsontoDropdown($datapath){
     <div class="form-group">
       <label for="name" class="col-sm-2 control-label">Active</label>
       <div class="col-sm-4">
-        <input type="radio" name="active" value="1"> Yes
-        <input type="radio" name="active" value="0"> No
+        <input type="radio" name="active" value="1"> <font color=#DD4814 >Yes</font>
+        <input type="radio" name="active" value="0"> <font color=#DD4814 >No</font>
       </div>
     </div>
     <div id = "deploy" class="form-group">
       <div class="col-sm-10 col-sm-offset-2">
-        <input id="submit" name="submit" type="submit" value="Submit" class="btn btn-primary">
+        <input id="submit" name="submit" type="submit" value="Submit" class="btn btn-query">
       </div>
     </div>
 

@@ -9,20 +9,27 @@ label,h2{
   color: #DD4814;
 }
 #search{
-  color: #DD4814;
+  color: #F6F6F5;
   background: #333333;
-  border-top: 2px solid #191919;
-  height: 40px;
-  padding-top: 7px
+  border: 2px solid #191919;
+  height: 50px;
+  padding-top: 10px;
+  border-radius: 5px;
 }
 select,option{
   background-color: #4c4c4c;
   border: 1px solid #666666;
-  color: #F4C8B8;
+  color: #FFF;
 }
 input{
   background-color: #4c4c4c;
   border: 1px solid #666666;
+  color: #F6F6F5;
+
+}
+.nav > li > a::hover,
+.nav > li > a::focus{ // fix hover glow for nav bar
+  border:1px solid #000;
 }
 .btn-search {
   background-color: #4c4c4c;

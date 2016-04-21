@@ -192,7 +192,7 @@ function replaceSpace($string){
     <!-- Sumbit Button -->
     <div class="form-group">
       <div class="col-sm-10 col-sm-offset-2">
-        <input id="submit" name="submit" type="submit" value="Submit" class="btn btn-primary">
+        <input id="submit" name="submit" type="submit" value="Submit" class="btn btn-query">
       </div>
     </div>
 

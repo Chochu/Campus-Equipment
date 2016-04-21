@@ -27,15 +27,15 @@ function populateTable(){
   if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
   }
-    //check if there is get method
+  //check if there is get method
   if( array_key_exists('key',$_GET) && array_key_exists('query',$_GET)){
-      //if there's set sql to get
+    //if there's set sql to get
     $sql = "SELECT * FROM campus WHERE " . $_GET['key'] . " LIKE '". $_GET['query'] . "';";
   }
 
   //execute sql
   $result = $conn->query($sql);
-    //for each row return from the sql
+  //for each row return from the sql
   if ($result->num_rows > 0) {
     // output data of each row
     while($row = $result->fetch_assoc()) {
@@ -73,55 +73,68 @@ function populateTable(){
   </div>
 </head>
 <body>
-  <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
-    <p id = "search">
-      Search
-      <select name="key">
-        <option value="Name">Name</option>
-        <option value="Abb">Abb</option>
-        <option value="Address">Address</option>
-        <option value="State">State</option>
-        <option value="Zip">Zip</option>
-        <option value="Country">Country</option>
-      </select>
-      Keyword: <input type="text" name="keyword">
-      <input type="submit" name="submit" value="Submit" class="btn btn-search btn-xs">
-    </p>
-  </form>
+  <div class="container-fluid">
+    <div class = "row">
+      <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
+        <p id = "search">
+          Search
+          <!-- <div class="dropdown"> fixed dropmenu for search 
+            <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Dropdown Example
+              <span class="caret"></span></button>
+              <ul class="dropdown-menu">
+                <li><a href="#">HTML</a></li>
+                <li><a href="#">CSS</a></li>
+                <li><a href="#">JavaScript</a></li>
+              </ul>
+            </div> -->
+            <select name="key">
+              <option value="Name">Name</option>
+              <option value="Abb">Abb</option>
+              <option value="Address">Address</option>
+              <option value="State">State</option>
+              <option value="Zip">Zip</option>
+              <option value="Country">Country</option>
+            </select>
+            Keyword: <input type="text" name="keyword" class="input-sm ">
+            <input type="submit" name="submit" value="Submit" class="btn btn-search btn-xs">
+          </p>
+        </form>
+      </div>
+    </div>
 
-  <div class="row">
-    <div class="col-lg-12">
-      <div class="panel panel-default">
-        <div class="panel-heading">
-          Result
-        </div>
-        <div class="panel-body">
-          <div class="dataTable_wrapper">
-            <table class="table table-striped table-bordered table-hover" id="dataTables-example">
-              <thead>
-                <tr>
-                  <th>ID</th>
-                  <th>Name</th>
-                  <th>Abb</th>
-                  <th>Address</th>
-                  <th>State</th>
-                  <th>Zip</th>
-                  <th>Country</th>
-                  <th>Delete</th>
-                  <th>Edit</th>
-                </tr>
-              </thead>
-              <tbody>
-                <?php
-                populateTable();
-                ?>
-              </tbody>
-            </table>
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            Result
           </div>
+          <div class="panel-body">
+            <div class="dataTable_wrapper">
+              <table class="table table-striped table-bordered table-hover" id="dataTables-example">
+                <thead>
+                  <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Abb</th>
+                    <th>Address</th>
+                    <th>State</th>
+                    <th>Zip</th>
+                    <th>Country</th>
+                    <th>Delete</th>
+                    <th>Edit</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <?php
+                  populateTable();
+                  ?>
+                </tbody>
+              </table>
+            </div>
 
+          </div>
         </div>
       </div>
     </div>
-  </div>
-</body>
-</html>
+  </body>
+  </html>
