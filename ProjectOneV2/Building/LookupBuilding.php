@@ -90,7 +90,7 @@ function populateTable(){
             <option value="CampusID">Campus ID</option>
             <option value="AltName">Alt Name</option>
           </select>
-          Keyword: <input type="text" name="keyword">
+          Keyword: <input type="text" name="keyword" class="input-sm ">
           <input type="submit" name="submit" value="Submit" class="btn btn-search btn-xs">
         </p>
       </form>

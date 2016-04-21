@@ -135,7 +135,7 @@ function populateTable(){
         <option value="CuurentRoomID">Room</option>
         <option value="DateInstall">Date: YYYY-MM-DD</option>
       </select>
-      Keyword: <input type="text" name="keyword">
+      Keyword: <input type="text" name="keyword" class="input-sm "> 
       <input type="submit" name="submit" value="Submit" class="btn btn-search btn-xs">
     </p>
   </form>

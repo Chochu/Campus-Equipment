@@ -77,7 +77,7 @@ function populateTable(){
         <option value="Model">Model</option>
         <option value="Type">Type</option>
       </select>
-      Keyword: <input type="text" name="keyword">
+      Keyword: <input type="text" name="keyword" class="input-sm "> 
       <input type="submit" name="submit" value="Submit" class="btn btn-search btn-xs">
     </p>
   </form>
