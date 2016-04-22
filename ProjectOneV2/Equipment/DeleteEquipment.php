@@ -61,30 +61,35 @@ function TrimText($data) {
 <head>
   <div class="menu">
     <?php
-     include '../header.php'; ?>
+    include '../header.php'; ?>
     <br><br>
   </div>
 
 </head>
 <body>
-  <h2>Delete Equipment</h2>
-  <form class="form-horizontal" role="form" method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
-    <div class="form-group">
-      <label for="name" class="col-sm-2 control-label">ID</label>
-      <div class="col-sm-4">
-        <input type="text" class="form-control" id="id" name="id" placeholder="ID Number" value="<?php echo $id;?>">
-        <?php echo "<p class='text-danger'>$idE</p>";?>
-      </div>
-    </div>
-    <div class="form-group">
-      <div class="col-sm-10 col-sm-offset-2">
-        <input id="submit" name="submit" type="submit" value="Delete" class="btn btn-query">
-      </div>
-    </div>
+  <div class="container">
+    <h2>Delete Equipment</h2>
+    <div class="row">
 
-  </form>
-  <?php
-  echo "<h1>" .  $result . "</h1>";
-  ?>
+      <form class="form-horizontal" role="form" method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
+        <div class="form-group">
+          <label for="name" class="col-sm-2 control-label">ID</label>
+          <div class="col-sm-4">
+            <input type="text" class="form-control" id="id" name="id" placeholder="ID Number" value="<?php echo $id;?>">
+            <?php echo "<p class='text-danger'>$idE</p>";?>
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="col-sm-10 col-sm-offset-2">
+            <input id="submit" name="submit" type="submit" value="Delete" class="btn btn-query">
+          </div>
+        </div>
+
+      </form>
+      <?php
+      echo "<h1>" .  $result . "</h1>";
+      ?>
+    </div>
+  </div>
 </body>
 </html>

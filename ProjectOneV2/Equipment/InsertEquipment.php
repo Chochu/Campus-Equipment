@@ -99,72 +99,73 @@ function JsontoDropdown($datapath){
 
 </head>
 <body>
+  <div class="container">
+    <h2>Insert to Equipment Database</h2>
+    <div class="row">
+      <form class="form-horizontal" role="form" method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
+        <!-- Name -->
+        <div class="form-group">
+          <label for="name" class="col-sm-2 control-label">Name</label>
+          <div class="col-sm-4">
+            <input type="text" class="form-control" id="name" name="name" value="<?php echo $Name;?>">
+            <?php echo "<p class='text-danger'>$NameE</p>";?>
+          </div>
+        </div>
+        <!-- Type Dropdown -->
+        <div class="form-group">
+          <label for="name" class="col-sm-2 control-label">Type</label>
+          <div class="col-sm-4">
+            <!-- Configure Model dropdown based on the option user select on this dropdown -->
+            <select name="EquipType" onchange="configureDropDownLists(this,document.getElementById('EquipModel'))">
+              <option value="">...</option>
+              <?php JsontoDropdown('../Script/JSON/EquipType.json');?>
+            </select>
+            <?php echo "<p class='text-danger'>$NameE</p>";?>
+          </div>
+        </div>
+        <!-- Model Dropdown -->
+        <div class="form-group">
+          <label for="name" class="col-sm-2 control-label">Model</label>
+          <div class="col-sm-4">
+            <select name="EquipModel" id = "EquipModel">
+              <option value="">...</option>
+            </select>
+            <?php echo "<p class='text-danger'>$NameE</p>";?>
+          </div>
+        </div>
+        <!-- Asset -->
+        <div class="form-group">
+          <label for="name" class="col-sm-2 control-label">Asset</label>
+          <div class="col-sm-4">
+            <input type="text" class="form-control" id="Asset" name="Asset" value="<?php echo $Asset;?>">
+          </div>
+        </div>
+        <!-- Serial -->
+        <div class="form-group">
+          <label for="name" class="col-sm-2 control-label">Serial</label>
+          <div class="col-sm-4">
+            <input type="text" class="form-control" id="Serial" name="Serial" value="<?php echo $Serial;?>">
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="name" class="col-sm-2 control-label">Active</label>
+          <div class="col-sm-4">
+            <input type="radio" name="active" value="1"> <font color=#DD4814 >Yes</font>
+            <input type="radio" name="active" value="0"> <font color=#DD4814 >No</font>
+          </div>
+        </div>
+        <div id = "deploy" class="form-group">
+          <div class="col-sm-10 col-sm-offset-2">
+            <input id="submit" name="submit" type="submit" value="Submit" class="btn btn-query">
+          </div>
+        </div>
 
-  <h2>Insert to Equipment Database</h2>
-
-
-  <form class="form-horizontal" role="form" method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
-    <!-- Name -->
-    <div class="form-group">
-      <label for="name" class="col-sm-2 control-label">Name</label>
-      <div class="col-sm-4">
-        <input type="text" class="form-control" id="name" name="name" value="<?php echo $Name;?>">
-        <?php echo "<p class='text-danger'>$NameE</p>";?>
-      </div>
+      </form>
+      <?php
+      echo "<h1>" .  $str . "</h1>";
+      ?>
     </div>
-    <!-- Type Dropdown -->
-    <div class="form-group">
-      <label for="name" class="col-sm-2 control-label">Type</label>
-      <div class="col-sm-4">
-        <!-- Configure Model dropdown based on the option user select on this dropdown -->
-        <select name="EquipType" onchange="configureDropDownLists(this,document.getElementById('EquipModel'))">
-          <option value="">...</option>
-          <?php JsontoDropdown('../Script/JSON/EquipType.json');?>
-        </select>
-        <?php echo "<p class='text-danger'>$NameE</p>";?>
-      </div>
-    </div>
-    <!-- Model Dropdown -->
-    <div class="form-group">
-      <label for="name" class="col-sm-2 control-label">Model</label>
-      <div class="col-sm-4">
-        <select name="EquipModel" id = "EquipModel">
-          <option value="">...</option>
-        </select>
-        <?php echo "<p class='text-danger'>$NameE</p>";?>
-      </div>
-    </div>
-    <!-- Asset -->
-    <div class="form-group">
-      <label for="name" class="col-sm-2 control-label">Asset</label>
-      <div class="col-sm-4">
-        <input type="text" class="form-control" id="Asset" name="Asset" value="<?php echo $Asset;?>">
-      </div>
-    </div>
-    <!-- Serial -->
-    <div class="form-group">
-      <label for="name" class="col-sm-2 control-label">Serial</label>
-      <div class="col-sm-4">
-        <input type="text" class="form-control" id="Serial" name="Serial" value="<?php echo $Serial;?>">
-      </div>
-    </div>
-    <div class="form-group">
-      <label for="name" class="col-sm-2 control-label">Active</label>
-      <div class="col-sm-4">
-        <input type="radio" name="active" value="1"> <font color=#DD4814 >Yes</font>
-        <input type="radio" name="active" value="0"> <font color=#DD4814 >No</font>
-      </div>
-    </div>
-    <div id = "deploy" class="form-group">
-      <div class="col-sm-10 col-sm-offset-2">
-        <input id="submit" name="submit" type="submit" value="Submit" class="btn btn-query">
-      </div>
-    </div>
-
-  </form>
-  <?php
-  echo "<h1>" .  $str . "</h1>";
-  ?>
+  </div>
   <Script>
   var EquipmentTypeArray = [];
   $.ajax({ //http://stackoverflow.com/questions/7346563/loading-local-json-file

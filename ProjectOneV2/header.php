@@ -23,12 +23,12 @@ if (!isset($_SESSION['id'])) {
 
   <div class="container-fluid">
     <div class="row">
-      <div class="col-xs-10 col-xs-offset-1">
-        <nav class="navbar navbar-inverse">
+      <div class="col-xs-12 ">
+        <nav class="navbar">
 
           <ul class="nav navbar-nav">
 
-            <li class="dropdown"><a href="../home.php">Home</a></li>
+            <li class="dropdown-toggle"><a href="../home.php">Home</a></li>
 
             <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Campus<span class="caret"></span></a>
               <ul class="dropdown-menu">
@@ -84,11 +84,11 @@ if (!isset($_SESSION['id'])) {
               </ul>
             </li>
 
-            <li class="dropdown"><a href="../logout.php">Logout</a></li>
-
+            <li class="dropdown-toggle"><a href="../logout.php">Logout</a></li>
+            <hr>
           </ul>
 
-          <hr>
+
         </div>
       </div>
     </nav>

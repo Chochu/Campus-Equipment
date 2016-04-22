@@ -22,40 +22,16 @@ if (!isset($_SESSION['id'])) {
   <style>
 
   body {
-    background: url(Images/background.jpg) no-repeat center center fixed;
+    /*background: url(Images/background.jpg) no-repeat center center fixed;*/
     -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;
     background-size: cover;
-  }
-  #WelcomeMes{
-    color: #DD4814;
 
   }
 
 
-  .nav .navbar-nav{
-    text-align: center;
-    display: inline-block;
-  }
 
-
-  .dropdown:hover{ // hover glow for nav bar
-    margin-top: -2px;
-    margin-bottom: -2px;
-    margin-left: -2px;
-    margin-right: -2px;
-    display: block;
-    border:1px solid #E05A2B;
-  }
-
-
-  .dropdown > a{
-    width: 162px;
-    text-align: center;
-    border-left: 1px solid #151515;
-    border-right: 1px solid #4D4D4D;
-  }
   hr{
     margin-top: 0px;
     margin-bottom: 0px;
@@ -66,18 +42,50 @@ if (!isset($_SESSION['id'])) {
     background-image: -moz-linear-gradient(left,rgba(0,0,0,0),rgba(0,0,0,0.15),rgba(0,0,0,0));
     background-image: -ms-linear-gradient(left,rgba(0,0,0,0),rgba(0,0,0,0.15),rgba(0,0,0,0));
     background-image: -o-linear-gradient(left,rgba(0,0,0,0),rgba(0,0,0,0.15),rgba(0,0,0,0));
-    background-image: linear-gradient(to left,rgba(21,21,21,0),rgba(224,90,43,25),rgba(0,0,0,0));
+    background-image: linear-gradient(to left,rgba(21,21,21,0),rgba(247,168,0,25),rgba(0,0,0,0));
   }
+
+  .dropdown-menu li a:hover{
+    box-shadow: 0 0 5px 1px #F7A800;
+  }
+
+  .dropdown-toggle{ /*when nav bar is click*/
+    background-image: linear-gradient(to bottom,rgba(255,255,255,100),rgba(222,222,222,50));
+    width: 162px;
+    text-align: center;
+    margin: 1px;
+  }
+
+  .nav .open>a,
+  .nav .open>a:focus,
+  .nav .open>a:hover
+  {
+    box-shadow: 0 0 5px 1px #F7A800;
+    border: none;
+  }
+  .navbar{
+    width: 1320px;
+    text-align: center;
+    margin: 0 auto;
+    }
+
+  .dropdown > a:hover,
+  .dropdown-toggle > a:hover{ // hover glow for nav bar
+    -moz-box-shadow: 0 0 4px #F7A800;
+    -webkit-box-shadow: 0 0 4px #F7A800;
+    box-shadow: 0 0 5px 1px #F7A800;
+  }
+
+
   </style>
 
   <div class="container-fluid">
     <div class="row">
-      <div class="col-xs-10 col-xs-offset-1">
-        <nav class="navbar navbar-inverse">
-
+      <div class="col-xs-12 ">
+        <nav class="navbar">
           <ul class="nav navbar-nav">
 
-            <li class="dropdown"><a href="home.php">Home</a></li>
+            <li class="dropdown-toggle"><a href="home.php">Home</a></li>
 
             <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Campus<span class="caret"></span></a>
               <ul class="dropdown-menu">
@@ -127,11 +135,9 @@ if (!isset($_SESSION['id'])) {
                 <li><a href="Deploy/Move.php">Move</a></li>
               </ul>
             </li>
-            <li class="dropdown"><a href="../logout.php">Logout</a></li>
-
+            <li class="dropdown-toggle"><a href="logout.php">Logout</a></li>
+            <hr>
           </ul>
-
-          <hr>
         </div>
       </div>
     </nav>

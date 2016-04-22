@@ -93,54 +93,58 @@ function TrimText($data) {
 
 </head>
 <body>
+  <div class="container">
+    <h2>Insert to Equipment Type Database</h2>
+    <div class="row">
 
-  <h2>Insert to Equipment Type Database</h2>
 
-  <form class="form-horizontal" role="form" method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
-    <!-- Make -->
-    <div class="form-group">
-      <label for="name" class="col-sm-2 control-label">Make</label>
-      <div class="col-sm-4">
-        <input type="text" class="form-control" id="make" name="make" placeholder="Dell" value="<?php echo $Make;?>">
-        <?php echo "<p class='text-danger'>$MakeE</p>";?>
-      </div>
-    </div>
-    <!-- Model -->
-    <div class="form-group">
-      <label for="name" class="col-sm-2 control-label">Model</label>
-      <div class="col-sm-4">
-        <input type="text" class="form-control" id="model" name="model" placeholder="Optiplex 7010" value="<?php echo $Model;?>">
-        <?php echo "<p class='text-danger'>$ModelE</p>";?>
-      </div>
-    </div>
-    <!-- Type  -->
-    <div class="form-group">
-      <label for="name" class="col-sm-2 control-label">Type</label>
-      <div class="col-sm-4">
-        <input type="text" class="form-control" id="type" name="type" placeholder="PC" value="<?php echo $Type;?>">
-        <?php echo "<p class='text-danger'>$TypeE</p>";?>
-      </div>
-    </div>
-    <!-- Description -->
-    <div class="form-group">
-      <label for="name" class="col-sm-2 control-label">Description</label>
-      <div class="col-sm-4">
-        <textarea name="description" rows="5" cols="40" id="description" name="description"></textarea>
-      </div>
-    </div>
+      <form class="form-horizontal" role="form" method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
+        <!-- Make -->
+        <div class="form-group">
+          <label for="name" class="col-sm-2 control-label">Make</label>
+          <div class="col-sm-4">
+            <input type="text" class="form-control" id="make" name="make" placeholder="Dell" value="<?php echo $Make;?>">
+            <?php echo "<p class='text-danger'>$MakeE</p>";?>
+          </div>
+        </div>
+        <!-- Model -->
+        <div class="form-group">
+          <label for="name" class="col-sm-2 control-label">Model</label>
+          <div class="col-sm-4">
+            <input type="text" class="form-control" id="model" name="model" placeholder="Optiplex 7010" value="<?php echo $Model;?>">
+            <?php echo "<p class='text-danger'>$ModelE</p>";?>
+          </div>
+        </div>
+        <!-- Type  -->
+        <div class="form-group">
+          <label for="name" class="col-sm-2 control-label">Type</label>
+          <div class="col-sm-4">
+            <input type="text" class="form-control" id="type" name="type" placeholder="PC" value="<?php echo $Type;?>">
+            <?php echo "<p class='text-danger'>$TypeE</p>";?>
+          </div>
+        </div>
+        <!-- Description -->
+        <div class="form-group">
+          <label for="name" class="col-sm-2 control-label">Description</label>
+          <div class="col-sm-4">
+            <textarea name="description" rows="5" cols="40" id="description" name="description"></textarea>
+          </div>
+        </div>
 
-    <!-- Sumbit Button -->
-    <div class="form-group">
-      <div class="col-sm-10 col-sm-offset-2">
-        <input id="submit" name="submit" type="submit" value="Submit" class="btn btn-query">
-      </div>
+        <!-- Sumbit Button -->
+        <div class="form-group">
+          <div class="col-sm-10 col-sm-offset-2">
+            <input id="submit" name="submit" type="submit" value="Submit" class="btn btn-query">
+          </div>
+        </div>
+
+      </form>
+      <?php
+      echo "<h1>" .  $str . "</h1>";//use to display result
+      ?>
+
     </div>
-
-  </form>
-  <?php
-  echo "<h1>" .  $str . "</h1>";//use to display result
-  ?>
-
+  </div>
 
 </body>
 </html>

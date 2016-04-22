@@ -89,7 +89,7 @@ function listcampusDropdown(){
   $str = file_get_contents($JsonCampus); //load text from file
   $json = json_decode($str,true);//decode to json var
   foreach ($json as $value){//loop through json
-     echo "<option value=\"".$value['id']."\">".$value['Name']."</option>";//add option value to dropdown
+    echo "<option value=\"".$value['id']."\">".$value['Name']."</option>";//add option value to dropdown
   }
 }
 
@@ -126,63 +126,67 @@ function replaceSpace($string){
 </head>
 <body>
 
-  <h2>Update Building id: <?php getPost("id"); ?></h2>
 
 
-  <form class="form-horizontal" role="form" method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
-    <!-- id -->
-    <div class="form-group">
-      <label for="name" class="col-sm-2 control-label">ID</label>
-      <div class="col-sm-4">
-        <input type="text" class="form-control" id="id" name="id" placeholder="0" value="<?php getPost("id");?>">
-        <?php echo "<p class='text-danger'>$IdE</p>";?>
-      </div>
-    </div>
-    <!-- Name -->
-    <div class="form-group">
-      <label for="name" class="col-sm-2 control-label">Name</label>
-      <div class="col-sm-4">
-        <input type="text" class="form-control" id="name" name="name" placeholder="Anna Rubin" value="<?php  getPost("Name");?>">
-        <?php echo "<p class='text-danger'>$NameE</p>";?>
-      </div>
-    </div>
-    <!-- Abb -->
-    <div class="form-group">
-      <label for="name" class="col-sm-2 control-label">Abb</label>
-      <div class="col-sm-4">
-        <input type="text" class="form-control" id="abb" name="abb" placeholder="AARH" value="<?php  getPost("Abb");?>">
-        <?php echo "<p class='text-danger'>$AbbE</p>";?>
-      </div>
-    </div>
-    <!-- Alt Name  -->
-    <div class="form-group">
-      <label for="name" class="col-sm-2 control-label">Alt Name</label>
-      <div class="col-sm-4">
-        <input type="text" class="form-control" id="altname" name="altname" placeholder="300 Building" value="<?php  getPost("AltName");?>">
-      </div>
-    </div>
-    <!-- Drop Down -->
-    <div class="form-group">
-      <label for="name" class="col-sm-2 control-label">Campus</label>
-      <div class="col-sm-4">
-        <select name="ddcampusid">
-          <option value="">...</option>
-          <?php listcampusDropdown();?>
-        </select>
-      </div>
-    </div>
-    <!-- Sumbit Button -->
-    <div class="form-group">
-      <div class="col-sm-10 col-sm-offset-2">
-        <input id="submit" name="submit" type="submit" value="Submit" class="btn btn-query">
-      </div>
-    </div>
+  <div class="container">
+    <h2>Update Building id: <?php getPost("id"); ?></h2>
+    <div class="row">
 
-  </form>
-  <?php
-  echo "<h1>" .  $str . "</h1>";//use to display result
-  ?>
+      <form class="form-horizontal" role="form" method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
+        <!-- id -->
+        <div class="form-group">
+          <label for="name" class="col-sm-2 control-label">ID</label>
+          <div class="col-sm-4">
+            <input type="text" class="form-control" id="id" name="id" placeholder="0" value="<?php getPost("id");?>">
+            <?php echo "<p class='text-danger'>$IdE</p>";?>
+          </div>
+        </div>
+        <!-- Name -->
+        <div class="form-group">
+          <label for="name" class="col-sm-2 control-label">Name</label>
+          <div class="col-sm-4">
+            <input type="text" class="form-control" id="name" name="name" placeholder="Anna Rubin" value="<?php  getPost("Name");?>">
+            <?php echo "<p class='text-danger'>$NameE</p>";?>
+          </div>
+        </div>
+        <!-- Abb -->
+        <div class="form-group">
+          <label for="name" class="col-sm-2 control-label">Abb</label>
+          <div class="col-sm-4">
+            <input type="text" class="form-control" id="abb" name="abb" placeholder="AARH" value="<?php  getPost("Abb");?>">
+            <?php echo "<p class='text-danger'>$AbbE</p>";?>
+          </div>
+        </div>
+        <!-- Alt Name  -->
+        <div class="form-group">
+          <label for="name" class="col-sm-2 control-label">Alt Name</label>
+          <div class="col-sm-4">
+            <input type="text" class="form-control" id="altname" name="altname" placeholder="300 Building" value="<?php  getPost("AltName");?>">
+          </div>
+        </div>
+        <!-- Drop Down -->
+        <div class="form-group">
+          <label for="name" class="col-sm-2 control-label">Campus</label>
+          <div class="col-sm-4">
+            <select name="ddcampusid">
+              <option value="">...</option>
+              <?php listcampusDropdown();?>
+            </select>
+          </div>
+        </div>
+        <!-- Sumbit Button -->
+        <div class="form-group">
+          <div class="col-sm-10 col-sm-offset-2">
+            <input id="submit" name="submit" type="submit" value="Submit" class="btn btn-query">
+          </div>
+        </div>
 
+      </form>
+      <?php
+      echo "<h1>" .  $str . "</h1>";//use to display result
+      ?>
+    </div>
+  </div>
 
 </body>
 </html>

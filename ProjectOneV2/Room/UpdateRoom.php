@@ -87,7 +87,7 @@ function listcampusDropdown(){
   $str = file_get_contents($JsonCampus); //load text from file
   $json = json_decode($str,true);//decode to json var
   foreach ($json as $value){//loop through json
-     echo "<option value=\"".$value['id']."\">".$value['Name']."</option>";//add option value to dropdown
+    echo "<option value=\"".$value['id']."\">".$value['Name']."</option>";//add option value to dropdown
   }
 }
 //remove special char to prevent sql injection
@@ -121,87 +121,90 @@ function replaceSpace($string){
 </head>
 <body>
 
-  <h2>Update Room id: <?php getPost("id"); ?></h2>
 
 
-  <form class="form-horizontal" role="form" method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
-    <!-- id -->
-    <div class="form-group">
-      <label for="name" class="col-sm-2 control-label">ID</label>
-      <div class="col-sm-4">
-        <input type="text" class="form-control" id="id" name="id" placeholder="0" value="<?php getPost("id");?>">
-        <?php echo "<p class='text-danger'>$IdE</p>";?>
-      </div>
-    </div>
-    <!-- Room Number -->
-    <div class="form-group">
-      <label for="name" class="col-sm-2 control-label">Room Number</label>
-      <div class="col-sm-4">
-        <input type="text" class="form-control" id="room" name="room" placeholder="130" value="<?php  getPost("Room");?>">
-        <?php echo "<p class='text-danger'>$RoomNumE</p>";?>
-      </div>
-    </div>
-    <!-- Alt Name  -->
-    <div class="form-group">
-      <label for="name" class="col-sm-2 control-label">Alt Name</label>
-      <div class="col-sm-4">
-        <input type="text" class="form-control" id="altname" name="altname" placeholder="Lecture Hall" value="<?php  getPost("Alt");?>">
-      </div>
-    </div>
-    <!-- Campus Dropdown -->
-    <div class="form-group">
-      <label for="name" class="col-sm-2 control-label">Campus</label>
-      <div class="col-sm-4">
-        <select name="ddcampusid" onchange="configureDropDownLists(this,document.getElementById('ddbuildingid'))">
-          <option value="">...</option>
-          <?php listcampusDropdown();?>
-        </select>
-        <?php echo "<p class='text-danger'>$CampusIDE</p>";?>
-      </div>
-    </div>
-    <!-- Building Dropdown -->
-    <div class="form-group">
-      <label for="name" class="col-sm-2 control-label">Building</label>
-      <div class="col-sm-4">
-        <select name="ddbuildingid" id="ddbuildingid">
-          <option value="">...</option>
-        </select>
-        <?php echo "<p class='text-danger'>$CampusIDE</p>";?>
-      </div>
-    </div>
-    <div class="form-group">
-      <!-- Submit Button -->
-      <div class="col-sm-10 col-sm-offset-2">
-        <input id="submit" name="submit" type="submit" value="Submit" class="btn btn-query">
-      </div>
-    </div>
+  <div class="container">
+    <h2>Update Room id: <?php getPost("id"); ?></h2>
+    <div class="row">
+      <form class="form-horizontal" role="form" method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
+        <!-- id -->
+        <div class="form-group">
+          <label for="name" class="col-sm-2 control-label">ID</label>
+          <div class="col-sm-4">
+            <input type="text" class="form-control" id="id" name="id" placeholder="0" value="<?php getPost("id");?>">
+            <?php echo "<p class='text-danger'>$IdE</p>";?>
+          </div>
+        </div>
+        <!-- Room Number -->
+        <div class="form-group">
+          <label for="name" class="col-sm-2 control-label">Room Number</label>
+          <div class="col-sm-4">
+            <input type="text" class="form-control" id="room" name="room" placeholder="130" value="<?php  getPost("Room");?>">
+            <?php echo "<p class='text-danger'>$RoomNumE</p>";?>
+          </div>
+        </div>
+        <!-- Alt Name  -->
+        <div class="form-group">
+          <label for="name" class="col-sm-2 control-label">Alt Name</label>
+          <div class="col-sm-4">
+            <input type="text" class="form-control" id="altname" name="altname" placeholder="Lecture Hall" value="<?php  getPost("Alt");?>">
+          </div>
+        </div>
+        <!-- Campus Dropdown -->
+        <div class="form-group">
+          <label for="name" class="col-sm-2 control-label">Campus</label>
+          <div class="col-sm-4">
+            <select name="ddcampusid" onchange="configureDropDownLists(this,document.getElementById('ddbuildingid'))">
+              <option value="">...</option>
+              <?php listcampusDropdown();?>
+            </select>
+            <?php echo "<p class='text-danger'>$CampusIDE</p>";?>
+          </div>
+        </div>
+        <!-- Building Dropdown -->
+        <div class="form-group">
+          <label for="name" class="col-sm-2 control-label">Building</label>
+          <div class="col-sm-4">
+            <select name="ddbuildingid" id="ddbuildingid">
+              <option value="">...</option>
+            </select>
+            <?php echo "<p class='text-danger'>$CampusIDE</p>";?>
+          </div>
+        </div>
+        <div class="form-group">
+          <!-- Submit Button -->
+          <div class="col-sm-10 col-sm-offset-2">
+            <input id="submit" name="submit" type="submit" value="Submit" class="btn btn-query">
+          </div>
+        </div>
 
-  </form>
-  <?php
-  echo "<h1>" .  $str . "</h1>";
-  ?>
-
+      </form>
+      <?php
+      echo "<h1>" .  $str . "</h1>";
+      ?>
+    </div>
+  </div>
   <script>
   var gBuildingjson;
   var BuildingArr = [];
   $.ajax({ //http://stackoverflow.com/questions/7346563/loading-local-json-file
-         url: "../Script/JSON/building.json",
-             //force to handle it as text
-         dataType: "text",
-              success: function (dataTest) {
+    url: "../Script/JSON/building.json",
+    //force to handle it as text
+    dataType: "text",
+    success: function (dataTest) {
 
-                  //data downloaded so we call parseJSON function
-                  //and pass downloaded data
-                  var Buildingjson = $.parseJSON(dataTest);
-                  gBuildingjson = Buildingjson;
-                  //now json variable contains data in json format
-                  //let's display a few items
-                  $.each(Buildingjson, function (i, jsonObjectList) {
-                    //console.log(jsonObjectList['id']);
-                    BuildingArr.push([jsonObjectList['id'],jsonObjectList['Name'],jsonObjectList['CampusID']]);
-                   });
-               }
-    });
+      //data downloaded so we call parseJSON function
+      //and pass downloaded data
+      var Buildingjson = $.parseJSON(dataTest);
+      gBuildingjson = Buildingjson;
+      //now json variable contains data in json format
+      //let's display a few items
+      $.each(Buildingjson, function (i, jsonObjectList) {
+        //console.log(jsonObjectList['id']);
+        BuildingArr.push([jsonObjectList['id'],jsonObjectList['Name'],jsonObjectList['CampusID']]);
+      });
+    }
+  });
 
 
   function configureDropDownLists(ddcampusid,ddbuildingid) {

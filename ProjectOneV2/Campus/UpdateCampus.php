@@ -128,79 +128,82 @@ function replaceSpace($string){
 
 </head>
 <body>
+  <div class="container">
+    <h2>Update Campus id: <?php getPost("id"); ?></h2>
+    <div class="row">
 
-  <h2>Update Campus id: <?php getPost("id"); ?></h2>
 
 
-  <form class="form-horizontal" role="form" method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
-    <!-- id -->
-    <div class="form-group">
-      <label for="name" class="col-sm-2 control-label">ID</label>
-      <div class="col-sm-4">
-        <input type="text" class="form-control" id="id" name="id" placeholder="0" value="<?php getPost("id");?>">
-        <?php echo "<p class='text-danger'>$IdE</p>";?>
-      </div>
-    </div>
-    <!-- Name -->
-    <div class="form-group">
-      <label for="name" class="col-sm-2 control-label">Name</label>
-      <div class="col-sm-4">
-        <input type="text" class="form-control" id="name" name="name" placeholder="Old Westbury" value="<?php  getPost("Name");?>">
-        <?php echo "<p class='text-danger'>$NameE</p>";?>
-      </div>
-    </div>
-    <!-- Abb -->
-    <div class="form-group">
-      <label for="name" class="col-sm-2 control-label">Abb</label>
-      <div class="col-sm-4">
-        <input type="text" class="form-control" id="abb" name="abb" placeholder="OW" value="<?php  getPost("Abb");?>">
-        <?php echo "<p class='text-danger'>$AbbE</p>";?>
-      </div>
-    </div>
-    <!-- Address  -->
-    <div class="form-group">
-      <label for="name" class="col-sm-2 control-label">Address</label>
-      <div class="col-sm-4">
-        <input type="text" class="form-control" id="address" name="address" placeholder="Northern Blvd, Old Westbury" value="<?php  getPost("Address");?>">
-        <?php echo "<p class='text-danger'>$AddressE</p>";?>
-      </div>
-    </div>
-    <!-- State -->
-    <div class="form-group">
-      <label for="name" class="col-sm-2 control-label">State</label>
-      <div class="col-sm-4">
-        <input type="text" class="form-control" id="state" name="state"  placeholder="NY" value="<?php  getPost("State");?>">
-        <?php echo "<p class='text-danger'>$StateE</p>";?>
-      </div>
-    </div>
-    <!-- Zip -->
-    <div class="form-group">
-      <label for="name" class="col-sm-2 control-label">Zip Code</label>
-      <div class="col-sm-4">
-        <input type="text" class="form-control" id="zip" name="zip"  placeholder="11568" value="<?php  getPost("Zip");?>">
-        <?php echo "<p class='text-danger'>$ZipE</p>";?>
-      </div>
-    </div>
-    <!-- Country -->
-    <div class="form-group">
-      <label for="name" class="col-sm-2 control-label">Country</label>
-      <div class="col-sm-4">
-        <input type="text" class="form-control" id="country" name="country" placeholder="USA" value="<?php  getPost("Country");?>">
-        <?php echo "<p class='text-danger'>$CountryE</p>";?>
-      </div>
-    </div>
-    <!-- Sumbit Button -->
-    <div class="form-group">
-      <div class="col-sm-10 col-sm-offset-2">
-        <input id="submit" name="submit" type="submit" value="Submit" class="btn btn-query">
-      </div>
-    </div>
+      <form class="form-horizontal" role="form" method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
+        <!-- id -->
+        <div class="form-group">
+          <label for="name" class="col-sm-2 control-label">ID</label>
+          <div class="col-sm-4">
+            <input type="text" class="form-control" id="id" name="id" placeholder="0" value="<?php getPost("id");?>">
+            <?php echo "<p class='text-danger'>$IdE</p>";?>
+          </div>
+        </div>
+        <!-- Name -->
+        <div class="form-group">
+          <label for="name" class="col-sm-2 control-label">Name</label>
+          <div class="col-sm-4">
+            <input type="text" class="form-control" id="name" name="name" placeholder="Old Westbury" value="<?php  getPost("Name");?>">
+            <?php echo "<p class='text-danger'>$NameE</p>";?>
+          </div>
+        </div>
+        <!-- Abb -->
+        <div class="form-group">
+          <label for="name" class="col-sm-2 control-label">Abb</label>
+          <div class="col-sm-4">
+            <input type="text" class="form-control" id="abb" name="abb" placeholder="OW" value="<?php  getPost("Abb");?>">
+            <?php echo "<p class='text-danger'>$AbbE</p>";?>
+          </div>
+        </div>
+        <!-- Address  -->
+        <div class="form-group">
+          <label for="name" class="col-sm-2 control-label">Address</label>
+          <div class="col-sm-4">
+            <input type="text" class="form-control" id="address" name="address" placeholder="Northern Blvd, Old Westbury" value="<?php  getPost("Address");?>">
+            <?php echo "<p class='text-danger'>$AddressE</p>";?>
+          </div>
+        </div>
+        <!-- State -->
+        <div class="form-group">
+          <label for="name" class="col-sm-2 control-label">State</label>
+          <div class="col-sm-4">
+            <input type="text" class="form-control" id="state" name="state"  placeholder="NY" value="<?php  getPost("State");?>">
+            <?php echo "<p class='text-danger'>$StateE</p>";?>
+          </div>
+        </div>
+        <!-- Zip -->
+        <div class="form-group">
+          <label for="name" class="col-sm-2 control-label">Zip Code</label>
+          <div class="col-sm-4">
+            <input type="text" class="form-control" id="zip" name="zip"  placeholder="11568" value="<?php  getPost("Zip");?>">
+            <?php echo "<p class='text-danger'>$ZipE</p>";?>
+          </div>
+        </div>
+        <!-- Country -->
+        <div class="form-group">
+          <label for="name" class="col-sm-2 control-label">Country</label>
+          <div class="col-sm-4">
+            <input type="text" class="form-control" id="country" name="country" placeholder="USA" value="<?php  getPost("Country");?>">
+            <?php echo "<p class='text-danger'>$CountryE</p>";?>
+          </div>
+        </div>
+        <!-- Sumbit Button -->
+        <div class="form-group">
+          <div class="col-sm-10 col-sm-offset-2">
+            <input id="submit" name="submit" type="submit" value="Submit" class="btn btn-query">
+          </div>
+        </div>
 
-  </form>
-  <?php
-  echo "<h1>" .  $str . "</h1>";//use to display result
-  ?>
-
+      </form>
+      <?php
+      echo "<h1>" .  $str . "</h1>";//use to display result
+      ?>
+    </div>
+  </div>
 
 </body>
 </html>

@@ -78,7 +78,7 @@ function populateTable(){
       <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
         <p id = "search">
           Search
-          <!-- <div class="dropdown"> fixed dropmenu for search 
+          <!-- <div class="dropdown"> fixed dropmenu for search
             <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Dropdown Example
               <span class="caret"></span></button>
               <ul class="dropdown-menu">

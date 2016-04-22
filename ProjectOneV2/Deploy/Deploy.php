@@ -36,7 +36,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     $sql = "SELECT * FROM nyit.deploy WHERE EquipID = " .$EquipID . " AND PastRoomID IS NULL;"
-     ;
+    ;
     $result = $conn->query($sql);
     $str = $sql;
     //if that equipment is already deploy
@@ -100,58 +100,61 @@ function TrimText($data) {
 
 </head>
 <body>
+  <div class="container">
+    <h2>Deploy</h2>
+    <div class="row">
 
-  <h2>Deploy</h2>
+      <form class="form-horizontal" role="form" method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
+        <!-- id -->
+        <div class="form-group">
+          <label for="name" class="col-sm-2 control-label">Equipment ID</label>
+          <div class="col-sm-4">
+            <input type="text" class="form-control" id="id" name="id" placeholder="0" value="<?php echo $id;?>" required>
+          </div>
+        </div>
+        <!-- Drop Down -->
+        <div class="form-group">
+          <label for="name" class="col-sm-2 control-label">Campus</label>
+          <div class="col-sm-4">
+            <select name="ddcampusid" id="ddcampusid" onchange="configureDropDownLists(this,document.getElementById('ddbuildingid'))" required>
+              <option value="">...</option>
+              <?php listcampusDropdown();?>
+            </select>
+          </div>
+        </div>
 
-  <form class="form-horizontal" role="form" method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
-    <!-- id -->
-    <div class="form-group">
-      <label for="name" class="col-sm-2 control-label">Equipment ID</label>
-      <div class="col-sm-4">
-        <input type="text" class="form-control" id="id" name="id" placeholder="0" value="<?php echo $id;?>" required>
-      </div>
+        <!-- Building Dropdown -->
+        <div class="form-group">
+          <label for="name" class="col-sm-2 control-label">Building</label>
+          <div class="col-sm-4">
+            <select name="ddbuildingid" id="ddbuildingid" onchange="configureDropDownLists(this,document.getElementById('ddroomid'))" required>
+              <option value="">...</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Room Dropdown -->
+        <div class="form-group">
+          <label for="name" class="col-sm-2 control-label">Room</label>
+          <div class="col-sm-4">
+            <select name="ddroomid" id="ddroomid" required>
+              <option value="">...</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <div class="col-sm-10 col-sm-offset-2">
+            <input id="submit" name="submit" type="submit" value="Submit" class="btn btn-query">
+          </div>
+        </div>
+
+      </form>
+      <?php
+      echo "<h1>" .  $str . "</h1>";
+      ?>
     </div>
-    <!-- Drop Down -->
-    <div class="form-group">
-      <label for="name" class="col-sm-2 control-label">Campus</label>
-      <div class="col-sm-4">
-        <select name="ddcampusid" id="ddcampusid" onchange="configureDropDownLists(this,document.getElementById('ddbuildingid'))" required>
-          <option value="">...</option>
-          <?php listcampusDropdown();?>
-        </select>
-      </div>
-    </div>
-
-    <!-- Building Dropdown -->
-    <div class="form-group">
-      <label for="name" class="col-sm-2 control-label">Building</label>
-      <div class="col-sm-4">
-        <select name="ddbuildingid" id="ddbuildingid" onchange="configureDropDownLists(this,document.getElementById('ddroomid'))" required>
-          <option value="">...</option>
-        </select>
-      </div>
-    </div>
-
-    <!-- Room Dropdown -->
-    <div class="form-group">
-      <label for="name" class="col-sm-2 control-label">Room</label>
-      <div class="col-sm-4">
-        <select name="ddroomid" id="ddroomid" required>
-          <option value="">...</option>
-        </select>
-      </div>
-    </div>
-
-    <div class="form-group">
-      <div class="col-sm-10 col-sm-offset-2">
-        <input id="submit" name="submit" type="submit" value="Submit" class="btn btn-query">
-      </div>
-    </div>
-
-  </form>
-  <?php
-  echo "<h1>" .  $str . "</h1>";
-  ?>
+  </div>
   <script>
   var BuildingArr = [];
   var RoomArr = [];

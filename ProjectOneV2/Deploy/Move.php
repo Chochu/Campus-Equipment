@@ -97,60 +97,63 @@ function JsontoDropdown($datapath){
 
 </head>
 <body>
+  <div class="container">
+    <h2>Insert to Room Database</h2>
+    <div class="row">
 
-  <h2>Insert to Room Database</h2>
 
 
-  <form class="form-horizontal" role="form" method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
-    <!-- Name -->
-    <div class="form-group">
-      <label for="name" class="col-sm-2 control-label">Room Number</label>
-      <div class="col-sm-4">
-        <input type="text" class="form-control" id="room" name="room" placeholder="130" value="<?php echo $RoomNum;?>">
-        <?php echo "<p class='text-danger'>$RoomNumE</p>";?>
-      </div>
+      <form class="form-horizontal" role="form" method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
+        <!-- Name -->
+        <div class="form-group">
+          <label for="name" class="col-sm-2 control-label">Room Number</label>
+          <div class="col-sm-4">
+            <input type="text" class="form-control" id="room" name="room" placeholder="130" value="<?php echo $RoomNum;?>">
+            <?php echo "<p class='text-danger'>$RoomNumE</p>";?>
+          </div>
+        </div>
+        <!-- Altname  -->
+        <div class="form-group">
+          <label for="name" class="col-sm-2 control-label">Alt Name</label>
+          <div class="col-sm-4">
+            <input type="text" class="form-control" id="altname" name="altname" placeholder="Lecture Hall" value="<?php echo $Altname;?>">
+          </div>
+        </div>
+        <!-- Campus Dropdown -->
+        <div class="form-group">
+          <label for="name" class="col-sm-2 control-label">Campus</label>
+          <div class="col-sm-4">
+            <select name="ddcampusid">
+              <option value="">...</option>
+              <?php JsontoDropdown('../campus.json');?>
+            </select>
+            <?php echo "<p class='text-danger'>$CampusIDE</p>";?>
+          </div>
+        </div>
+        <!-- Building Dropdown -->
+        <div class="form-group">
+          <label for="name" class="col-sm-2 control-label">Building</label>
+          <div class="col-sm-4">
+            <select name="ddbuildingid">
+              <option value="">...</option>
+              <?php JsontoDropdown('../building.json');?>
+            </select>
+            <?php echo "<p class='text-danger'>$CampusIDE</p>";?>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <div class="col-sm-10 col-sm-offset-2">
+            <input id="submit" name="submit" type="submit" value="Submit" class="btn btn-query">
+          </div>
+        </div>
+
+      </form>
+      <?php
+      echo "<h1>" .  $str . "</h1>";
+      ?>
     </div>
-    <!-- Altname  -->
-    <div class="form-group">
-      <label for="name" class="col-sm-2 control-label">Alt Name</label>
-      <div class="col-sm-4">
-        <input type="text" class="form-control" id="altname" name="altname" placeholder="Lecture Hall" value="<?php echo $Altname;?>">
-      </div>
-    </div>
-    <!-- Campus Dropdown -->
-    <div class="form-group">
-      <label for="name" class="col-sm-2 control-label">Campus</label>
-      <div class="col-sm-4">
-        <select name="ddcampusid">
-          <option value="">...</option>
-          <?php JsontoDropdown('../campus.json');?>
-        </select>
-        <?php echo "<p class='text-danger'>$CampusIDE</p>";?>
-      </div>
-    </div>
-    <!-- Building Dropdown -->
-    <div class="form-group">
-      <label for="name" class="col-sm-2 control-label">Building</label>
-      <div class="col-sm-4">
-        <select name="ddbuildingid">
-          <option value="">...</option>
-          <?php JsontoDropdown('../building.json');?>
-        </select>
-        <?php echo "<p class='text-danger'>$CampusIDE</p>";?>
-      </div>
-    </div>
-
-    <div class="form-group">
-      <div class="col-sm-10 col-sm-offset-2">
-        <input id="submit" name="submit" type="submit" value="Submit" class="btn btn-query">
-      </div>
-    </div>
-
-  </form>
-  <?php
-  echo "<h1>" .  $str . "</h1>";
-  ?>
-
+  </div>
 
 </body>
 </html>

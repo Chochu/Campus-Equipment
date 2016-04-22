@@ -108,54 +108,59 @@ function listcampusDropdown(){
 </head>
 <body>
 
-  <h2>Insert to Building Database</h2>
+  <div class="container">
+    <h2>Insert to Building Database</h2>
+    <div class="row">
 
 
-  <form class="form-horizontal" role="form" method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
-    <!-- Name -->
-    <div class="form-group">
-      <label for="name" class="col-sm-2 control-label">Name</label>
-      <div class="col-sm-4">
-        <input type="text" class="form-control" id="name" name="name" placeholder="Anna Rubin" value="<?php echo $Name;?>">
-        <?php echo "<p class='text-danger'>$NameE</p>";?>
-      </div>
-    </div>
-    <!-- Abb -->
-    <div class="form-group">
-      <label for="name" class="col-sm-2 control-label">Abb</label>
-      <div class="col-sm-4">
-        <input type="text" class="form-control" id="abb" name="abb" placeholder="AARH" value="<?php echo $Abb;?>">
-        <?php echo "<p class='text-danger'>$AbbE</p>";?>
-      </div>
-    </div>
-    <!-- Altname  -->
-    <div class="form-group">
-      <label for="name" class="col-sm-2 control-label">Alt Name</label>
-      <div class="col-sm-4">
-        <input type="text" class="form-control" id="altname" name="altname" placeholder="300 Building" value="<?php echo $Altname;?>">
-      </div>
-    </div>
-    <!-- Campus Dropdown -->
-    <div class="form-group">
-      <label for="name" class="col-sm-2 control-label">Campus</label>
-      <div class="col-sm-4">
-        <select name="ddcampusid">
-          <option value="">...</option>
-          <?php listcampusDropdown();?>
-        </select>
-        <?php echo "<p class='text-danger'>$CampusIDE</p>";?>
-      </div>
-    </div>
-    <!-- Sumbit Button -->
-    <div class="form-group">
-      <div class="col-sm-10 col-sm-offset-2">
-        <input id="submit" name="submit" type="submit" value="Submit" class="btn btn-query">
-      </div>
-    </div>
 
-  </form>
-  <?php
-  echo "<h1>" .  $str . "</h1>"; //use to display result
-  ?>
+      <form class="form-horizontal" role="form" method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
+        <!-- Name -->
+        <div class="form-group">
+          <label for="name" class="col-sm-2 control-label">Name</label>
+          <div class="col-sm-4">
+            <input type="text" class="form-control" id="name" name="name" placeholder="Anna Rubin" value="<?php echo $Name;?>">
+            <?php echo "<p class='text-danger'>$NameE</p>";?>
+          </div>
+        </div>
+        <!-- Abb -->
+        <div class="form-group">
+          <label for="name" class="col-sm-2 control-label">Abb</label>
+          <div class="col-sm-4">
+            <input type="text" class="form-control" id="abb" name="abb" placeholder="AARH" value="<?php echo $Abb;?>">
+            <?php echo "<p class='text-danger'>$AbbE</p>";?>
+          </div>
+        </div>
+        <!-- Altname  -->
+        <div class="form-group">
+          <label for="name" class="col-sm-2 control-label">Alt Name</label>
+          <div class="col-sm-4">
+            <input type="text" class="form-control" id="altname" name="altname" placeholder="300 Building" value="<?php echo $Altname;?>">
+          </div>
+        </div>
+        <!-- Campus Dropdown -->
+        <div class="form-group">
+          <label for="name" class="col-sm-2 control-label">Campus</label>
+          <div class="col-sm-4">
+            <select name="ddcampusid">
+              <option value="">...</option>
+              <?php listcampusDropdown();?>
+            </select>
+            <?php echo "<p class='text-danger'>$CampusIDE</p>";?>
+          </div>
+        </div>
+        <!-- Sumbit Button -->
+        <div class="form-group">
+          <div class="col-sm-10 col-sm-offset-2">
+            <input id="submit" name="submit" type="submit" value="Submit" class="btn btn-query">
+          </div>
+        </div>
+
+      </form>
+      <?php
+      echo "<h1>" .  $str . "</h1>"; //use to display result
+      ?>
+    </div>
+  </div>
 </body>
 </html>

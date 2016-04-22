@@ -105,71 +105,71 @@ function replaceSpace($string){
 
 </head>
 <body>
+  <div class="container">
+    <h2>Update Equipement id: <?php getPost("id"); ?></h2>
+    <div class="row">
+      <form class="form-horizontal" role="form" method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
+        <!-- id -->
+        <div class="form-group">
+          <label for="name" class="col-sm-2 control-label">ID</label>
+          <div class="col-sm-4">
+            <input type="text" class="form-control" id="id" name="id" placeholder="0" value="<?php getPost("id");?>">
+            <?php echo "<p class='text-danger'>$IdE</p>";?>
+          </div>
+        </div>
+        <!-- Name -->
+        <div class="form-group">
+          <label for="name" class="col-sm-2 control-label">Name</label>
+          <div class="col-sm-4">
+            <input type="text" class="form-control" id="name" name="name" value="<?php  getPost("Name");?>">
+            <?php echo "<p class='text-danger'>$NameE</p>";?>
+          </div>
+        </div>
+        <!-- Equip Type Dropdown -->
+        <div class="form-group">
+          <label for="name" class="col-sm-2 control-label">Equip Type</label>
+          <div class="col-sm-4">
+            <select name="EquipID">
+              <option value="">...</option>
+              <?php JsontoDropdown('../Script/JSON/EquipType.json');?>
+            </select>
+            <?php echo "<p class='text-danger'>$NameE</p>";?>
+          </div>
+        </div>
+        <!-- Asset -->
+        <div class="form-group">
+          <label for="name" class="col-sm-2 control-label">Asset</label>
+          <div class="col-sm-4">
+            <input type="text" class="form-control" id="Asset" name="Asset" value="<?php  getPost("Asset");?>">
+          </div>
+        </div>
+        <!-- Serial -->
+        <div class="form-group">
+          <label for="name" class="col-sm-2 control-label">Serial</label>
+          <div class="col-sm-4">
+            <input type="text" class="form-control" id="Serial" name="Serial" value="<?php getPost("Serial");?>">
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="name" class="col-sm-2 control-label">Active</label>
+          <div class="col-sm-4">
+            <input type="radio" name="active" value="1"> <font color=#DD4814 >Yes </font>
+            <input type="radio" name="active" value="0"> <font color=#DD4814 >No  </font>
+            <?php echo "<p class='text-danger'>$ActiveE</p>";?>
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="col-sm-10 col-sm-offset-2">
+            <input id="submit" name="submit" type="submit" value="Submit" class="btn btn-query">
+          </div>
+        </div>
 
-  <h2>Update Equipement id: <?php getPost("id"); ?></h2>
+      </form>
+      <?php
+      echo "<h1>" .  $str . "</h1>";
+      ?>
 
-
-  <form class="form-horizontal" role="form" method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
-    <!-- id -->
-    <div class="form-group">
-      <label for="name" class="col-sm-2 control-label">ID</label>
-      <div class="col-sm-4">
-        <input type="text" class="form-control" id="id" name="id" placeholder="0" value="<?php getPost("id");?>">
-        <?php echo "<p class='text-danger'>$IdE</p>";?>
-      </div>
     </div>
-    <!-- Name -->
-    <div class="form-group">
-      <label for="name" class="col-sm-2 control-label">Name</label>
-      <div class="col-sm-4">
-        <input type="text" class="form-control" id="name" name="name" value="<?php  getPost("Name");?>">
-        <?php echo "<p class='text-danger'>$NameE</p>";?>
-      </div>
-    </div>
-    <!-- Equip Type Dropdown -->
-    <div class="form-group">
-      <label for="name" class="col-sm-2 control-label">Equip Type</label>
-      <div class="col-sm-4">
-        <select name="EquipID">
-          <option value="">...</option>
-          <?php JsontoDropdown('../Script/JSON/EquipType.json');?>
-        </select>
-        <?php echo "<p class='text-danger'>$NameE</p>";?>
-      </div>
-    </div>
-    <!-- Asset -->
-    <div class="form-group">
-      <label for="name" class="col-sm-2 control-label">Asset</label>
-      <div class="col-sm-4">
-        <input type="text" class="form-control" id="Asset" name="Asset" value="<?php  getPost("Asset");?>">
-      </div>
-    </div>
-    <!-- Serial -->
-    <div class="form-group">
-      <label for="name" class="col-sm-2 control-label">Serial</label>
-      <div class="col-sm-4">
-        <input type="text" class="form-control" id="Serial" name="Serial" value="<?php getPost("Serial");?>">
-      </div>
-    </div>
-    <div class="form-group">
-      <label for="name" class="col-sm-2 control-label">Active</label>
-      <div class="col-sm-4">
-        <input type="radio" name="active" value="1"> <font color=#DD4814 >Yes </font>
-        <input type="radio" name="active" value="0"> <font color=#DD4814 >No  </font>
-        <?php echo "<p class='text-danger'>$ActiveE</p>";?>
-      </div>
-    </div>
-    <div class="form-group">
-      <div class="col-sm-10 col-sm-offset-2">
-        <input id="submit" name="submit" type="submit" value="Submit" class="btn btn-query">
-      </div>
-    </div>
-
-  </form>
-  <?php
-  echo "<h1>" .  $str . "</h1>";
-  ?>
-
-
+  </div>
 </body>
 </html>

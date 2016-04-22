@@ -8,7 +8,7 @@ $id = $idE = "";
 $sql = "";
 $result = "";
 
- //If post request was called
+//If post request was called
 if($_SERVER["REQUEST_METHOD"] == "POST" )
 {
   /*
@@ -69,30 +69,33 @@ function TrimText($data) { //remove special character
 <head>
   <div class="menu">
     <?php
-     include '../header.php'; ?>
+    include '../header.php'; ?>
     <br><br>
   </div>
 
 </head>
 <body>
-  <h2>Delete Campus</h2>
-<!-- id -->
-  <form class="form-horizontal" role="form" method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
-    <div class="form-group">
-      <label for="name" class="col-sm-2 control-label">ID</label>
-      <div class="col-sm-4">
-        <input type="text" class="form-control" id="id" name="id" placeholder="ID Number" value="<?php echo $id;?>">
-        <?php echo "<p class='text-danger'>$idE</p>";?>
-      </div>
+  <!-- id -->
+  <div class="container">
+    <h2>Delete Campus</h2>
+    <div class="row">
+      <form class="form-horizontal" role="form" method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
+        <div class="form-group">
+          <label for="name" class="col-sm-2 control-label">ID</label>
+          <div class="col-sm-4">
+            <input type="text" class="form-control" id="id" name="id" placeholder="ID Number" value="<?php echo $id;?>">
+            <?php echo "<p class='text-danger'>$idE</p>";?>
+          </div>
+        </div>
+        <!-- Submit Buttom -->
+        <div class="form-group">
+          <div class="col-sm-10 col-sm-offset-2">
+            <input id="submit" name="submit" type="submit" value="Delete" class="btn btn-query">
+          </div>
+        </div>
+      </form>
     </div>
-    <!-- Submit Buttom -->
-    <div class="form-group">
-      <div class="col-sm-10 col-sm-offset-2">
-        <input id="submit" name="submit" type="submit" value="Delete" class="btn btn-query">
-      </div>
-    </div>
-
-  </form>
+  </div>
   <?php
   echo "<h1>" .  $result . "</h1>";
   ?>
