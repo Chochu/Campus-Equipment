@@ -78,9 +78,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {//If post request was called
     Name = '".$Name."',
     Abb = '".$Abb."',
     Address = '".$Address."',
-    State = '".$Country."',
-    Zip = '".$State."',
-    Country ='".$Zip."'
+    Country = '".$Country."',
+    State = '".$State."',
+    Zip ='".$Zip."'
     WHERE
     id = ".$Id;
 

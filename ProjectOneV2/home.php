@@ -100,15 +100,15 @@ if (!isset($_SESSION['id'])) {
                 <li><a href="Building/InsertBuilding.php">Insert Building</a></li>
                 <li><a href="Building/LookupBuilding.php">Lookup Building</a></li>
                 <li><a href="Building/DeleteBuilding.php">Delete Building</a></li>
-                <li><a href="../Building/UpdateBuilding.php">Update Building</a></li>
+                <li><a href="Building/UpdateBuilding.php">Update Building</a></li>
               </ul>
             </li>
             <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Room<span class="caret"></span></a>
               <ul class="dropdown-menu">
                 <li><a href="Room/InsertRoom.php">Insert Room</a></li>
-                <li><a href="../Room/LookupRoom.php">Lookup Room</a></li>
-                <li><a href="../Room/DeleteRoom.php">Delete Room</a></li>
-                <li><a href="../Room/UpdateRoom.php">Update Room</a></li>
+                <li><a href="Room/LookupRoom.php">Lookup Room</a></li>
+                <li><a href="Room/DeleteRoom.php">Delete Room</a></li>
+                <li><a href="Room/UpdateRoom.php">Update Room</a></li>
               </ul>
             </li>
             <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Equipment<span class="caret"></span></a>

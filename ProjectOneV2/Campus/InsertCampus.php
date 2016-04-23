@@ -75,9 +75,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {//If post request was called
     ('".$Name."',
     '".$Abb."',
     '".$Address."',
-    '".$Country."',
     '".$State."',
     '".$Zip."',
+    '".$Country."',
     '1')";
 
     // get result of the executed statement
