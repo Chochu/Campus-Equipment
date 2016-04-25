@@ -1,69 +1,3 @@
-<?php
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
-
-//Variables
-$id = $idE = "";
-$sql = "";
-$result = "";
-
-//If post request was called
-if($_SERVER["REQUEST_METHOD"] == "POST" )
-{
-  /*
-  if statement are use to check if the text field of the html are empty
-  if they are, set the error variables to display the error
-  else remove special header and set its to the variables
-  */
-  if (empty($_POST["id"])) {   //If id field is empty
-    $idE = "Cannot delete entry without id number"; //Set $idE
-  } else {
-    $id = TrimText($_POST["id"]); //Set $id
-  }
-
-  if($id != ""){//if $id is not empty
-    global $sql;
-    $sql = "DELETE FROM equipmenttype WHERE id=" . $_POST['id'] .";"; //set sql command
-  }
-  deleteRow(); //execute the code
-}
-if( array_key_exists('id',$_GET)){ //if the method is get
-  $id = $_GET['id']; //set id
-  $sql = "DELETE FROM equipmenttype WHERE id=" . $_GET['id']. ";"; //set sql command
-  deleteRow(); //execute code
-}
-function deleteRow(){
-  global $sql;
-  global $id;
-  global $result;
-  require '../Credential.php'; //load credential
-  $conn = new mysqli($servername, $username, $password, $dbname);
-  // Check connection
-  if ($conn->connect_error) { //check connection
-    die("Connection failed: " . $conn->connect_error);
-  }
-
-  if ($conn->query($sql) === TRUE) { //if success
-    //set result variable
-    $result =  "Successfully deleted Equipment type ID: " .$id ;
-    //run python Script to update json in Script/Json folder
-    exec('python ../Script/UpdateEquipTypeJson.py');
-  } else {
-    $result = "Error : " . $sql . "<br>" . $conn->error;
-  }
-
-}
-function TrimText($data) { //remove special character
-  $data = trim($data);
-  $data = stripslashes($data);
-  $data = htmlspecialchars($data);
-  return $data;
-}
-?>
-
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -72,7 +6,66 @@ function TrimText($data) { //remove special character
     include '../header.php'; ?>
     <br><br>
   </div>
+  <?php
+  ini_set('display_errors', 1);
+  ini_set('display_startup_errors', 1);
+  error_reporting(E_ALL);
+  include "../globalphpfunction.php";
+  require '../Credential.php'; //load credential to database
+  echo isRanked("gDelete");
+  //Variables
+  $id = $idE = "";
+  $sql = "";
+  $result = "";
 
+  //If post request was called
+  if($_SERVER["REQUEST_METHOD"] == "POST" )
+  {
+    /*
+    if statement are use to check if the text field of the html are empty
+    if they are, set the error variables to display the error
+    else remove special header and set its to the variables
+    */
+    if (empty($_POST["id"])) {   //If id field is empty
+      $idE = "Cannot delete entry without id number"; //Set $idE
+    } else {
+      $id = TrimText($_POST["id"]); //Set $id
+    }
+
+    if($id != ""){//if $id is not empty
+      global $sql;
+      $sql = "DELETE FROM equipmenttype WHERE id=" . $_POST['id'] .";"; //set sql command
+    }
+    deleteRow(); //execute the code
+  }
+  if( array_key_exists('id',$_GET)){ //if the method is get
+    $id = $_GET['id']; //set id
+    $sql = "DELETE FROM equipmenttype WHERE id=" . $_GET['id']. ";"; //set sql command
+    deleteRow(); //execute code
+  }
+  function deleteRow(){
+    global $sql;
+    global $id;
+    global $result;
+    require '../Credential.php'; //load credential
+    $conn = new mysqli($servername, $username, $password, $dbname);
+    // Check connection
+    if ($conn->connect_error) { //check connection
+      die("Connection failed: " . $conn->connect_error);
+    }
+
+    if ($conn->query($sql) === TRUE) { //if success
+      //set result variable
+      $result =  "Successfully deleted Equipment type ID: " .$id ;
+      //run python Script to update json in Script/Json folder
+      exec('python ../Script/UpdateEquipTypeJson.py');
+    } else {
+      $result = "Error : " . $sql . "<br>" . $conn->error;
+    }
+
+  }
+
+  ?>
 </head>
 <body>
   <div class="container">

@@ -1,102 +1,89 @@
-<?php
-/*
-$_Get - Someone is requesting Data from your application
-$_Post - Someone is pushing (inserting/updating/deleting) data from your application
-*/
-?>
 <html>
 <head>
-<style>
-.error {color: #FF0000;}
-</style>
-<?php
+  <meta charset="UTF-8">
+  <div class="menu">
+    <?php include '../header.php'; ?>
+    <br><br>
+  </div>
 
-// define variables and set to empty values
-$EquipmentTypeIDE = $NameE = $ActiveE= "";
-$Name = $EquipmentTypeID = $Asset = $Serial = $Active =  "";
-$str = "";
+  <?php
+  ini_set('display_errors', 1);
+  ini_set('display_startup_errors', 1);
+  error_reporting(E_ALL);
+  include "../globalphpfunction.php";
+  require '../Credential.php'; //load credential to database
+  echo isRanked("gInsert");
+  // define variables and set to empty values
+  $EquipmentTypeIDE = $NameE = $ActiveE= "";
+  $Name = $EquipmentTypeID = $Asset = $Serial = $Active =  "";
+  $str = "";
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-  if (empty($_POST['EquipModel'])) {
-    $EquipmentTypeIDE = "Equipment Type ID is required";
-  } else {
-    $EquipmentTypeID = TrimText($_POST["EquipModel"]);
-  }
-  if (empty($_POST['name'])) {
-    $NameE = "Equipment Type ID is required";
-  } else {
-    $Name = TrimText($_POST["name"]);
-  }
-  if (empty($_POST['active'])) {
-    $ActiveE = "Please pick one";
-  } else {
-    $Active = TrimText($_POST["active"]);
-  }
-  $Asset = TrimText($_POST["Asset"]);
-  $Serial = TrimText($_POST["Serial"]);
-
-  if($EquipmentTypeID != ""){
-    // Connection Data
-
-    require '../Credential.php';
-
-    $conn = new mysqli($servername, $username, $password, $dbname);
-    // Check connection
-    if ($conn->connect_error) {
-      die("Connection failed: " . $conn->connect_error);
-    }
-
-    $sql = "
-    INSERT INTO equipment(Name, equipmenttype, Asset, Serial, Active)
-    VALUES
-    ('".$Name."',
-    '".$EquipmentTypeID."',
-    '".$Asset."',
-    '".$Serial."',
-    '".$Active."')";
-
-
-    if ($conn->query($sql) === TRUE) {
-      $id = $conn->insert_id;
-      echo '<script type="text/javascript">';
-      echo 'alert("Update Successfully");';
-      echo 'window.location.href = "../Deploy/Deploy.php?id='.$id.'";';
-      echo '</script>';
+  if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    if (empty($_POST['EquipModel'])) {
+      $EquipmentTypeIDE = "Equipment Type ID is required";
     } else {
-      $str = "Error : " . $sql . "<br>" . $conn->error;
+      $EquipmentTypeID = TrimText($_POST["EquipModel"]);
+    }
+    if (empty($_POST['name'])) {
+      $NameE = "Equipment Type ID is required";
+    } else {
+      $Name = TrimText($_POST["name"]);
+    }
+    if (empty($_POST['active'])) {
+      $ActiveE = "Please pick one";
+    } else {
+      $Active = TrimText($_POST["active"]);
+    }
+    $Asset = TrimText($_POST["Asset"]);
+    $Serial = TrimText($_POST["Serial"]);
+
+    if($EquipmentTypeID != ""){
+      // Connection Data
+      require '../Credential.php';
+      $conn = new mysqli($servername, $username, $password, $dbname);
+      // Check connection
+      if ($conn->connect_error) {
+        die("Connection failed: " . $conn->connect_error);
+      }
+
+      $sql = "
+      INSERT INTO equipment(Name, equipmenttype, Asset, Serial, Active)
+      VALUES
+      ('".$Name."',
+      '".$EquipmentTypeID."',
+      '".$Asset."',
+      '".$Serial."',
+      '".$Active."')";
+
+
+      if ($conn->query($sql) === TRUE) {
+        $id = $conn->insert_id;
+        echo '<script type="text/javascript">';
+        echo 'alert("Update Successfully");';
+        echo 'window.location.href = "../Deploy/Deploy.php?id='.$id.'";';
+        echo '</script>';
+      } else {
+        $str = "Error : " . $sql . "<br>" . $conn->error;
+      }
     }
   }
-}
-
-function TrimText($data) {
-  $data = trim($data);
-  $data = stripslashes($data);
-  $data = htmlspecialchars($data);
-  return $data;
-}
 
 
-function JsontoDropdown($datapath){
-  $TypeArray = array();
-  $str = file_get_contents($datapath);
-  $json = json_decode($str,true);
-  foreach ($json as $value){
-    array_push($TypeArray,$value['Type']);
-    //echo "<option value=\"".$value['id']."\">".$value['Make']. " " .$value['Model']."</option>";
+  function JsontoDropdown($datapath){
+    $TypeArray = array();
+    $str = file_get_contents($datapath);
+    $json = json_decode($str,true);
+    foreach ($json as $value){
+      array_push($TypeArray,$value['Type']);
+      //echo "<option value=\"".$value['id']."\">".$value['Make']. " " .$value['Model']."</option>";
+    }
+    $TypeArray = array_unique($TypeArray,SORT_REGULAR);
+    foreach ($TypeArray as $value) {
+      echo "<option value=\"".$value."\">".$value."</option>";
+    }
+
   }
-  $TypeArray = array_unique($TypeArray,SORT_REGULAR);
-  foreach ($TypeArray as $value) {
-    echo "<option value=\"".$value."\">".$value."</option>";
-  }
-
-}
-?>
-<meta charset="UTF-8">
-<div class="menu">
-  <?php include '../header.php'; ?>
-  <br><br>
-</div>
-
+  ?>
 </head>
 <body>
   <div class="container">
@@ -203,5 +190,5 @@ function JsontoDropdown($datapath){
   }
   </Script>
 
-</body>
-</html>
+  </body>
+  </html>

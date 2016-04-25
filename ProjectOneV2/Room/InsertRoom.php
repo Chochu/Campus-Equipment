@@ -1,102 +1,91 @@
-<?php
-/*
-$_Get - Someone is requesting Data from your application
-$_Post - Someone is pushing (inserting/updating/deleting) data from your application
-*/
-?>
 <html>
 <head>
-<style>
-.error {color: #FF0000;}
-</style>
-<?php
+  <meta charset="UTF-8">
+  <div class="menu">
+    <?php include '../header.php'; //load menu?>
+    <br><br>
+  </div>
 
-// define variables and set to empty values
-$RoomNumE = $BuildingIDE = $CampusIDE = "";
-$RoomNum = $type = $BuildingID = $CampusID = $Altname = "";
-$str = "";
+  <?php
+  ini_set('display_errors', 1);
+  ini_set('display_startup_errors', 1);
+  error_reporting(E_ALL);
+  include "../globalphpfunction.php";
+  require '../Credential.php'; //load credential to database
+  echo isRanked("gInsert");
+  // define variables and set to empty values
+  $RoomNumE = $BuildingIDE = $CampusIDE = "";
+  $RoomNum = $type = $BuildingID = $CampusID = $Altname = "";
+  $str = "";
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {//If post request was called
-  /*
-  if statement are use to check if the text field of the html are empty
-  if they are, set the error variables to display the error
-  else remove special header and set its to the variables
-  */
-  if (empty($_POST['room'])) {
-    $RoomNumE = "Room Number is required";
-  } else {
-    $RoomNum = TrimText($_POST["room"]);
-  }
-  if (empty($_POST['altname'])) {
-    $Altname = "";
-  } else {
-    $Altname = TrimText($_POST["altname"]);
-  }
-  if($_POST['ddcampusid'] == ""){
-    $CampusIDE = "Must Select an Campus";
-  }else {
-    $CampusID = $_POST['ddcampusid'];
-  }
-  if($_POST['ddbuildingid'] == ""){
-    $BuildingIDE = "Must Select an Campus";
-  }else {
-    $BuildingID = $_POST['ddbuildingid'];
-  }
-
-  //Check if the variable are empty, if they are that means that the html text-danger
-  //are empty, This check prevent sql statement from executing if Name, Abb, and CampusID
-  //are empty
-  if($RoomNum != "" && $BuildingID != "" && $CampusID != ""){
-
-    // Connection Data
-    require '../Credential.php';
-    $conn = new mysqli($servername, $username, $password, $dbname);
-    // Check connection
-    if ($conn->connect_error) {
-      die("Connection failed: " . $conn->connect_error);
-    }
-
-    $sql = "
-    INSERT INTO room(RoomNumber, AltName, BuildingID, CampusID,Active)
-    VALUES
-    ('".$RoomNum."',
-    '".$Altname."',
-    '".$BuildingID."',
-    '".$CampusID."','1')";
-
-    // get result of the executed statement
-    if ($conn->query($sql) === TRUE) {//if success
-      //set result variable
-      $str =  "Updated record created successfully";
-      //run python Script to update json in Script/Json folder
-      exec('python ../Script/UpdateRoomJson.py');
+  if ($_SERVER["REQUEST_METHOD"] == "POST") {//If post request was called
+    /*
+    if statement are use to check if the text field of the html are empty
+    if they are, set the error variables to display the error
+    else remove special header and set its to the variables
+    */
+    if (empty($_POST['room'])) {
+      $RoomNumE = "Room Number is required";
     } else {
-      $str = "Error : " . $sql . "<br>" . $conn->error;
+      $RoomNum = TrimText($_POST["room"]);
+    }
+    if (empty($_POST['altname'])) {
+      $Altname = "";
+    } else {
+      $Altname = TrimText($_POST["altname"]);
+    }
+    if($_POST['ddcampusid'] == ""){
+      $CampusIDE = "Must Select an Campus";
+    }else {
+      $CampusID = $_POST['ddcampusid'];
+    }
+    if($_POST['ddbuildingid'] == ""){
+      $BuildingIDE = "Must Select an Campus";
+    }else {
+      $BuildingID = $_POST['ddbuildingid'];
+    }
+
+    //Check if the variable are empty, if they are that means that the html text-danger
+    //are empty, This check prevent sql statement from executing if Name, Abb, and CampusID
+    //are empty
+    if($RoomNum != "" && $BuildingID != "" && $CampusID != ""){
+
+      // Connection Data
+      require '../Credential.php';
+      $conn = new mysqli($servername, $username, $password, $dbname);
+      // Check connection
+      if ($conn->connect_error) {
+        die("Connection failed: " . $conn->connect_error);
+      }
+
+      $sql = "
+      INSERT INTO room(RoomNumber, AltName, BuildingID, CampusID,Active)
+      VALUES
+      ('".$RoomNum."',
+      '".$Altname."',
+      '".$BuildingID."',
+      '".$CampusID."','1')";
+
+      // get result of the executed statement
+      if ($conn->query($sql) === TRUE) {//if success
+        //set result variable
+        $str =  "Updated record created successfully";
+        //run python Script to update json in Script/Json folder
+        exec('python ../Script/UpdateRoomJson.py');
+      } else {
+        $str = "Error : " . $sql . "<br>" . $conn->error;
+      }
     }
   }
-}
-//remove special char to prevent sql injection
-function TrimText($data) {
-  $data = trim($data);
-  $data = stripslashes($data);
-  $data = htmlspecialchars($data);
-  return $data;
-}
-//populate campus dropdown
-function JsontoDropdown($datapath){
-  $str = file_get_contents($datapath);//load text from file
-  $json = json_decode($str,true);//decode to json var
-  foreach ($json as $value){//loop through json
-    echo "<option value=\"".$value['id']."\">".$value['Name']."</option>";//add option value to dropdown
+  //populate campus dropdown
+  function JsontoDropdown($datapath){
+    $str = file_get_contents($datapath);//load text from file
+    $json = json_decode($str,true);//decode to json var
+    foreach ($json as $value){//loop through json
+      echo "<option value=\"".$value['id']."\">".$value['Name']."</option>";//add option value to dropdown
+    }
   }
-}
-?>
-<meta charset="UTF-8">
-<div class="menu">
-  <?php include '../header.php'; //load menu?>
-  <br><br>
-</div>
-
+  ?>
 </head>
 <body>
   <div class="container">

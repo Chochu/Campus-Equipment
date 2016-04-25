@@ -1,108 +1,90 @@
-<?php
-/*
-$_Get - Someone is requesting Data from your application
-$_Post - Someone is pushing (inserting/updating/deleting) data from your application
-*/
-?>
 <html>
 <head>
-<style>
-.error {color: #FF0000;}
-</style>
-<?php
+  <meta charset="UTF-8">
+  <div class="menu">
+    <?php include '../header.php'; ?>
+    <br><br>
+  </div>
 
-// define variables and set to empty values
-$IdE = $EquipmentTypeIDE = $NameE = $ActiveE= "";
-$Id =  $EquipmentTypeID = $Asset = $Serial = $Active =  "";
-$str = "";
+  <?php
+  require '../Credential.php';
+  include "../globalphpfunction.php";
+  ini_set('display_errors', 1);
+  ini_set('display_startup_errors', 1);
+  error_reporting(E_ALL);
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
+  echo isRanked("gUpdate");
 
-  if (empty($_POST['EquipID'])) {
-    $EquipmentTypeIDE = "Equipment Type ID is required";
-  } else {
-    $EquipmentTypeID = TrimText($_POST["EquipID"]);
-  }
-  if (empty($_POST['name'])) {
-    $NameE = "Equipment Type ID is required";
-  } else {
-    $Name = TrimText($_POST["name"]);
-  }
-  if (empty($_POST['active'])) {
-    $ActiveE = "Please pick one";
-  } else {
-    $Active = TrimText($_POST["active"]);
-  }
-  $Asset =TrimText($_POST["Asset"]);
-  $Serial = TrimText($_POST["Serial"]);
+  // define variables and set to empty values
+  $IdE = $EquipmentTypeIDE = $NameE = $ActiveE= "";
+  $Id =  $EquipmentTypeID = $Asset = $Serial = $Active =  "";
+  $str = "";
 
-  if($EquipmentTypeID != ""){
+  if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
-    require '../Credential.php';
-
-    $conn = new mysqli($servername, $username, $password, $dbname);
-    // Check connection
-    if ($conn->connect_error) {
-      die("Connection failed: " . $conn->connect_error);
-    }
-
-    $sql = "
-    UPDATE equipment SET
-    Name = '".$Name."',
-    equipmenttype = '".$EquipmentTypeID."',
-    Asset = '".$Asset."',
-    Serial = '".$Serial."',
-    Active = '".$Active."'
-    WHERE
-    id = ".$Id;
-
-    if ($conn->query($sql) === TRUE) {
-      $str =  "Updated record created successfully";
+    if (empty($_POST['EquipID'])) {
+      $EquipmentTypeIDE = "Equipment Type ID is required";
     } else {
-      $str = "Error : " . $sql . "<br>" . $conn->error;
+      $EquipmentTypeID = TrimText($_POST["EquipID"]);
     }
+    if (empty($_POST['name'])) {
+      $NameE = "Equipment Type ID is required";
+    } else {
+      $Name = TrimText($_POST["name"]);
+    }
+    if (empty($_POST['active'])) {
+      $ActiveE = "Please pick one";
+    } else {
+      $Active = TrimText($_POST["active"]);
+    }
+    $Asset =TrimText($_POST["Asset"]);
+    $Serial = TrimText($_POST["Serial"]);
+
+    if($EquipmentTypeID != ""){
+
+      require '../Credential.php';
+
+      $conn = new mysqli($servername, $username, $password, $dbname);
+      // Check connection
+      if ($conn->connect_error) {
+        die("Connection failed: " . $conn->connect_error);
+      }
+
+      $sql = "
+      UPDATE equipment SET
+      Name = '".$Name."',
+      equipmenttype = '".$EquipmentTypeID."',
+      Asset = '".$Asset."',
+      Serial = '".$Serial."',
+      Active = '".$Active."'
+      WHERE
+      id = ".$Id;
+
+      if ($conn->query($sql) === TRUE) {
+        $str =  "Updated record created successfully";
+      } else {
+        $str = "Error : " . $sql . "<br>" . $conn->error;
+      }
+    }
+
   }
 
-}
-function listcampusDropdown(){
-  $str = file_get_contents('campus.json');
-  $json = json_decode($str,true);
-  foreach ($json as $value){
-    echo "<option value=\"".$value['id']."\">".$value['Name']."</option>";
-  }
-}
-function TrimText($data) {
-  $data = trim($data);
-  $data = stripslashes($data);
-  $data = htmlspecialchars($data);
-  return $data;
-}
+  function JsontoDropdown($datapath){
+    $TypeArray = array();
+    $str = file_get_contents($datapath);
+    $json = json_decode($str,true);
+    foreach ($json as $value){
+      array_push($TypeArray,$value['Type']);
+      //echo "<option value=\"".$value['id']."\">".$value['Make']. " " .$value['Model']."</option>";
+    }
+    $TypeArray = array_unique($TypeArray,SORT_REGULAR);
+    foreach ($TypeArray as $value) {
+      echo "<option value=\"".$value."\">".$value."</option>";
+    }
 
-function getPost($string){
-  if( array_key_exists($string,$_GET)){
-    echo replaceSpace($_GET[$string]);
   }
-  else{
-    echo "";
-  }
-}
-function JsontoDropdown($datapath){
-  $str = file_get_contents($datapath);
-  $json = json_decode($str,true);
-  foreach ($json as $value){
-    echo "<option value=\"".$value['id']."\">".$value['Make']. " " .$value['Model']."</option>";
-  }
-}
-function replaceSpace($string){
-  return str_replace("%"," ",$string);
-}
-?>
-<meta charset="UTF-8">
-<div class="menu">
-  <?php include '../header.php'; ?>
-  <br><br>
-</div>
 
+  ?>
 </head>
 <body>
   <div class="container">
@@ -125,13 +107,24 @@ function replaceSpace($string){
             <?php echo "<p class='text-danger'>$NameE</p>";?>
           </div>
         </div>
-        <!-- Equip Type Dropdown -->
+        <!-- Type Dropdown -->
         <div class="form-group">
-          <label for="name" class="col-sm-2 control-label">Equip Type</label>
+          <label for="name" class="col-sm-2 control-label">Type</label>
           <div class="col-sm-4">
-            <select name="EquipID">
+            <!-- Configure Model dropdown based on the option user select on this dropdown -->
+            <select name="EquipType" onchange="configureDropDownLists(this,document.getElementById('EquipModel'))">
               <option value="">...</option>
               <?php JsontoDropdown('../Script/JSON/EquipType.json');?>
+            </select>
+            <?php echo "<p class='text-danger'>$NameE</p>";?>
+          </div>
+        </div>
+        <!-- Model Dropdown -->
+        <div class="form-group">
+          <label for="name" class="col-sm-2 control-label">Model</label>
+          <div class="col-sm-4">
+            <select name="EquipModel" id = "EquipModel">
+              <option value="">...</option>
             </select>
             <?php echo "<p class='text-danger'>$NameE</p>";?>
           </div>
@@ -171,5 +164,42 @@ function replaceSpace($string){
 
     </div>
   </div>
+  <Script>
+  var EquipmentTypeArray = [];
+  $.ajax({ //http://stackoverflow.com/questions/7346563/loading-local-json-file
+    url: "../Script/JSON/EquipType.json",
+    //force to handle it as text
+    dataType: "text",
+    success: function (dataTest) {
+
+      //data downloaded so we call parseJSON function
+      //and pass downloaded data
+      var EquipTypeJson = $.parseJSON(dataTest);
+      //now json variable contains data in json format
+      //let's display a few items
+      $.each(EquipTypeJson, function (i, jsonObjectList) {
+        //console.log(jsonObjectList['id']);
+        EquipmentTypeArray.push([jsonObjectList['id'],jsonObjectList['Type'],jsonObjectList['Model']]);
+        console.log(jsonObjectList['Type']);
+      });
+    }
+  });
+
+  function configureDropDownLists(EquipType,EquipModel) {//Function called when dropdown value change
+    EquipModel.options.length = 0;
+    for (var arrayID in EquipmentTypeArray){
+      if (EquipmentTypeArray[arrayID][1] == EquipType.value){
+        createOption(EquipModel, EquipmentTypeArray[arrayID][2], EquipmentTypeArray[arrayID][0]);
+      }
+    }
+  }
+  function createOption(EquipModel, text, value) {//add option to dropdown
+    var opt = document.createElement('option');
+    opt.value = value;
+    opt.text = text;
+    EquipModel.options.add(opt);
+  }
+  </Script>
+
 </body>
 </html>

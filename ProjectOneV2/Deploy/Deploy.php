@@ -1,103 +1,85 @@
-<?php
-/*
-$_Get - Someone is requesting Data from your application
-$_Post - Someone is pushing (inserting/updating/deleting) data from your application
-*/
-?>
 <html>
 <head>
-<style>
-.error {color: #FF0000;}
-</style>
-<?php
+  <meta charset="UTF-8">
+  <div class="menu">
+    <?php include '../header.php'; ?>
+    <br><br>
+  </div>
+  <?php
+  ini_set('display_errors', 1);
+  ini_set('display_startup_errors', 1);
+  error_reporting(E_ALL);
+  require '../Credential.php';
+  include "../globalphpfunction.php";
 
+  echo isRanked("gInsert");
 
-$str = $id = "";
+  $str = $id = "";
 
-if( array_key_exists('id',$_GET)){
-  $id = $_GET['id'];
-}
+  if( array_key_exists('id',$_GET)){
+    $id = $_GET['id'];
+  }
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
+  if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
-  $EquipID = TrimText($_POST["id"]);
-  $CampusID = TrimText($_POST["ddcampusid"]);
-  $BuildingID = TrimText($_POST["ddbuildingid"]);
-  $RoomID = TrimText($_POST["ddroomid"]);
+    $EquipID = TrimText($_POST["id"]);
+    $CampusID = TrimText($_POST["ddcampusid"]);
+    $BuildingID = TrimText($_POST["ddbuildingid"]);
+    $RoomID = TrimText($_POST["ddroomid"]);
 
-  if($EquipID != ""){
-    // Connection Data
-    require '../Credential.php';
+    if($EquipID != ""){
+      // Connection Data
+      require '../Credential.php';//load Credential for sql login
+      $conn = new mysqli($servername, $username, $password, $dbname);
+      // Check connection
+      if ($conn->connect_error) {
+        die("Connection failed: " . $conn->connect_error);
+      }
 
-    $conn = new mysqli($servername, $username, $password, $dbname);
-    // Check connection
-    if ($conn->connect_error) {
-      die("Connection failed: " . $conn->connect_error);
-    }
+      $sql = "SELECT * FROM nyit.deploy WHERE EquipID = " .$EquipID . " AND PastRoomID IS NULL;"
+      ;
+      $result = $conn->query($sql);
+      $str = $sql;
+      //if that equipment is already deploy
+      if ($result->num_rows > 0) {
+        $row = $result->fetch_assoc();
 
-    $sql = "SELECT * FROM nyit.deploy WHERE EquipID = " .$EquipID . " AND PastRoomID IS NULL;"
-    ;
-    $result = $conn->query($sql);
-    $str = $sql;
-    //if that equipment is already deploy
-    if ($result->num_rows > 0) {
-      $row = $result->fetch_assoc();
-
-      $sql = "
-      UPDATE deploy SET
-      DateInstall = '".date("Y-m-d")."',
-      CurrentCampusID = '".$CampusID."',
-      CurrentBuildingID = '".$BuildingID."',
-      CurrentRoomID = '".$RoomID."',
-      PastCampusID = '".$row['CurrentCampusID']."',
-      PastBuildingID = '".$row['CurrentBuildingID']."',
-      PastRoomID = '".$row['CurrentRoomID']."',
-      DateRemove = '".$row['DateInstall']."'
-      WHERE
-      EquipID = ".$EquipID;
-      $str =  "Updated record Updated successfully";
-    }else{//if not deploy
-      $sql = "
-      INSERT INTO deploy(EquipID, CurrentCampusID, CurrentBuildingID, CurrentRoomID, DateInstall)
-      VALUES
-      ('".$EquipID."',
-      '".$CampusID."',
-      '".$BuildingID."',
-      '".$RoomID."',
-      '".date("Y-m-d")."')";
-      $str =  "Updated record created successfully";
-    }
-    if ($conn->query($sql) === TRUE) {//if success
-      //update DeployID, this hold which row in the deploy row holds the current location of the equipment
-      $returnID = $conn->insert_id;
-      $sql = "UPDATE `nyit`.`equipment` SET `DeployID` = ".$returnID." WHERE `id` = ".$EquipID.";";
-      $conn->query($sql);
-    } else {
-      $str = "Error : " . $sql . "<br>" . $conn->error;
+        $sql = "
+        UPDATE deploy SET
+        DateInstall = '".date("Y-m-d")."',
+        CurrentCampusID = '".$CampusID."',
+        CurrentBuildingID = '".$BuildingID."',
+        CurrentRoomID = '".$RoomID."',
+        PastCampusID = '".$row['CurrentCampusID']."',
+        PastBuildingID = '".$row['CurrentBuildingID']."',
+        PastRoomID = '".$row['CurrentRoomID']."',
+        DateRemove = '".$row['DateInstall']."'
+        WHERE
+        EquipID = ".$EquipID;
+        $str =  "Updated record Updated successfully";
+      }else{//if not deploy
+        $sql = "
+        INSERT INTO deploy(EquipID, CurrentCampusID, CurrentBuildingID, CurrentRoomID, DateInstall)
+        VALUES
+        ('".$EquipID."',
+        '".$CampusID."',
+        '".$BuildingID."',
+        '".$RoomID."',
+        '".date("Y-m-d")."')";
+        $str =  "Updated record created successfully";
+      }
+      if ($conn->query($sql) === TRUE) {//if success
+        //update DeployID, this hold which row in the deploy row holds the current location of the equipment
+        $returnID = $conn->insert_id;
+        $sql = "UPDATE `nyit`.`equipment` SET `DeployID` = ".$returnID." WHERE `id` = ".$EquipID.";";
+        $conn->query($sql);
+      } else {
+        $str = "Error : " . $sql . "<br>" . $conn->error;
+      }
     }
   }
-}
-function listcampusDropdown(){
-  $str = file_get_contents('../Script/JSON/campus.json');
-  $json = json_decode($str,true);
-  foreach ($json as $value){
-    echo "<option value=\"".$value['id']."\">".$value['Name']."</option>";
-  }
-}
-function TrimText($data) {
-  $data = trim($data);
-  $data = stripslashes($data);
-  $data = htmlspecialchars($data);
-  return $data;
-}
 
-?>
-<meta charset="UTF-8">
-<div class="menu">
-  <?php include '../header.php'; ?>
-  <br><br>
-</div>
-
+  ?>
 </head>
 <body>
   <div class="container">

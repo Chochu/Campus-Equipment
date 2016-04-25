@@ -1,96 +1,83 @@
-<?php
-/*
-$_Get - Someone is requesting Data from your application
-$_Post - Someone is pushing (inserting/updating/deleting) data from your application
-*/
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
-?>
+
 <html>
 <head>
-<style>
-.error {color: #FF0000;}
-</style>
-<?php
+  <meta charset="UTF-8">
+  <div class="menu">
+    <?php include '../header.php';  //load menu?>
+    <br><br>
+  </div>
 
-// define variables and set to empty values
-$MakeE = $ModelE = $TypeE = "";
-$Make = $Model = $Type = $Description = "";
-$str = "";
+  <?php
+  ini_set('display_errors', 1);
+  ini_set('display_startup_errors', 1);
+  error_reporting(E_ALL);
+  include "../globalphpfunction.php";
+  require '../Credential.php'; //load credential to database
+  echo isRanked("gInsert");
+  // define variables and set to empty values
+  $MakeE = $ModelE = $TypeE = "";
+  $Make = $Model = $Type = $Description = "";
+  $str = "";
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {//If post request was called
-  /*
-  if statement are use to check if the text field of the html are empty
-  if they are, set the error variables to display the error
-  else remove special header and set its to the variables
-  */
-  if (empty($_POST["make"])) {
-    $MakeE = "Make is required";
-  } else {
-    $Make = TrimText($_POST["make"]);
-  }
-  if (empty($_POST["model"])) {
-    $ModelE = "Model is required";
-  } else {
-    $Model = TrimText($_POST["model"]);
-  }
-  if (empty($_POST["type"])) {
-    $TypeE = "Type is required";
-  } else {
-    $Type = TrimText($_POST["type"]);
-  }
-
-
-  //Check if the variable are empty, if they are that means that the html text-danger
-  //are empty, This check prevent sql statement from executing if Name, Abb, and CampusID
-  //are empty
-  if($Make != "" && $Model != "" && $Type != ""){
-
-    // Connection Data
-    require '../Credential.php';
-    $conn = new mysqli($servername, $username, $password, $dbname);
-    // Check connection
-    if ($conn->connect_error) {
-      die("Connection failed: " . $conn->connect_error);
-    }
-    $Description = $conn -> real_escape_string($_POST["description"]);
-
-    $sql = "
-    INSERT INTO equipmenttype(Make, Model, Type, Description)
-    VALUES
-    ('".$Make."',
-    '".$Model."',
-    '".$Type."',
-    '".$Description."')";
-
-
-    // get result of the executed statement
-    if ($conn->query($sql) === TRUE) {//if success
-      //set result variable
-      $str =  "New record created successfully";
-      //run python Script to update json in Script/Json folder
-      exec('python ../Script/UpdateEquipTypeJson.py');
+  if ($_SERVER["REQUEST_METHOD"] == "POST") {//If post request was called
+    /*
+    if statement are use to check if the text field of the html are empty
+    if they are, set the error variables to display the error
+    else remove special header and set its to the variables
+    */
+    if (empty($_POST["make"])) {
+      $MakeE = "Make is required";
     } else {
-      $str = "Error : " . $sql . "<br>" . $conn->error;
+      $Make = TrimText($_POST["make"]);
+    }
+    if (empty($_POST["model"])) {
+      $ModelE = "Model is required";
+    } else {
+      $Model = TrimText($_POST["model"]);
+    }
+    if (empty($_POST["type"])) {
+      $TypeE = "Type is required";
+    } else {
+      $Type = TrimText($_POST["type"]);
+    }
+
+
+    //Check if the variable are empty, if they are that means that the html text-danger
+    //are empty, This check prevent sql statement from executing if Name, Abb, and CampusID
+    //are empty
+    if($Make != "" && $Model != "" && $Type != ""){
+
+      // Connection Data
+      require '../Credential.php';
+      $conn = new mysqli($servername, $username, $password, $dbname);
+      // Check connection
+      if ($conn->connect_error) {
+        die("Connection failed: " . $conn->connect_error);
+      }
+      $Description = $conn -> real_escape_string($_POST["description"]);
+
+      $sql = "
+      INSERT INTO equipmenttype(Make, Model, Type, Description)
+      VALUES
+      ('".$Make."',
+      '".$Model."',
+      '".$Type."',
+      '".$Description."')";
+
+
+      // get result of the executed statement
+      if ($conn->query($sql) === TRUE) {//if success
+        //set result variable
+        $str =  "New record created successfully";
+        //run python Script to update json in Script/Json folder
+        exec('python ../Script/UpdateEquipTypeJson.py');
+      } else {
+        $str = "Error : " . $sql . "<br>" . $conn->error;
+      }
     }
   }
-}
-
-//remove special char to prevent sql injection
-function TrimText($data) {
-  $data = trim($data);
-  $data = stripslashes($data);
-  $data = htmlspecialchars($data);
-  return $data;
-}
-?>
-<meta charset="UTF-8">
-<div class="menu">
-  <?php include '../header.php';  //load menu?>
-  <br><br>
-</div>
-
+  
+  ?>
 </head>
 <body>
   <div class="container">

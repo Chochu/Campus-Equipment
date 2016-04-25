@@ -1,20 +1,26 @@
-<?php
-/*
-$_Get - Someone is requesting Data from your application
-$_Post - Someone is pushing (inserting/updating/deleting) data from your application
-*/
-?>
 <html>
 <head>
-<style>
-.error {color: #FF0000;}
-</style>
+<div class="menu">
+  <?php include '../header.php'; ?>
+  <br><br>
+</div>
+
 <?php
+require '../Credential.php';
+include "../globalphpfunction.php";
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
+echo isRanked("gUpdate");
+
 
 // define variables and set to empty values
 $IdE = $NameE = $AbbE = $CampusIDE = $Altname= "";
 $Id = $Name = $Abb = $CampusID = "";
 $str = "";
+
+
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") { //If post request was called
   /* similar structure to Insert Building, with an extra field called id
@@ -53,9 +59,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") { //If post request was called
   //are empty, This check prevent sql statement from executing if Name, Abb, and CampusID
   //are empty
   if($Name != "" && $Abb != "" && $CampusID != ""){
-
+    require '../Credential.php';//load Credential for sql login
     // Connection Data
-    require '../Credential.php';
     $conn = new mysqli($servername, $username, $password, $dbname);
     // Check connection
     if ($conn->connect_error) {
@@ -83,51 +88,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") { //If post request was called
   }
 }
 
-//populate campus dropdown
-function listcampusDropdown(){
-  require '../Credential.php';//load the path
-  $str = file_get_contents($JsonCampus); //load text from file
-  $json = json_decode($str,true);//decode to json var
-  foreach ($json as $value){//loop through json
-    echo "<option value=\"".$value['id']."\">".$value['Name']."</option>";//add option value to dropdown
-  }
-}
 
-//remove special char to prevent sql injection
-function TrimText($data) {
-  $data = trim($data);
-  $data = stripslashes($data);
-  $data = htmlspecialchars($data);
-  return $data;
-}
-
-//this function is use for set the value of the html text from "get request"
-//User doesnt have retype everything out
-function getPost($string){
-  if( array_key_exists($string,$_GET)){
-    echo replaceSpace($_GET[$string]);
-  }
-  else{
-    echo "";
-  }
-}
-
-//replace % with space
-function replaceSpace($string){
-  return str_replace("%"," ",$string);
-}
 ?>
-<meta charset="UTF-8">
-<div class="menu">
-  <?php include '../header.php'; ?>
-  <br><br>
-</div>
-
 </head>
 <body>
-
-
-
   <div class="container">
     <h2>Update Building id: <?php getPost("id"); ?></h2>
     <div class="row">

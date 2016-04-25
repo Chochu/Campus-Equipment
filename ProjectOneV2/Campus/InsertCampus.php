@@ -1,111 +1,98 @@
-<?php
-/*
-$_Get - Someone is requesting Data from your application
-$_Post - Someone is pushing (inserting/updating/deleting) data from your application
-*/
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
-?>
 <html>
 <head>
-<style>
-.error {color: #FF0000;}
-</style>
-<?php
+  <meta charset="UTF-8">
+  <div class="menu">
+    <?php include '../header.php';  //load menu?>
+    <br><br>
+  </div>
+  <?php
+  ini_set('display_errors', 1);
+  ini_set('display_startup_errors', 1);
+  error_reporting(E_ALL);
+  require '../Credential.php';
+  include "../globalphpfunction.php";
 
-// define variables and set to empty values
-$NameE = $AbbE = $AddressE = $CountryE = $StateE = $ZipE = "";
-$Name = $Abb = $Address = $Country = $State = $Zip = "";
-$str = "";
+  echo isRanked("gInsert");
+  // define variables and set to empty values
+  $NameE = $AbbE = $AddressE = $CountryE = $StateE = $ZipE = "";
+  $Name = $Abb = $Address = $Country = $State = $Zip = "";
+  $str = "";
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {//If post request was called
-  /*
-  if statement are use to check if the text field of the html are empty
-  if they are, set the error variables to display the error
-  else remove special header and set its to the variables
-  */
-  if (empty($_POST["name"])) {
-    $NameE = "Name is required";
-  } else {
-    $Name = TrimText($_POST["name"]);
-  }
-  if (empty($_POST["abb"])) {
-    $AbbE = "Abb is required";
-  } else {
-    $Abb = TrimText($_POST["abb"]);
-  }
-  if (empty($_POST["address"])) {
-    $AddressE = "Address is required";
-  } else {
-    $Address = TrimText($_POST["address"]);
-  }
-  if (empty($_POST["state"])) {
-    $StateE = "State is required";
-  } else {
-    $State = TrimText($_POST["state"]);
-  }
-  if (empty($_POST["zip"])) {
-    $ZipE = "Zip code is required";
-  } else {
-    $Zip = TrimText($_POST["zip"]);
-  }
-  if (empty($_POST["country"])) {
-    $CountryE = "State is Required";
-  } else {
-    $Country = TrimText($_POST["country"]);
-  }
 
-  //Check if the variable are empty, if they are that means that the html text-danger
-  //are empty, This check prevent sql statement from executing if Name, Abb, and CampusID
-  //are empty
-  if($Name != "" && $Abb != "" && $Address != "" && $Country != "" && $State != "" && $Zip != ""){
 
-    // Connection Data
-    require '../Credential.php';
-    $conn = new mysqli($servername, $username, $password, $dbname);
-    // Check connection
-    if ($conn->connect_error) {
-      die("Connection failed: " . $conn->connect_error);
-    }
-
-    $sql = "
-    INSERT INTO campus(Name, Abb, Address, State, Zip, Country,Active)
-    VALUES
-    ('".$Name."',
-    '".$Abb."',
-    '".$Address."',
-    '".$State."',
-    '".$Zip."',
-    '".$Country."',
-    '1')";
-
-    // get result of the executed statement
-    if ($conn->query($sql) === TRUE) {//if success
-      //set result variable
-      $str =  "New record created successfully";
-      //run python Script to update json in Script/Json folder
-      exec('python ../Script/UpdateCampusJson.py');
+  if ($_SERVER["REQUEST_METHOD"] == "POST") {//If post request was called
+    /*
+    if statement are use to check if the text field of the html are empty
+    if they are, set the error variables to display the error
+    else remove special header and set its to the variables
+    */
+    if (empty($_POST["name"])) {
+      $NameE = "Name is required";
     } else {
-      $str = "Error : " . $sql . "<br>" . $conn->error;
+      $Name = TrimText($_POST["name"]);
+    }
+    if (empty($_POST["abb"])) {
+      $AbbE = "Abb is required";
+    } else {
+      $Abb = TrimText($_POST["abb"]);
+    }
+    if (empty($_POST["address"])) {
+      $AddressE = "Address is required";
+    } else {
+      $Address = TrimText($_POST["address"]);
+    }
+    if (empty($_POST["state"])) {
+      $StateE = "State is required";
+    } else {
+      $State = TrimText($_POST["state"]);
+    }
+    if (empty($_POST["zip"])) {
+      $ZipE = "Zip code is required";
+    } else {
+      $Zip = TrimText($_POST["zip"]);
+    }
+    if (empty($_POST["country"])) {
+      $CountryE = "State is Required";
+    } else {
+      $Country = TrimText($_POST["country"]);
+    }
+
+    //Check if the variable are empty, if they are that means that the html text-danger
+    //are empty, This check prevent sql statement from executing if Name, Abb, and CampusID
+    //are empty
+    if($Name != "" && $Abb != "" && $Address != "" && $Country != "" && $State != "" && $Zip != ""){
+      require '../Credential.php';//load Credential for sql login
+      // Connection Data
+      $conn = new mysqli($servername, $username, $password, $dbname);
+      // Check connection
+      if ($conn->connect_error) {
+        die("Connection failed: " . $conn->connect_error);
+      }
+
+      $sql = "
+      INSERT INTO campus(Name, Abb, Address, State, Zip, Country,Active)
+      VALUES
+      ('".$Name."',
+      '".$Abb."',
+      '".$Address."',
+      '".$State."',
+      '".$Zip."',
+      '".$Country."',
+      '1')";
+
+      // get result of the executed statement
+      if ($conn->query($sql) === TRUE) {//if success
+        //set result variable
+        $str =  "New record created successfully";
+        //run python Script to update json in Script/Json folder
+        exec('python ../Script/UpdateCampusJson.py');
+      } else {
+        $str = "Error : " . $sql . "<br>" . $conn->error;
+      }
     }
   }
-}
 
-//remove special char to prevent sql injection
-function TrimText($data) {
-  $data = trim($data);
-  $data = stripslashes($data);
-  $data = htmlspecialchars($data);
-  return $data;
-}
-?>
-<meta charset="UTF-8">
-<div class="menu">
-  <?php include '../header.php';  //load menu?>
-  <br><br>
-</div>
-
+  ?>
 </head>
 <body>
   <div class="container">
@@ -160,6 +147,7 @@ function TrimText($data) {
           <label for="name" class="col-sm-2 control-label">Country</label>
           <div class="col-sm-4">
             <select name="country">
+              <option value="USA">United States</option>
               <option value="AFG">Afghanistan</option>
               <option value="ALA">Åland Islands</option>
               <option value="ALB">Albania</option>
@@ -395,7 +383,6 @@ function TrimText($data) {
               <option value="UKR">Ukraine</option>
               <option value="ARE">United Arab Emirates</option>
               <option value="GBR">United Kingdom</option>
-              <option value="USA">United States</option>
               <option value="UMI">United States Minor Outlying Islands</option>
               <option value="URY">Uruguay</option>
               <option value="UZB">Uzbekistan</option>

@@ -100,3 +100,25 @@ body {
 	background-color: #E05A2B;
 	border-color: #E05A2B;
 }
+
+/* input focus color change*/
+textarea:focus,
+input[type="text"]:focus,
+input[type="password"]:focus,
+input[type="datetime"]:focus,
+input[type="datetime-local"]:focus,
+input[type="date"]:focus,
+input[type="month"]:focus,
+input[type="time"]:focus,
+input[type="week"]:focus,
+input[type="number"]:focus,
+input[type="email"]:focus,
+input[type="url"]:focus,
+input[type="search"]:focus,
+input[type="tel"]:focus,
+input[type="color"]:focus,
+.uneditable-input:focus {
+  border: 1px solid #FF7606;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.175) inset, 0 0 8px rgba(253, 154, 2, 0.7);
+  outline: 0 none;
+}

@@ -6,7 +6,7 @@ body {
   background-size: cover;
   background-color: #b3b3b3;
 }
-label,h2{
+label,h2,h1,h5{
   color: #DD4814;
 }
 
@@ -20,12 +20,12 @@ input{
   border: 1px solid #666666;
   color: #F6F6F5;
 }
-.input-sm{
-  background-color: #4c4c4c;
-}
 
 a{
   color: #FFF;
+}
+td > a{
+  color: #F7C04A;    
 }
 
 hr{
@@ -40,6 +40,78 @@ hr{
   background-image: -o-linear-gradient(left,rgba(0,0,0,0),rgba(0,0,0,0.15),rgba(0,0,0,0));
   background-image: linear-gradient(to left,rgba(21,21,21,0),rgba(224,90,43,25),rgba(0,0,0,0));
 }
+textarea{
+  background-color: #4c4c4c;
+  border-color: #FF7606;
+}
+/*equipment popup */
+.popover-title{
+  background-image: linear-gradient(to bottom,#3b3b3b 0,#242424 100%);
+  border-bottom: 1px solid rgb(197, 82, 41);
+}
+.popover {
+  background-color: #3B3B3B;
+  border: 1px solid rgb(197, 82, 41);
+}
+a:focus, a:hover {
+    color: #E89A46;
+    text-decoration: underline;
+}
+
+.error {color: #FF0000;}
+.navbar{ /*navbar size */
+  width: 1320px;
+  text-align: center;
+  margin: 0 auto;
+}
+/*end*/
+
+.dropdown-toggle{ /*when nav bar is click*/
+  background-image: linear-gradient(to bottom,#3b3b3b 0,#242424 100%);
+  width: 162px;
+  text-align: center;
+  margin: 1px;
+}
+
+.dropdown-menu li>a{
+  color: #FFF;
+
+}
+.dropdown-menu{ /*for the dropdown-menu list*/
+  background-color: #3b3b3b;
+
+}
+
+.dropdown ul>li>a:hover,
+.dropdown ul>li>a:focus{
+  color: #FFF;
+  box-shadow: 0 0 5px 1px #FF7606;
+  background-image: linear-gradient(to bottom,#3b3b3b 0,#242424 100%);
+}
+
+
+
+.nav .open>a,
+.nav .open>a:focus,
+.nav .open>a:hover
+{
+  color: #F7A800;
+  box-shadow: 0 0 5px 1px #F7A800;
+  border: none;
+}
+
+.dropdown > a:hover,
+.dropdown-toggle > a:hover,
+.dropdown > a:focus,
+.dropdown-toggle > a:focus { // hover glow for nav bar
+  -moz-box-shadow: 0 0 5px 1px #F7A800;
+  -webkit-box-shadow: 0 0 5px 1px #F7A800;
+  box-shadow: 0 0 5px 1px #F7A800;
+  color: #F7A800;
+  background-image: linear-gradient(to bottom,#3b3b3b 0,#242424 100%);
+}
+
+/*VVVVVVVVlookup tableVVVVVVVVV*/
 .panel-default>.panel-heading {
   background-image: linear-gradient(to bottom,#3b3b3b 0,#242424 100%);
   color:#f5f5f5;
@@ -51,9 +123,10 @@ hr{
   color: #f5f5f5;
   text-decoration:none;
 }
-.form-control {
-  background-color: #4c4c4c !important;
-  color: #F6F6F5 !important;
+.form-control, .input-sm {
+  background-color: #4c4c4c ;
+  color: #F6F6F5 ;
+  border: 1px solid #FF7606;
 }
 .dataTable_wrapper{
   border-color: #ca542a;
@@ -66,52 +139,28 @@ td,tr{
 .panel-default {
   border-color: #000;
 }
+/*^^^Loopup Table^^^^^^^*/
 
-
-.nav .navbar-nav{ /*navbar size */
-  width: 1320px;
-  text-align: center;
-  margin: 0 auto;
-}
-
-.dropdown-toggle,
-.dropdown-toggle > a{ /*when nav bar is click*/
-  background-image: linear-gradient(to bottom,#3b3b3b 0,#242424 100%);
-  width: 162px;
-  text-align: center;
-  margin: 1px;
-
-}
-
-.nav .open>a,
-.nav .open>a:focus,
-.nav .open>a:hover
-{
-  color: #F7A800;
-  box-shadow: 0 0 5px 1px #F7A800;
-  border: none;
-}
-
-.dropdown > a:hover,
-.dropdown-toggle > a:hover { // hover glow for nav bar
-  -moz-box-shadow: 0 0 4px #4D4D4D;
-  -webkit-box-shadow: 0 0 4px #4D4D4D;
-  box-shadow: 0 0 5px 1px #F7A800;
-  color: #F7A800;
-}
-
-.dropdown-menu>li>a:focus,
-.dropdown-menu>li>a:hover {
-    color: #000;
-    text-decoration: none;
-    background-color: #3b3b3b;
-    box-shadow: 0 0 5px 1px #F7A800;
-}
-
-.dropdown-menu>li>a,
-.dropdown-menu{ /*for the dropdown-menu list*/
-    color: #fff;
-    background-color: #3b3b3b;
+/* input focus color change*/
+textarea:focus,
+input[type="text"]:focus,
+input[type="password"]:focus,
+input[type="datetime"]:focus,
+input[type="datetime-local"]:focus,
+input[type="date"]:focus,
+input[type="month"]:focus,
+input[type="time"]:focus,
+input[type="week"]:focus,
+input[type="number"]:focus,
+input[type="email"]:focus,
+input[type="url"]:focus,
+input[type="search"]:focus,
+input[type="tel"]:focus,
+input[type="color"]:focus,
+.uneditable-input:focus {
+  border: 1px solid #FF7606;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.175) inset, 0 0 8px rgba(253, 154, 2, 0.7);
+  outline: 0 none;
 }
 
 .btn-search {

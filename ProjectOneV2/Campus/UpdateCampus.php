@@ -1,131 +1,103 @@
-<?php
-/*
-$_Get - Someone is requesting Data from your application
-$_Post - Someone is pushing (inserting/updating/deleting) data from your application
-*/
-?>
 <html>
 <head>
-<style>
-.error {color: #FF0000;}
-</style>
-<?php
 
-// define variables and set to empty values
-$IdE = $NameE = $AbbE = $AddressE = $CountryE = $StateE = $ZipE = "";
-$Id = $Name = $Abb = $Address = $Country = $State = $Zip = "";
-$str = "";
+  <meta charset="UTF-8">
+  <div class="menu">
+    <?php include '../header.php'; ?>
+    <br><br>
+  </div>
+  <?php
+  require '../Credential.php';
+  include "../globalphpfunction.php";
+  ini_set('display_errors', 1);
+  ini_set('display_startup_errors', 1);
+  error_reporting(E_ALL);
+  // define variables and set to empty values
+  $IdE = $NameE = $AbbE = $AddressE = $CountryE = $StateE = $ZipE = "";
+  $Id = $Name = $Abb = $Address = $Country = $State = $Zip = "";
+  $str = "";
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {//If post request was called
-  /* similar structure to Insert Building, with an extra field called id
-  if statement are use to check if the text field of the html are empty
-  if they are, set the error variables to display the error
-  else remove special header and set its to the variables
-  */
+  echo isRanked("gUpdate");
 
-  if (empty($_POST["id"])) {
-    $IdE = "ID is required";
-  } else {
-    $Id = TrimText($_POST["id"]);
-  }
-  if (empty($_POST["name"])) {
-    $NameE = "Name is required";
-  } else {
-    $Name = TrimText($_POST["name"]);
-  }
-  if (empty($_POST["abb"])) {
-    $AbbE = "Abb is required";
-  } else {
-    $Abb = TrimText($_POST["abb"]);
-  }
-  if (empty($_POST["address"])) {
-    $AddressE = "Address is required";
-  } else {
-    $Address = TrimText($_POST["address"]);
-  }
-  if (empty($_POST["state"])) {
-    $StateE = "State is required";
-  } else {
-    $State = TrimText($_POST["state"]);
-  }
-  if (empty($_POST["zip"])) {
-    $ZipE = "Zip code is required";
-  } else {
-    $Zip = TrimText($_POST["zip"]);
-  }
-  if (empty($_POST["country"])) {
-    $CountryE = "State is Required";
-  } else {
-    $Country = TrimText($_POST["country"]);
-  }
+  if ($_SERVER["REQUEST_METHOD"] == "POST") {//If post request was called
+    /* similar structure to Insert Building, with an extra field called id
+    if statement are use to check if the text field of the html are empty
+    if they are, set the error variables to display the error
+    else remove special header and set its to the variables
+    */
 
-  //Check if the variable are empty, if they are that means that the html text-danger
-  //are empty, This check prevent sql statement from executing if Name, Abb, and CampusID
-  //are empty
-  if($Id != "" && $Name != "" && $Abb != "" && $Address != "" && $Country != "" && $State != "" && $Zip != ""){
-    // Connection Data
-
-    require '../Credential.php';
-
-    $conn = new mysqli($servername, $username, $password, $dbname);
-    // Check connection
-    if ($conn->connect_error) {
-      die("Connection failed: " . $conn->connect_error);
-    }
-
-    $sql = "
-    UPDATE campus SET
-    Name = '".$Name."',
-    Abb = '".$Abb."',
-    Address = '".$Address."',
-    Country = '".$Country."',
-    State = '".$State."',
-    Zip ='".$Zip."'
-    WHERE
-    id = ".$Id;
-
-    // get result of the executed statement
-    if ($conn->query($sql) === TRUE) {//if success
-      //set result variable
-      $str =  "Updated record created successfully";
-      //run python Script to update json in Script/Json folder
-      exec('python ../Script/UpdateCampusJson.py');
+    if (empty($_POST["id"])) {
+      $IdE = "ID is required";
     } else {
-      $str = "Error : " . $sql . "<br>" . $conn->error;
+      $Id = TrimText($_POST["id"]);
+    }
+    if (empty($_POST["name"])) {
+      $NameE = "Name is required";
+    } else {
+      $Name = TrimText($_POST["name"]);
+    }
+    if (empty($_POST["abb"])) {
+      $AbbE = "Abb is required";
+    } else {
+      $Abb = TrimText($_POST["abb"]);
+    }
+    if (empty($_POST["address"])) {
+      $AddressE = "Address is required";
+    } else {
+      $Address = TrimText($_POST["address"]);
+    }
+    if (empty($_POST["state"])) {
+      $StateE = "State is required";
+    } else {
+      $State = TrimText($_POST["state"]);
+    }
+    if (empty($_POST["zip"])) {
+      $ZipE = "Zip code is required";
+    } else {
+      $Zip = TrimText($_POST["zip"]);
+    }
+    if (empty($_POST["country"])) {
+      $CountryE = "State is Required";
+    } else {
+      $Country = TrimText($_POST["country"]);
+    }
+
+    //Check if the variable are empty, if they are that means that the html text-danger
+    //are empty, This check prevent sql statement from executing if Name, Abb, and CampusID
+    //are empty
+    if($Id != "" && $Name != "" && $Abb != "" && $Address != "" && $Country != "" && $State != "" && $Zip != ""){
+      // Connection Data
+      require '../Credential.php';//load Credential for sql login
+      $conn = new mysqli($servername, $username, $password, $dbname);
+      // Check connection
+      if ($conn->connect_error) {
+        die("Connection failed: " . $conn->connect_error);
+      }
+
+      $sql = "
+      UPDATE campus SET
+      Name = '".$Name."',
+      Abb = '".$Abb."',
+      Address = '".$Address."',
+      Country = '".$Country."',
+      State = '".$State."',
+      Zip ='".$Zip."'
+      WHERE
+      id = ".$Id;
+
+      // get result of the executed statement
+      if ($conn->query($sql) === TRUE) {//if success
+        //set result variable
+        $str =  "Updated record created successfully";
+        //run python Script to update json in Script/Json folder
+        exec('python ../Script/UpdateCampusJson.py');
+      } else {
+        $str = "Error : " . $sql . "<br>" . $conn->error;
+      }
     }
   }
-}
 
-//remove special char to prevent sql injection
-function TrimText($data) {
-  $data = trim($data);
-  $data = stripslashes($data);
-  $data = htmlspecialchars($data);
-  return $data;
-}
-
-//Used for set the value of the html text from get request,
-//User doesnt have retype everything out
-function getPost($string){
-  if( array_key_exists($string,$_GET)){
-    echo replaceSpace($_GET[$string]);
-  }
-  else{
-    echo "";
-  }
-}
-
-//replace % with space
-function replaceSpace($string){
-  return str_replace("%"," ",$string);
-}
-?>
-<meta charset="UTF-8">
-<div class="menu">
-  <?php include '../header.php'; ?>
-  <br><br>
-</div>
-
+  ?>
 </head>
 <body>
   <div class="container">

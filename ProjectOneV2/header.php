@@ -1,7 +1,7 @@
 <?php
 //Homeapge
 session_start();
-if (!isset($_SESSION['id'])) {
+if (!isset($_SESSION['Username'])) {
   header('location:../index.php');
   exit(); // <-- terminates the current script
 }
@@ -23,7 +23,7 @@ if (!isset($_SESSION['id'])) {
 
   <div class="container-fluid">
     <div class="row">
-      <div class="col-xs-12 ">
+      <div class="col-xs-12">
         <nav class="navbar">
 
           <ul class="nav navbar-nav">
@@ -79,19 +79,16 @@ if (!isset($_SESSION['id'])) {
               <ul class="dropdown-menu">
                 <li><a href="../Deploy/Deploy.php">Deploy</a></li>
                 <li><a href="../Deploy/Lookup.php">Lookup</a></li>
-                <li><a href="../Deploy/Retired.php">Retired</a></li>
-                <li><a href="../Deploy/Move.php">Move</a></li>
               </ul>
             </li>
 
             <li class="dropdown-toggle"><a href="../logout.php">Logout</a></li>
             <hr>
           </ul>
-
-
         </div>
       </div>
     </nav>
   </div>
 </head>
+
 </html>

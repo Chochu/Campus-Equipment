@@ -11,13 +11,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") { //If post request was called
   if they are, set the error variables to display the error
   else remove special header and set its to the variables
   */
-  $username  = TrimText($_POST["username"]);
-  $password = TrimText($_POST["password"]);
-
+  $loginUsername  = TrimText($_POST["username"]);
+  $Loginpassword = TrimText($_POST["password"]);
   //Check if the variable are empty, if they are that means that the html text-danger
   //are empty, This check prevent sql statement from executing if Name, Abb, and CampusID
   //are empty
-  if($username != "" && $password != "" ){
+
+  if($loginUsername != "" && $Loginpassword != "" ){
     // Connection Data
     require 'ProjectOneV2/Credential.php';
     $conn = new mysqli($servername, $username, $password, $dbname);
@@ -26,8 +26,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") { //If post request was called
       die("Connection failed: " . $conn->connect_error);
     }
 
-    $sql = "SELECT * FROM account WHERE user = '".$username."';"; //set query statement
-
+    $sql = "SELECT * FROM account WHERE user = '".$loginUsername."';"; //set query statement
     $result = $conn->query($sql); //execute query
 
 
@@ -37,7 +36,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") { //If post request was called
         $hash = crypt($Pass, $row['salt']); //$row[salt] = contains the salt for that user
 
         if(var_export(hash_equals($hash, $row['pass']), true)){ //check if the result matched with the store hash password
-          $_SESSION["id"] = $row['id']; //create session id
+          $_SESSION["id"] = $row['rank']; //create session id using the rank
           $_SESSION["Username"] = $row['user']; //and set username
           header('Location: /ProjectOneV2/home.php'); //redirect to header , main page
         }

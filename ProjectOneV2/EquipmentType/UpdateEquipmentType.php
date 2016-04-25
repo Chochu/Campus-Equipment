@@ -1,16 +1,20 @@
-<?php
-/*
-$_Get - Someone is requesting Data from your application
-$_Post - Someone is pushing (inserting/updating/deleting) data from your application
-*/
-?>
+
 <html>
 <head>
-<style>
-.error {color: #FF0000;}
-</style>
-<?php
+<meta charset="UTF-8">
+<div class="menu">
+  <?php include '../header.php'; ?>
+  <br><br>
+</div>
 
+<?php
+require '../Credential.php';
+include "../globalphpfunction.php";
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
+echo isRanked("gUpdate");
 // define variables and set to empty values
 $IdE = $MakeE = $ModelE = $TypeE = "";
 $Id = $Make = $Model = $Type = $Description = "";
@@ -80,14 +84,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {//If post request was called
   }
 }
 
-//remove special char to prevent sql injection
-function TrimText($data) {
-  $data = trim($data);
-  $data = stripslashes($data);
-  $data = htmlspecialchars($data);
-  return $data;
-}
-
 function loadDescrip($id){
   if( array_key_exists($id,$_GET)){
     require '../Credential.php'; //load Credential for Sql login
@@ -110,28 +106,7 @@ function loadDescrip($id){
 
 
 }
-//Used for set the value of the html text from get request,
-//User doesnt have retype everything out
-function getPost($string){
-  if( array_key_exists($string,$_GET)){
-    echo replaceSpace($_GET[$string]);
-  }
-  else{
-    echo "";
-  }
-}
-
-//replace % with space
-function replaceSpace($string){
-  return str_replace("%"," ",$string);
-}
 ?>
-<meta charset="UTF-8">
-<div class="menu">
-  <?php include '../header.php'; ?>
-  <br><br>
-</div>
-
 </head>
 <body>
   <div class="container">

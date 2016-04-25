@@ -37,7 +37,7 @@ hr{
   background-image: linear-gradient(to left,rgba(21,21,21,0),rgba(247,168,0,25),rgba(0,0,0,0));
 }
 
-
+.error {color: #FF0000;}
 .navbar{ /*navbar size */
   width: 1320px;
   text-align: center;

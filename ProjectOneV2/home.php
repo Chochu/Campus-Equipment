@@ -5,6 +5,18 @@ if (!isset($_SESSION['id'])) {
   header('location:../index.php');
   exit(); // <-- terminates the current script
 }
+
+function getPost($string){
+  if( array_key_exists($string,$_GET)){
+    echo replaceSpace($_GET[$string]);
+  }
+  else{
+    echo "";
+  }
+}
+function replaceSpace($string){
+  return str_replace("%"," ",$string);
+}
 ?>
 <html lang = "en">
 <head>
@@ -19,65 +31,8 @@ if (!isset($_SESSION['id'])) {
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
   <!-- Latest compiled and minified JavaScript -->
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
-  <style>
+  <link rel="stylesheet" type="text/css" href="Darkstyle.css">
 
-  body {
-    /*background: url(Images/background.jpg) no-repeat center center fixed;*/
-    -webkit-background-size: cover;
-    -moz-background-size: cover;
-    -o-background-size: cover;
-    background-size: cover;
-
-  }
-
-
-
-  hr{
-    margin-top: 0px;
-    margin-bottom: 0px;
-    clear: both;
-    border: 0;
-    height: 2px;
-    background-image: -webkit-linear-gradient(left,rgba(0, 0, 0, 0),rgba(0, 0, 0, 0.15),rgba(0, 0, 0, 0));
-    background-image: -moz-linear-gradient(left,rgba(0,0,0,0),rgba(0,0,0,0.15),rgba(0,0,0,0));
-    background-image: -ms-linear-gradient(left,rgba(0,0,0,0),rgba(0,0,0,0.15),rgba(0,0,0,0));
-    background-image: -o-linear-gradient(left,rgba(0,0,0,0),rgba(0,0,0,0.15),rgba(0,0,0,0));
-    background-image: linear-gradient(to left,rgba(21,21,21,0),rgba(247,168,0,25),rgba(0,0,0,0));
-  }
-
-  .dropdown-menu li a:hover{
-    box-shadow: 0 0 5px 1px #F7A800;
-  }
-
-  .dropdown-toggle{ /*when nav bar is click*/
-    background-image: linear-gradient(to bottom,rgba(255,255,255,100),rgba(222,222,222,50));
-    width: 162px;
-    text-align: center;
-    margin: 1px;
-  }
-
-  .nav .open>a,
-  .nav .open>a:focus,
-  .nav .open>a:hover
-  {
-    box-shadow: 0 0 5px 1px #F7A800;
-    border: none;
-  }
-  .navbar{
-    width: 1320px;
-    text-align: center;
-    margin: 0 auto;
-    }
-
-  .dropdown > a:hover,
-  .dropdown-toggle > a:hover{ // hover glow for nav bar
-    -moz-box-shadow: 0 0 4px #F7A800;
-    -webkit-box-shadow: 0 0 4px #F7A800;
-    box-shadow: 0 0 5px 1px #F7A800;
-  }
-
-
-  </style>
 
   <div class="container-fluid">
     <div class="row">
@@ -131,8 +86,6 @@ if (!isset($_SESSION['id'])) {
               <ul class="dropdown-menu">
                 <li><a href="Deploy/Deploy.php">Deploy</a></li>
                 <li><a href="Deploy/Lookup.php">Lookup</a></li>
-                <li><a href="Deploy/Retired.php">Retired</a></li>
-                <li><a href="Deploy/Move.php">Move</a></li>
               </ul>
             </li>
             <li class="dropdown-toggle"><a href="logout.php">Logout</a></li>
@@ -147,8 +100,9 @@ if (!isset($_SESSION['id'])) {
   <div class="container-fluid">
     <div class = "row">
       <div class = "col-md-12 col-md-offset-5">
-        <h1 id = "WelcomeMes"> Welcome <?php echo $_SESSION["Username"]?> !</h1>
-        <h5 id = "WelcomeMes"> Message of the Day: </h5>
+        <h1 id = "WelcomeMes"> Welcome <?php echo $_SESSION["Username"];?> !</h1>
+        <h2 id = "WelcomeMes"> Message of the Day: <?php getPost("motd");?></h2>
+        <h2 id = "WelcomeMes"> <?php  getPost("error");?></h2>
       </div>
     </div>
   </div>

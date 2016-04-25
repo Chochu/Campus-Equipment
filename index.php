@@ -73,7 +73,7 @@
                     <div class="row">
                       <div class="col-sm-6 col-sm-offset-3">
                         <!-- disable button to prevent registertion   -->
-                        <input type="submit" disabled="true" style="background-color: #E05A2B" name="register-submit" id="register-submit" tabindex="4" class="form-control btn btn-register" value="Register Now">
+                        <input type="submit"  style="background-color: #E05A2B" name="register-submit" id="register-submit" tabindex="4" class="form-control btn btn-register" value="Register Now">
                         <p>Registertion is disable at this time </p>
                       </div>
                     </div>

@@ -1,128 +1,93 @@
-<?php
-/*
-$_Get - Someone is requesting Data from your application
-$_Post - Someone is pushing (inserting/updating/deleting) data from your application
-*/
-?>
 <html>
 <head>
-<style>
-.error {color: #FF0000;}
-</style>
-<?php
+  <div class="menu">
+    <?php include '../header.php'; ?>
+    <br><br>
+  </div>
 
-// define variables and set to empty values
-$IdE = $RoomNumE = $BuildingIDE = $CampusIDE = "";
-$Id = $RoomNum = $type = $BuildingID = $CampusID = $Altname = "";
-$str = "";
+  <?php
+  require '../Credential.php';
+  include "../globalphpfunction.php";
+  ini_set('display_errors', 1);
+  ini_set('display_startup_errors', 1);
+  error_reporting(E_ALL);
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {//If post request was called
-  /* similar structure to Insert Building, with an extra field called id
-  if statement are use to check if the text field of the html are empty
-  if they are, set the error variables to display the error
-  else remove special header and set its to the variables
-  */
+  echo isRanked("gUpdate");
+  // define variables and set to empty values
+  $IdE = $RoomNumE = $BuildingIDE = $CampusIDE = "";
+  $Id = $RoomNum = $type = $BuildingID = $CampusID = $Altname = "";
+  $str = "";
 
-  if (empty($_POST["id"])) {
-    $IdE = "ID is required";
-  } else {
-    $Id = TrimText($_POST["id"]);
-  }
-  if (empty($_POST['room'])) {
-    $RoomNumE = "Name is required";
-  } else {
-    $RoomNum = TrimText($_POST["room"]);
-  }
-  if (empty($_POST['altname'])) {
-    $Altname = "";//Alt name doesnt have a error variables, so if it is empty, nothing will happen
-  } else {
-    $Altname = TrimText($_POST["altname"]);
-  }
-  if($_POST['ddcampusid'] == ""){
-    $CampusIDE = "Must Select an Campus";
-  }else {
-    $CampusID = $_POST['ddcampusid'];
-  }
-  if($_POST['ddbuildingid'] == ""){
-    $BuildingIDE = "Must Select an Campus";
-  }else {
-    $BuildingID = $_POST['ddbuildingid'];
-  }
+  if ($_SERVER["REQUEST_METHOD"] == "POST") {//If post request was called
+    /* similar structure to Insert Building, with an extra field called id
+    if statement are use to check if the text field of the html are empty
+    if they are, set the error variables to display the error
+    else remove special header and set its to the variables
+    */
 
-  //Check if the variable are empty, if they are that means that the html text-danger
-  //are empty, This check prevent sql statement from executing if Name, Abb, and CampusID
-  //are empty
-  if($RoomNum != "" && $BuildingID != "" && $CampusID != ""){
-    // Connection Data
-    require '../Credential.php';
-    $conn = new mysqli($servername, $username, $password, $dbname);
-    // Check connection
-    if ($conn->connect_error) {
-      die("Connection failed: " . $conn->connect_error);
-    }
-
-    $sql = "
-    UPDATE room SET
-    RoomNumber = '".$RoomNum."',
-    AltName = '".$Altname."',
-    BuildingID = '".$BuildingID."',
-    CampusID = '".$CampusID."'
-    WHERE
-    id = ".$Id;
-
-    // get result of the executed statement
-    if ($conn->query($sql) === TRUE) {//if success
-      //set result variable
-      $str =  "Updated record created successfully";
-      //run python Script to update json in Script/Json folder
-      exec('python ../Script/UpdateRoomJson.py');
+    if (empty($_POST["id"])) {
+      $IdE = "ID is required";
     } else {
-      $str = "Error : " . $sql . "<br>" . $conn->error;
+      $Id = TrimText($_POST["id"]);
+    }
+    if (empty($_POST['room'])) {
+      $RoomNumE = "Name is required";
+    } else {
+      $RoomNum = TrimText($_POST["room"]);
+    }
+    if (empty($_POST['altname'])) {
+      $Altname = "";//Alt name doesnt have a error variables, so if it is empty, nothing will happen
+    } else {
+      $Altname = TrimText($_POST["altname"]);
+    }
+    if($_POST['ddcampusid'] == ""){
+      $CampusIDE = "Must Select an Campus";
+    }else {
+      $CampusID = $_POST['ddcampusid'];
+    }
+    if($_POST['ddbuildingid'] == ""){
+      $BuildingIDE = "Must Select an Campus";
+    }else {
+      $BuildingID = $_POST['ddbuildingid'];
+    }
+
+    //Check if the variable are empty, if they are that means that the html text-danger
+    //are empty, This check prevent sql statement from executing if Name, Abb, and CampusID
+    //are empty
+    if($RoomNum != "" && $BuildingID != "" && $CampusID != ""){
+      // Connection Data
+      require '../Credential.php';
+      $conn = new mysqli($servername, $username, $password, $dbname);
+      // Check connection
+      if ($conn->connect_error) {
+        die("Connection failed: " . $conn->connect_error);
+      }
+
+      $sql = "
+      UPDATE room SET
+      RoomNumber = '".$RoomNum."',
+      AltName = '".$Altname."',
+      BuildingID = '".$BuildingID."',
+      CampusID = '".$CampusID."'
+      WHERE
+      id = ".$Id;
+
+      // get result of the executed statement
+      if ($conn->query($sql) === TRUE) {//if success
+        //set result variable
+        $str =  "Updated record created successfully";
+        //run python Script to update json in Script/Json folder
+        exec('python ../Script/UpdateRoomJson.py');
+      } else {
+        $str = "Error : " . $sql . "<br>" . $conn->error;
+      }
     }
   }
-}
-//populate campus dropdown
-function listcampusDropdown(){
-  require '../Credential.php';//load the path
-  $str = file_get_contents($JsonCampus); //load text from file
-  $json = json_decode($str,true);//decode to json var
-  foreach ($json as $value){//loop through json
-    echo "<option value=\"".$value['id']."\">".$value['Name']."</option>";//add option value to dropdown
-  }
-}
-//remove special char to prevent sql injection
-function TrimText($data) {
-  $data = trim($data);
-  $data = stripslashes($data);
-  $data = htmlspecialchars($data);
-  return $data;
-}
-//Used for set the value of the html text from get request,
-//User doesnt have retype everything out
-function getPost($string){
-  if( array_key_exists($string,$_GET)){
-    echo replaceSpace($_GET[$string]);
-  }
-  else{
-    echo "";
-  }
-}
-//replace % with space
-function replaceSpace($string){
-  return str_replace("%"," ",$string);
-}
-?>
-<meta charset="UTF-8">
-<div class="menu">
-  <?php include '../header.php'; ?>
-  <br><br>
-</div>
 
+
+  ?>
 </head>
 <body>
-
-
-
   <div class="container">
     <h2>Update Room id: <?php getPost("id"); ?></h2>
     <div class="row">
